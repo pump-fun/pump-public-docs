@@ -1,4 +1,10 @@
-{
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/pump.json`.
+ */
+export type Pump = {
   "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
   "metadata": {
     "name": "pump",
@@ -42,14 +48,14 @@
           }
         },
         {
-          "name": "fee_recipient",
+          "name": "feeRecipient",
           "writable": true
         },
         {
           "name": "mint"
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
@@ -79,13 +85,13 @@
           }
         },
         {
-          "name": "associated_bonding_curve",
+          "name": "associatedBondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "bonding_curve"
+                "path": "bondingCurve"
               },
               {
                 "kind": "const",
@@ -169,7 +175,7 @@
           }
         },
         {
-          "name": "associated_user",
+          "name": "associatedUser",
           "writable": true
         },
         {
@@ -178,15 +184,15 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "creator_vault",
+          "name": "creatorVault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -211,13 +217,13 @@
               {
                 "kind": "account",
                 "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "account": "bondingCurve"
               }
             ]
           }
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -255,13 +261,13 @@
           "type": "u64"
         },
         {
-          "name": "max_sol_cost",
+          "name": "maxSolCost",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "collect_creator_fee",
+      "name": "collectCreatorFee",
       "docs": [
         "Collects creator_fee from creator_vault to the coin creator account"
       ],
@@ -282,7 +288,7 @@
           "signer": true
         },
         {
-          "name": "creator_vault",
+          "name": "creatorVault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -312,11 +318,11 @@
           }
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -372,7 +378,7 @@
           "signer": true
         },
         {
-          "name": "mint_authority",
+          "name": "mintAuthority",
           "pda": {
             "seeds": [
               {
@@ -398,7 +404,7 @@
           }
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
@@ -428,13 +434,13 @@
           }
         },
         {
-          "name": "associated_bonding_curve",
+          "name": "associatedBondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "bonding_curve"
+                "path": "bondingCurve"
               },
               {
                 "kind": "const",
@@ -536,7 +542,7 @@
           }
         },
         {
-          "name": "mpl_token_metadata",
+          "name": "mplTokenMetadata",
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -601,7 +607,7 @@
             ],
             "program": {
               "kind": "account",
-              "path": "mpl_token_metadata"
+              "path": "mplTokenMetadata"
             }
           }
         },
@@ -611,15 +617,15 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
@@ -627,7 +633,7 @@
           "address": "SysvarRent111111111111111111111111111111111"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -679,7 +685,7 @@
       ]
     },
     {
-      "name": "extend_account",
+      "name": "extendAccount",
       "docs": [
         "Extends the size of program-owned accounts"
       ],
@@ -703,11 +709,11 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -782,7 +788,7 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -823,7 +829,7 @@
           }
         },
         {
-          "name": "withdraw_authority",
+          "name": "withdrawAuthority",
           "writable": true,
           "relations": [
             "global"
@@ -833,7 +839,7 @@
           "name": "mint"
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
@@ -863,13 +869,13 @@
           }
         },
         {
-          "name": "associated_bonding_curve",
+          "name": "associatedBondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "bonding_curve"
+                "path": "bondingCurve"
               },
               {
                 "kind": "const",
@@ -957,15 +963,15 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "pump_amm",
+          "name": "pumpAmm",
           "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
@@ -991,7 +997,7 @@
               },
               {
                 "kind": "account",
-                "path": "pool_authority"
+                "path": "poolAuthority"
               },
               {
                 "kind": "account",
@@ -999,17 +1005,17 @@
               },
               {
                 "kind": "account",
-                "path": "wsol_mint"
+                "path": "wsolMint"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "pump_amm"
+              "path": "pumpAmm"
             }
           }
         },
         {
-          "name": "pool_authority",
+          "name": "poolAuthority",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1040,17 +1046,17 @@
           }
         },
         {
-          "name": "pool_authority_mint_account",
+          "name": "poolAuthorityMintAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "pool_authority"
+                "path": "poolAuthority"
               },
               {
                 "kind": "account",
-                "path": "token_program"
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
@@ -1059,36 +1065,36 @@
             ],
             "program": {
               "kind": "account",
-              "path": "associated_token_program"
+              "path": "associatedTokenProgram"
             }
           }
         },
         {
-          "name": "pool_authority_wsol_account",
+          "name": "poolAuthorityWsolAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "pool_authority"
+                "path": "poolAuthority"
               },
               {
                 "kind": "account",
-                "path": "token_program"
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
-                "path": "wsol_mint"
+                "path": "wsolMint"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "associated_token_program"
+              "path": "associatedTokenProgram"
             }
           }
         },
         {
-          "name": "amm_global_config",
+          "name": "ammGlobalConfig",
           "pda": {
             "seeds": [
               {
@@ -1112,16 +1118,16 @@
             ],
             "program": {
               "kind": "account",
-              "path": "pump_amm"
+              "path": "pumpAmm"
             }
           }
         },
         {
-          "name": "wsol_mint",
+          "name": "wsolMint",
           "address": "So11111111111111111111111111111111111111112"
         },
         {
-          "name": "lp_mint",
+          "name": "lpMint",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1149,36 +1155,36 @@
             ],
             "program": {
               "kind": "account",
-              "path": "pump_amm"
+              "path": "pumpAmm"
             }
           }
         },
         {
-          "name": "user_pool_token_account",
+          "name": "userPoolTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "pool_authority"
+                "path": "poolAuthority"
               },
               {
                 "kind": "account",
-                "path": "token_2022_program"
+                "path": "token2022Program"
               },
               {
                 "kind": "account",
-                "path": "lp_mint"
+                "path": "lpMint"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "associated_token_program"
+              "path": "associatedTokenProgram"
             }
           }
         },
         {
-          "name": "pool_base_token_account",
+          "name": "poolBaseTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1188,7 +1194,7 @@
               },
               {
                 "kind": "account",
-                "path": "token_program"
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
@@ -1197,12 +1203,12 @@
             ],
             "program": {
               "kind": "account",
-              "path": "associated_token_program"
+              "path": "associatedTokenProgram"
             }
           }
         },
         {
-          "name": "pool_quote_token_account",
+          "name": "poolQuoteTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1212,29 +1218,29 @@
               },
               {
                 "kind": "account",
-                "path": "token_program"
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
-                "path": "wsol_mint"
+                "path": "wsolMint"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "associated_token_program"
+              "path": "associatedTokenProgram"
             }
           }
         },
         {
-          "name": "token_2022_program",
+          "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "pump_amm_event_authority",
+          "name": "pumpAmmEventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1262,12 +1268,12 @@
             ],
             "program": {
               "kind": "account",
-              "path": "pump_amm"
+              "path": "pumpAmm"
             }
           }
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1336,14 +1342,14 @@
           }
         },
         {
-          "name": "fee_recipient",
+          "name": "feeRecipient",
           "writable": true
         },
         {
           "name": "mint"
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1373,13 +1379,13 @@
           }
         },
         {
-          "name": "associated_bonding_curve",
+          "name": "associatedBondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "bonding_curve"
+                "path": "bondingCurve"
               },
               {
                 "kind": "const",
@@ -1463,7 +1469,7 @@
           }
         },
         {
-          "name": "associated_user",
+          "name": "associatedUser",
           "writable": true
         },
         {
@@ -1472,11 +1478,11 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "creator_vault",
+          "name": "creatorVault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1501,17 +1507,17 @@
               {
                 "kind": "account",
                 "path": "bonding_curve.creator",
-                "account": "BondingCurve"
+                "account": "bondingCurve"
               }
             ]
           }
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1549,13 +1555,13 @@
           "type": "u64"
         },
         {
-          "name": "min_sol_output",
+          "name": "minSolOutput",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "set_creator",
+      "name": "setCreator",
       "docs": [
         "Allows Global::set_creator_authority to set the bonding curve creator from Metaplex metadata or input argument"
       ],
@@ -1571,7 +1577,7 @@
       ],
       "accounts": [
         {
-          "name": "set_creator_authority",
+          "name": "setCreatorAuthority",
           "signer": true,
           "relations": [
             "global"
@@ -1697,7 +1703,7 @@
           }
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1727,7 +1733,7 @@
           }
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1767,7 +1773,7 @@
       ]
     },
     {
-      "name": "set_metaplex_creator",
+      "name": "setMetaplexCreator",
       "docs": [
         "Syncs the bonding curve creator with the Metaplex metadata creator if it exists"
       ],
@@ -1884,7 +1890,7 @@
           }
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "writable": true,
           "pda": {
             "seeds": [
@@ -1914,7 +1920,7 @@
           }
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1949,7 +1955,7 @@
       "args": []
     },
     {
-      "name": "set_params",
+      "name": "setParams",
       "docs": [
         "Sets the global state parameters."
       ],
@@ -1992,7 +1998,7 @@
           ]
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -2026,49 +2032,49 @@
       ],
       "args": [
         {
-          "name": "initial_virtual_token_reserves",
+          "name": "initialVirtualTokenReserves",
           "type": "u64"
         },
         {
-          "name": "initial_virtual_sol_reserves",
+          "name": "initialVirtualSolReserves",
           "type": "u64"
         },
         {
-          "name": "initial_real_token_reserves",
+          "name": "initialRealTokenReserves",
           "type": "u64"
         },
         {
-          "name": "token_total_supply",
+          "name": "tokenTotalSupply",
           "type": "u64"
         },
         {
-          "name": "fee_basis_points",
+          "name": "feeBasisPoints",
           "type": "u64"
         },
         {
-          "name": "withdraw_authority",
+          "name": "withdrawAuthority",
           "type": "pubkey"
         },
         {
-          "name": "enable_migrate",
+          "name": "enableMigrate",
           "type": "bool"
         },
         {
-          "name": "pool_migration_fee",
+          "name": "poolMigrationFee",
           "type": "u64"
         },
         {
-          "name": "creator_fee_basis_points",
+          "name": "creatorFeeBasisPoints",
           "type": "u64"
         },
         {
-          "name": "set_creator_authority",
+          "name": "setCreatorAuthority",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "update_global_authority",
+      "name": "updateGlobalAuthority",
       "discriminator": [
         227,
         181,
@@ -2107,10 +2113,10 @@
           ]
         },
         {
-          "name": "new_authority"
+          "name": "newAuthority"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -2147,7 +2153,7 @@
   ],
   "accounts": [
     {
-      "name": "BondingCurve",
+      "name": "bondingCurve",
       "discriminator": [
         23,
         183,
@@ -2160,7 +2166,7 @@
       ]
     },
     {
-      "name": "Global",
+      "name": "global",
       "discriminator": [
         167,
         232,
@@ -2175,7 +2181,7 @@
   ],
   "events": [
     {
-      "name": "CollectCreatorFeeEvent",
+      "name": "collectCreatorFeeEvent",
       "discriminator": [
         122,
         2,
@@ -2188,7 +2194,7 @@
       ]
     },
     {
-      "name": "CompleteEvent",
+      "name": "completeEvent",
       "discriminator": [
         95,
         114,
@@ -2201,7 +2207,7 @@
       ]
     },
     {
-      "name": "CompletePumpAmmMigrationEvent",
+      "name": "completePumpAmmMigrationEvent",
       "discriminator": [
         189,
         233,
@@ -2214,7 +2220,7 @@
       ]
     },
     {
-      "name": "CreateEvent",
+      "name": "createEvent",
       "discriminator": [
         27,
         114,
@@ -2227,7 +2233,7 @@
       ]
     },
     {
-      "name": "ExtendAccountEvent",
+      "name": "extendAccountEvent",
       "discriminator": [
         97,
         97,
@@ -2240,7 +2246,7 @@
       ]
     },
     {
-      "name": "SetCreatorEvent",
+      "name": "setCreatorEvent",
       "discriminator": [
         237,
         52,
@@ -2253,7 +2259,7 @@
       ]
     },
     {
-      "name": "SetMetaplexCreatorEvent",
+      "name": "setMetaplexCreatorEvent",
       "discriminator": [
         142,
         203,
@@ -2266,7 +2272,7 @@
       ]
     },
     {
-      "name": "SetParamsEvent",
+      "name": "setParamsEvent",
       "discriminator": [
         223,
         195,
@@ -2279,7 +2285,7 @@
       ]
     },
     {
-      "name": "TradeEvent",
+      "name": "tradeEvent",
       "discriminator": [
         189,
         219,
@@ -2292,7 +2298,7 @@
       ]
     },
     {
-      "name": "UpdateGlobalAuthorityEvent",
+      "name": "updateGlobalAuthorityEvent",
       "discriminator": [
         182,
         195,
@@ -2308,184 +2314,184 @@
   "errors": [
     {
       "code": 6000,
-      "name": "NotAuthorized",
+      "name": "notAuthorized",
       "msg": "The given account is not authorized to execute this instruction."
     },
     {
       "code": 6001,
-      "name": "AlreadyInitialized",
+      "name": "alreadyInitialized",
       "msg": "The program is already initialized."
     },
     {
       "code": 6002,
-      "name": "TooMuchSolRequired",
+      "name": "tooMuchSolRequired",
       "msg": "slippage: Too much SOL required to buy the given amount of tokens."
     },
     {
       "code": 6003,
-      "name": "TooLittleSolReceived",
+      "name": "tooLittleSolReceived",
       "msg": "slippage: Too little SOL received to sell the given amount of tokens."
     },
     {
       "code": 6004,
-      "name": "MintDoesNotMatchBondingCurve",
+      "name": "mintDoesNotMatchBondingCurve",
       "msg": "The mint does not match the bonding curve."
     },
     {
       "code": 6005,
-      "name": "BondingCurveComplete",
+      "name": "bondingCurveComplete",
       "msg": "The bonding curve has completed and liquidity migrated to raydium."
     },
     {
       "code": 6006,
-      "name": "BondingCurveNotComplete",
+      "name": "bondingCurveNotComplete",
       "msg": "The bonding curve has not completed."
     },
     {
       "code": 6007,
-      "name": "NotInitialized",
+      "name": "notInitialized",
       "msg": "The program is not initialized."
     },
     {
       "code": 6008,
-      "name": "WithdrawTooFrequent",
+      "name": "withdrawTooFrequent",
       "msg": "Withdraw too frequent"
     },
     {
       "code": 6009,
-      "name": "NewSizeShouldBeGreaterThanCurrentSize",
+      "name": "newSizeShouldBeGreaterThanCurrentSize",
       "msg": "new_size should be > current_size"
     },
     {
       "code": 6010,
-      "name": "AccountTypeNotSupported",
+      "name": "accountTypeNotSupported",
       "msg": "Account type not supported"
     },
     {
       "code": 6011,
-      "name": "InitialRealTokenReservesShouldBeLessThanTokenTotalSupply",
+      "name": "initialRealTokenReservesShouldBeLessThanTokenTotalSupply",
       "msg": "initial_real_token_reserves should be less than token_total_supply"
     },
     {
       "code": 6012,
-      "name": "InitialVirtualTokenReservesShouldBeGreaterThanInitialRealTokenReserves",
+      "name": "initialVirtualTokenReservesShouldBeGreaterThanInitialRealTokenReserves",
       "msg": "initial_virtual_token_reserves should be greater than initial_real_token_reserves"
     },
     {
       "code": 6013,
-      "name": "FeeBasisPointsGreaterThanMaximum",
+      "name": "feeBasisPointsGreaterThanMaximum",
       "msg": "fee_basis_points greater than maximum"
     },
     {
       "code": 6014,
-      "name": "AllZerosWithdrawAuthority",
+      "name": "allZerosWithdrawAuthority",
       "msg": "Withdraw authority cannot be set to System Program ID"
     },
     {
       "code": 6015,
-      "name": "PoolMigrationFeeShouldBeLessThanFinalRealSolReserves",
+      "name": "poolMigrationFeeShouldBeLessThanFinalRealSolReserves",
       "msg": "pool_migration_fee should be less than final_real_sol_reserves"
     },
     {
       "code": 6016,
-      "name": "PoolMigrationFeeShouldBeGreaterThanCreatorFeePlusMaxMigrateFees",
+      "name": "poolMigrationFeeShouldBeGreaterThanCreatorFeePlusMaxMigrateFees",
       "msg": "pool_migration_fee should be greater than creator_fee + MAX_MIGRATE_FEES"
     },
     {
       "code": 6017,
-      "name": "DisabledWithdraw",
+      "name": "disabledWithdraw",
       "msg": "Migrate instruction is disabled"
     },
     {
       "code": 6018,
-      "name": "DisabledMigrate",
+      "name": "disabledMigrate",
       "msg": "Migrate instruction is disabled"
     },
     {
       "code": 6019,
-      "name": "InvalidCreator",
+      "name": "invalidCreator",
       "msg": "Invalid creator pubkey"
     },
     {
       "code": 6020,
-      "name": "BuyZeroAmount",
+      "name": "buyZeroAmount",
       "msg": "Buy zero amount"
     },
     {
       "code": 6021,
-      "name": "NotEnoughTokensToBuy",
+      "name": "notEnoughTokensToBuy",
       "msg": "Not enough tokens to buy"
     },
     {
       "code": 6022,
-      "name": "SellZeroAmount",
+      "name": "sellZeroAmount",
       "msg": "Sell zero amount"
     },
     {
       "code": 6023,
-      "name": "NotEnoughTokensToSell",
+      "name": "notEnoughTokensToSell",
       "msg": "Not enough tokens to sell"
     },
     {
       "code": 6024,
-      "name": "Overflow",
-      "msg": "Overflow"
+      "name": "overflow",
+      "msg": "overflow"
     },
     {
       "code": 6025,
-      "name": "Truncation",
-      "msg": "Truncation"
+      "name": "truncation",
+      "msg": "truncation"
     },
     {
       "code": 6026,
-      "name": "DivisionByZero",
+      "name": "divisionByZero",
       "msg": "Division by zero"
     },
     {
       "code": 6027,
-      "name": "NotEnoughRemainingAccounts",
+      "name": "notEnoughRemainingAccounts",
       "msg": "Not enough remaining accounts"
     },
     {
       "code": 6028,
-      "name": "AllFeeRecipientsShouldBeNonZero",
+      "name": "allFeeRecipientsShouldBeNonZero",
       "msg": "All fee recipients should be non-zero"
     },
     {
       "code": 6029,
-      "name": "UnsortedNotUniqueFeeRecipients",
+      "name": "unsortedNotUniqueFeeRecipients",
       "msg": "Unsorted or not unique fee recipients"
     },
     {
       "code": 6030,
-      "name": "CreatorShouldNotBeZero",
+      "name": "creatorShouldNotBeZero",
       "msg": "Creator should not be zero"
     }
   ],
   "types": [
     {
-      "name": "BondingCurve",
+      "name": "bondingCurve",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "virtual_token_reserves",
+            "name": "virtualTokenReserves",
             "type": "u64"
           },
           {
-            "name": "virtual_sol_reserves",
+            "name": "virtualSolReserves",
             "type": "u64"
           },
           {
-            "name": "real_token_reserves",
+            "name": "realTokenReserves",
             "type": "u64"
           },
           {
-            "name": "real_sol_reserves",
+            "name": "realSolReserves",
             "type": "u64"
           },
           {
-            "name": "token_total_supply",
+            "name": "tokenTotalSupply",
             "type": "u64"
           },
           {
@@ -2500,7 +2506,7 @@
       }
     },
     {
-      "name": "CollectCreatorFeeEvent",
+      "name": "collectCreatorFeeEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2513,14 +2519,14 @@
             "type": "pubkey"
           },
           {
-            "name": "creator_fee",
+            "name": "creatorFee",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "CompleteEvent",
+      "name": "completeEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2533,7 +2539,7 @@
             "type": "pubkey"
           },
           {
-            "name": "bonding_curve",
+            "name": "bondingCurve",
             "type": "pubkey"
           },
           {
@@ -2544,7 +2550,7 @@
       }
     },
     {
-      "name": "CompletePumpAmmMigrationEvent",
+      "name": "completePumpAmmMigrationEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2557,19 +2563,19 @@
             "type": "pubkey"
           },
           {
-            "name": "mint_amount",
+            "name": "mintAmount",
             "type": "u64"
           },
           {
-            "name": "sol_amount",
+            "name": "solAmount",
             "type": "u64"
           },
           {
-            "name": "pool_migration_fee",
+            "name": "poolMigrationFee",
             "type": "u64"
           },
           {
-            "name": "bonding_curve",
+            "name": "bondingCurve",
             "type": "pubkey"
           },
           {
@@ -2584,7 +2590,7 @@
       }
     },
     {
-      "name": "CreateEvent",
+      "name": "createEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2605,7 +2611,7 @@
             "type": "pubkey"
           },
           {
-            "name": "bonding_curve",
+            "name": "bondingCurve",
             "type": "pubkey"
           },
           {
@@ -2621,26 +2627,26 @@
             "type": "i64"
           },
           {
-            "name": "virtual_token_reserves",
+            "name": "virtualTokenReserves",
             "type": "u64"
           },
           {
-            "name": "virtual_sol_reserves",
+            "name": "virtualSolReserves",
             "type": "u64"
           },
           {
-            "name": "real_token_reserves",
+            "name": "realTokenReserves",
             "type": "u64"
           },
           {
-            "name": "token_total_supply",
+            "name": "tokenTotalSupply",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "ExtendAccountEvent",
+      "name": "extendAccountEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2653,11 +2659,11 @@
             "type": "pubkey"
           },
           {
-            "name": "current_size",
+            "name": "currentSize",
             "type": "u64"
           },
           {
-            "name": "new_size",
+            "name": "newSize",
             "type": "u64"
           },
           {
@@ -2668,7 +2674,7 @@
       }
     },
     {
-      "name": "Global",
+      "name": "global",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2684,50 +2690,50 @@
             "type": "pubkey"
           },
           {
-            "name": "fee_recipient",
+            "name": "feeRecipient",
             "type": "pubkey"
           },
           {
-            "name": "initial_virtual_token_reserves",
+            "name": "initialVirtualTokenReserves",
             "type": "u64"
           },
           {
-            "name": "initial_virtual_sol_reserves",
+            "name": "initialVirtualSolReserves",
             "type": "u64"
           },
           {
-            "name": "initial_real_token_reserves",
+            "name": "initialRealTokenReserves",
             "type": "u64"
           },
           {
-            "name": "token_total_supply",
+            "name": "tokenTotalSupply",
             "type": "u64"
           },
           {
-            "name": "fee_basis_points",
+            "name": "feeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "withdraw_authority",
+            "name": "withdrawAuthority",
             "type": "pubkey"
           },
           {
-            "name": "enable_migrate",
+            "name": "enableMigrate",
             "docs": [
               "Unused"
             ],
             "type": "bool"
           },
           {
-            "name": "pool_migration_fee",
+            "name": "poolMigrationFee",
             "type": "u64"
           },
           {
-            "name": "creator_fee_basis_points",
+            "name": "creatorFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "fee_recipients",
+            "name": "feeRecipients",
             "type": {
               "array": [
                 "pubkey",
@@ -2736,14 +2742,14 @@
             }
           },
           {
-            "name": "set_creator_authority",
+            "name": "setCreatorAuthority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "SetCreatorEvent",
+      "name": "setCreatorEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2756,7 +2762,7 @@
             "type": "pubkey"
           },
           {
-            "name": "bonding_curve",
+            "name": "bondingCurve",
             "type": "pubkey"
           },
           {
@@ -2767,7 +2773,7 @@
       }
     },
     {
-      "name": "SetMetaplexCreatorEvent",
+      "name": "setMetaplexCreatorEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2780,7 +2786,7 @@
             "type": "pubkey"
           },
           {
-            "name": "bonding_curve",
+            "name": "bondingCurve",
             "type": "pubkey"
           },
           {
@@ -2795,52 +2801,52 @@
       }
     },
     {
-      "name": "SetParamsEvent",
+      "name": "setParamsEvent",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "initial_virtual_token_reserves",
+            "name": "initialVirtualTokenReserves",
             "type": "u64"
           },
           {
-            "name": "initial_virtual_sol_reserves",
+            "name": "initialVirtualSolReserves",
             "type": "u64"
           },
           {
-            "name": "initial_real_token_reserves",
+            "name": "initialRealTokenReserves",
             "type": "u64"
           },
           {
-            "name": "final_real_sol_reserves",
+            "name": "finalRealSolReserves",
             "type": "u64"
           },
           {
-            "name": "token_total_supply",
+            "name": "tokenTotalSupply",
             "type": "u64"
           },
           {
-            "name": "fee_basis_points",
+            "name": "feeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "withdraw_authority",
+            "name": "withdrawAuthority",
             "type": "pubkey"
           },
           {
-            "name": "enable_migrate",
+            "name": "enableMigrate",
             "type": "bool"
           },
           {
-            "name": "pool_migration_fee",
+            "name": "poolMigrationFee",
             "type": "u64"
           },
           {
-            "name": "creator_fee_basis_points",
+            "name": "creatorFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "fee_recipients",
+            "name": "feeRecipients",
             "type": {
               "array": [
                 "pubkey",
@@ -2853,14 +2859,14 @@
             "type": "i64"
           },
           {
-            "name": "set_creator_authority",
+            "name": "setCreatorAuthority",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "TradeEvent",
+      "name": "tradeEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2869,15 +2875,15 @@
             "type": "pubkey"
           },
           {
-            "name": "sol_amount",
+            "name": "solAmount",
             "type": "u64"
           },
           {
-            "name": "token_amount",
+            "name": "tokenAmount",
             "type": "u64"
           },
           {
-            "name": "is_buy",
+            "name": "isBuy",
             "type": "bool"
           },
           {
@@ -2889,27 +2895,27 @@
             "type": "i64"
           },
           {
-            "name": "virtual_sol_reserves",
+            "name": "virtualSolReserves",
             "type": "u64"
           },
           {
-            "name": "virtual_token_reserves",
+            "name": "virtualTokenReserves",
             "type": "u64"
           },
           {
-            "name": "real_sol_reserves",
+            "name": "realSolReserves",
             "type": "u64"
           },
           {
-            "name": "real_token_reserves",
+            "name": "realTokenReserves",
             "type": "u64"
           },
           {
-            "name": "fee_recipient",
+            "name": "feeRecipient",
             "type": "pubkey"
           },
           {
-            "name": "fee_basis_points",
+            "name": "feeBasisPoints",
             "type": "u64"
           },
           {
@@ -2921,18 +2927,18 @@
             "type": "pubkey"
           },
           {
-            "name": "creator_fee_basis_points",
+            "name": "creatorFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "creator_fee",
+            "name": "creatorFee",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "UpdateGlobalAuthorityEvent",
+      "name": "updateGlobalAuthorityEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2945,7 +2951,7 @@
             "type": "pubkey"
           },
           {
-            "name": "new_authority",
+            "name": "newAuthority",
             "type": "pubkey"
           },
           {
@@ -2956,4 +2962,4 @@
       }
     }
   ]
-}
+};

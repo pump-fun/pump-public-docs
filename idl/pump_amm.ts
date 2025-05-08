@@ -1,7 +1,13 @@
-{
+/**
+ * Program IDL in camelCase format in order to be used in JS/TS.
+ *
+ * Note that this is only a type helper and is not the actual IDL. The original
+ * IDL can be found at `target/idl/pump_amm.json`.
+ */
+export type PumpAmm = {
   "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
   "metadata": {
-    "name": "pump_amm",
+    "name": "pumpAmm",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
@@ -29,61 +35,61 @@
           "signer": true
         },
         {
-          "name": "global_config"
+          "name": "globalConfig"
         },
         {
-          "name": "base_mint",
+          "name": "baseMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "quote_mint",
+          "name": "quoteMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "user_base_token_account",
+          "name": "userBaseTokenAccount",
           "writable": true
         },
         {
-          "name": "user_quote_token_account",
+          "name": "userQuoteTokenAccount",
           "writable": true
         },
         {
-          "name": "pool_base_token_account",
+          "name": "poolBaseTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "pool_quote_token_account",
+          "name": "poolQuoteTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "protocol_fee_recipient"
+          "name": "protocolFeeRecipient"
         },
         {
-          "name": "protocol_fee_recipient_token_account",
+          "name": "protocolFeeRecipientTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "protocol_fee_recipient"
+                "path": "protocolFeeRecipient"
               },
               {
                 "kind": "account",
-                "path": "quote_token_program"
+                "path": "quoteTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ],
             "program": {
@@ -126,21 +132,21 @@
           }
         },
         {
-          "name": "base_token_program"
+          "name": "baseTokenProgram"
         },
         {
-          "name": "quote_token_program"
+          "name": "quoteTokenProgram"
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -172,21 +178,21 @@
           "name": "program"
         },
         {
-          "name": "coin_creator_vault_ata",
+          "name": "coinCreatorVaultAta",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "coin_creator_vault_authority"
+                "path": "coinCreatorVaultAuthority"
               },
               {
                 "kind": "account",
-                "path": "quote_token_program"
+                "path": "quoteTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ],
             "program": {
@@ -229,7 +235,7 @@
           }
         },
         {
-          "name": "coin_creator_vault_authority",
+          "name": "coinCreatorVaultAuthority",
           "pda": {
             "seeds": [
               {
@@ -253,7 +259,7 @@
               {
                 "kind": "account",
                 "path": "pool.coin_creator",
-                "account": "Pool"
+                "account": "pool"
               }
             ]
           }
@@ -261,17 +267,17 @@
       ],
       "args": [
         {
-          "name": "base_amount_out",
+          "name": "baseAmountOut",
           "type": "u64"
         },
         {
-          "name": "max_quote_amount_in",
+          "name": "maxQuoteAmountIn",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "collect_coin_creator_fee",
+      "name": "collectCoinCreatorFee",
       "discriminator": [
         160,
         57,
@@ -284,17 +290,17 @@
       ],
       "accounts": [
         {
-          "name": "quote_mint"
+          "name": "quoteMint"
         },
         {
-          "name": "quote_token_program"
+          "name": "quoteTokenProgram"
         },
         {
-          "name": "coin_creator",
+          "name": "coinCreator",
           "signer": true
         },
         {
-          "name": "coin_creator_vault_authority",
+          "name": "coinCreatorVaultAuthority",
           "pda": {
             "seeds": [
               {
@@ -317,27 +323,27 @@
               },
               {
                 "kind": "account",
-                "path": "coin_creator"
+                "path": "coinCreator"
               }
             ]
           }
         },
         {
-          "name": "coin_creator_vault_ata",
+          "name": "coinCreatorVaultAta",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "coin_creator_vault_authority"
+                "path": "coinCreatorVaultAuthority"
               },
               {
                 "kind": "account",
-                "path": "quote_token_program"
+                "path": "quoteTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ],
             "program": {
@@ -380,11 +386,11 @@
           }
         },
         {
-          "name": "coin_creator_token_account",
+          "name": "coinCreatorTokenAccount",
           "writable": true
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -419,7 +425,7 @@
       "args": []
     },
     {
-      "name": "create_config",
+      "name": "createConfig",
       "discriminator": [
         201,
         207,
@@ -438,7 +444,7 @@
           "address": "8LWu7QM2dGR1G8nKDHthckea57bkCzXyBTAKPJUBDHo8"
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true,
           "pda": {
             "seeds": [
@@ -464,11 +470,11 @@
           }
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -502,15 +508,15 @@
       ],
       "args": [
         {
-          "name": "lp_fee_basis_points",
+          "name": "lpFeeBasisPoints",
           "type": "u64"
         },
         {
-          "name": "protocol_fee_basis_points",
+          "name": "protocolFeeBasisPoints",
           "type": "u64"
         },
         {
-          "name": "protocol_fee_recipients",
+          "name": "protocolFeeRecipients",
           "type": {
             "array": [
               "pubkey",
@@ -519,13 +525,13 @@
           }
         },
         {
-          "name": "coin_creator_fee_basis_points",
+          "name": "coinCreatorFeeBasisPoints",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "create_pool",
+      "name": "createPool",
       "discriminator": [
         233,
         146,
@@ -561,17 +567,17 @@
               },
               {
                 "kind": "account",
-                "path": "base_mint"
+                "path": "baseMint"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ]
           }
         },
         {
-          "name": "global_config"
+          "name": "globalConfig"
         },
         {
           "name": "creator",
@@ -579,13 +585,13 @@
           "signer": true
         },
         {
-          "name": "base_mint"
+          "name": "baseMint"
         },
         {
-          "name": "quote_mint"
+          "name": "quoteMint"
         },
         {
-          "name": "lp_mint",
+          "name": "lpMint",
           "writable": true,
           "pda": {
             "seeds": [
@@ -614,15 +620,15 @@
           }
         },
         {
-          "name": "user_base_token_account",
+          "name": "userBaseTokenAccount",
           "writable": true
         },
         {
-          "name": "user_quote_token_account",
+          "name": "userQuoteTokenAccount",
           "writable": true
         },
         {
-          "name": "user_pool_token_account",
+          "name": "userPoolTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -632,11 +638,11 @@
               },
               {
                 "kind": "account",
-                "path": "token_2022_program"
+                "path": "token2022Program"
               },
               {
                 "kind": "account",
-                "path": "lp_mint"
+                "path": "lpMint"
               }
             ],
             "program": {
@@ -679,7 +685,7 @@
           }
         },
         {
-          "name": "pool_base_token_account",
+          "name": "poolBaseTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -689,11 +695,11 @@
               },
               {
                 "kind": "account",
-                "path": "base_token_program"
+                "path": "baseTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "base_mint"
+                "path": "baseMint"
               }
             ],
             "program": {
@@ -736,7 +742,7 @@
           }
         },
         {
-          "name": "pool_quote_token_account",
+          "name": "poolQuoteTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
@@ -746,11 +752,11 @@
               },
               {
                 "kind": "account",
-                "path": "quote_token_program"
+                "path": "quoteTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ],
             "program": {
@@ -793,25 +799,25 @@
           }
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "token_2022_program",
+          "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
         },
         {
-          "name": "base_token_program"
+          "name": "baseTokenProgram"
         },
         {
-          "name": "quote_token_program"
+          "name": "quoteTokenProgram"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -849,15 +855,15 @@
           "type": "u16"
         },
         {
-          "name": "base_amount_in",
+          "name": "baseAmountIn",
           "type": "u64"
         },
         {
-          "name": "quote_amount_in",
+          "name": "quoteAmountIn",
           "type": "u64"
         },
         {
-          "name": "coin_creator",
+          "name": "coinCreator",
           "type": "pubkey"
         }
       ]
@@ -880,67 +886,67 @@
           "writable": true
         },
         {
-          "name": "global_config"
+          "name": "globalConfig"
         },
         {
           "name": "user",
           "signer": true
         },
         {
-          "name": "base_mint",
+          "name": "baseMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "quote_mint",
+          "name": "quoteMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "lp_mint",
+          "name": "lpMint",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "user_base_token_account",
+          "name": "userBaseTokenAccount",
           "writable": true
         },
         {
-          "name": "user_quote_token_account",
+          "name": "userQuoteTokenAccount",
           "writable": true
         },
         {
-          "name": "user_pool_token_account",
+          "name": "userPoolTokenAccount",
           "writable": true
         },
         {
-          "name": "pool_base_token_account",
+          "name": "poolBaseTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "pool_quote_token_account",
+          "name": "poolQuoteTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "token_2022_program",
+          "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -974,15 +980,15 @@
       ],
       "args": [
         {
-          "name": "lp_token_amount_out",
+          "name": "lpTokenAmountOut",
           "type": "u64"
         },
         {
-          "name": "max_base_amount_in",
+          "name": "maxBaseAmountIn",
           "type": "u64"
         },
         {
-          "name": "max_quote_amount_in",
+          "name": "maxQuoteAmountIn",
           "type": "u64"
         }
       ]
@@ -1004,15 +1010,15 @@
           "name": "admin",
           "signer": true,
           "relations": [
-            "global_config"
+            "globalConfig"
           ]
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1046,29 +1052,29 @@
       ],
       "args": [
         {
-          "name": "disable_create_pool",
+          "name": "disableCreatePool",
           "type": "bool"
         },
         {
-          "name": "disable_deposit",
+          "name": "disableDeposit",
           "type": "bool"
         },
         {
-          "name": "disable_withdraw",
+          "name": "disableWithdraw",
           "type": "bool"
         },
         {
-          "name": "disable_buy",
+          "name": "disableBuy",
           "type": "bool"
         },
         {
-          "name": "disable_sell",
+          "name": "disableSell",
           "type": "bool"
         }
       ]
     },
     {
-      "name": "extend_account",
+      "name": "extendAccount",
       "discriminator": [
         234,
         102,
@@ -1089,11 +1095,11 @@
           "signer": true
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1149,61 +1155,61 @@
           "signer": true
         },
         {
-          "name": "global_config"
+          "name": "globalConfig"
         },
         {
-          "name": "base_mint",
+          "name": "baseMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "quote_mint",
+          "name": "quoteMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "user_base_token_account",
+          "name": "userBaseTokenAccount",
           "writable": true
         },
         {
-          "name": "user_quote_token_account",
+          "name": "userQuoteTokenAccount",
           "writable": true
         },
         {
-          "name": "pool_base_token_account",
+          "name": "poolBaseTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "pool_quote_token_account",
+          "name": "poolQuoteTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "protocol_fee_recipient"
+          "name": "protocolFeeRecipient"
         },
         {
-          "name": "protocol_fee_recipient_token_account",
+          "name": "protocolFeeRecipientTokenAccount",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "protocol_fee_recipient"
+                "path": "protocolFeeRecipient"
               },
               {
                 "kind": "account",
-                "path": "quote_token_program"
+                "path": "quoteTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ],
             "program": {
@@ -1246,21 +1252,21 @@
           }
         },
         {
-          "name": "base_token_program"
+          "name": "baseTokenProgram"
         },
         {
-          "name": "quote_token_program"
+          "name": "quoteTokenProgram"
         },
         {
-          "name": "system_program",
+          "name": "systemProgram",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "associated_token_program",
+          "name": "associatedTokenProgram",
           "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1292,21 +1298,21 @@
           "name": "program"
         },
         {
-          "name": "coin_creator_vault_ata",
+          "name": "coinCreatorVaultAta",
           "writable": true,
           "pda": {
             "seeds": [
               {
                 "kind": "account",
-                "path": "coin_creator_vault_authority"
+                "path": "coinCreatorVaultAuthority"
               },
               {
                 "kind": "account",
-                "path": "quote_token_program"
+                "path": "quoteTokenProgram"
               },
               {
                 "kind": "account",
-                "path": "quote_mint"
+                "path": "quoteMint"
               }
             ],
             "program": {
@@ -1349,7 +1355,7 @@
           }
         },
         {
-          "name": "coin_creator_vault_authority",
+          "name": "coinCreatorVaultAuthority",
           "pda": {
             "seeds": [
               {
@@ -1373,7 +1379,7 @@
               {
                 "kind": "account",
                 "path": "pool.coin_creator",
-                "account": "Pool"
+                "account": "pool"
               }
             ]
           }
@@ -1381,17 +1387,17 @@
       ],
       "args": [
         {
-          "name": "base_amount_in",
+          "name": "baseAmountIn",
           "type": "u64"
         },
         {
-          "name": "min_quote_amount_out",
+          "name": "minQuoteAmountOut",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "set_coin_creator",
+      "name": "setCoinCreator",
       "docs": [
         "Sets Pool::coin_creator from Metaplex metadata creator or BondingCurve::creator"
       ],
@@ -1467,7 +1473,7 @@
               {
                 "kind": "account",
                 "path": "pool.base_mint",
-                "account": "Pool"
+                "account": "pool"
               }
             ],
             "program": {
@@ -1510,7 +1516,7 @@
           }
         },
         {
-          "name": "bonding_curve",
+          "name": "bondingCurve",
           "pda": {
             "seeds": [
               {
@@ -1534,7 +1540,7 @@
               {
                 "kind": "account",
                 "path": "pool.base_mint",
-                "account": "Pool"
+                "account": "pool"
               }
             ],
             "program": {
@@ -1577,7 +1583,7 @@
           }
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1612,7 +1618,7 @@
       "args": []
     },
     {
-      "name": "update_admin",
+      "name": "updateAdmin",
       "discriminator": [
         161,
         176,
@@ -1628,18 +1634,18 @@
           "name": "admin",
           "signer": true,
           "relations": [
-            "global_config"
+            "globalConfig"
           ]
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true
         },
         {
-          "name": "new_admin"
+          "name": "newAdmin"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1674,7 +1680,7 @@
       "args": []
     },
     {
-      "name": "update_fee_config",
+      "name": "updateFeeConfig",
       "discriminator": [
         104,
         184,
@@ -1690,15 +1696,15 @@
           "name": "admin",
           "signer": true,
           "relations": [
-            "global_config"
+            "globalConfig"
           ]
         },
         {
-          "name": "global_config",
+          "name": "globalConfig",
           "writable": true
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1732,15 +1738,15 @@
       ],
       "args": [
         {
-          "name": "lp_fee_basis_points",
+          "name": "lpFeeBasisPoints",
           "type": "u64"
         },
         {
-          "name": "protocol_fee_basis_points",
+          "name": "protocolFeeBasisPoints",
           "type": "u64"
         },
         {
-          "name": "protocol_fee_recipients",
+          "name": "protocolFeeRecipients",
           "type": {
             "array": [
               "pubkey",
@@ -1749,7 +1755,7 @@
           }
         },
         {
-          "name": "coin_creator_fee_basis_points",
+          "name": "coinCreatorFeeBasisPoints",
           "type": "u64"
         }
       ]
@@ -1772,67 +1778,67 @@
           "writable": true
         },
         {
-          "name": "global_config"
+          "name": "globalConfig"
         },
         {
           "name": "user",
           "signer": true
         },
         {
-          "name": "base_mint",
+          "name": "baseMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "quote_mint",
+          "name": "quoteMint",
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "lp_mint",
+          "name": "lpMint",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "user_base_token_account",
+          "name": "userBaseTokenAccount",
           "writable": true
         },
         {
-          "name": "user_quote_token_account",
+          "name": "userQuoteTokenAccount",
           "writable": true
         },
         {
-          "name": "user_pool_token_account",
+          "name": "userPoolTokenAccount",
           "writable": true
         },
         {
-          "name": "pool_base_token_account",
+          "name": "poolBaseTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "pool_quote_token_account",
+          "name": "poolQuoteTokenAccount",
           "writable": true,
           "relations": [
             "pool"
           ]
         },
         {
-          "name": "token_program",
+          "name": "tokenProgram",
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
-          "name": "token_2022_program",
+          "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
         },
         {
-          "name": "event_authority",
+          "name": "eventAuthority",
           "pda": {
             "seeds": [
               {
@@ -1866,15 +1872,15 @@
       ],
       "args": [
         {
-          "name": "lp_token_amount_in",
+          "name": "lpTokenAmountIn",
           "type": "u64"
         },
         {
-          "name": "min_base_amount_out",
+          "name": "minBaseAmountOut",
           "type": "u64"
         },
         {
-          "name": "min_quote_amount_out",
+          "name": "minQuoteAmountOut",
           "type": "u64"
         }
       ]
@@ -1882,7 +1888,7 @@
   ],
   "accounts": [
     {
-      "name": "BondingCurve",
+      "name": "bondingCurve",
       "discriminator": [
         23,
         183,
@@ -1895,7 +1901,7 @@
       ]
     },
     {
-      "name": "GlobalConfig",
+      "name": "globalConfig",
       "discriminator": [
         149,
         8,
@@ -1908,7 +1914,7 @@
       ]
     },
     {
-      "name": "Pool",
+      "name": "pool",
       "discriminator": [
         241,
         154,
@@ -1923,7 +1929,7 @@
   ],
   "events": [
     {
-      "name": "BuyEvent",
+      "name": "buyEvent",
       "discriminator": [
         103,
         244,
@@ -1936,7 +1942,7 @@
       ]
     },
     {
-      "name": "CollectCoinCreatorFeeEvent",
+      "name": "collectCoinCreatorFeeEvent",
       "discriminator": [
         232,
         245,
@@ -1949,7 +1955,7 @@
       ]
     },
     {
-      "name": "CreateConfigEvent",
+      "name": "createConfigEvent",
       "discriminator": [
         107,
         52,
@@ -1962,7 +1968,7 @@
       ]
     },
     {
-      "name": "CreatePoolEvent",
+      "name": "createPoolEvent",
       "discriminator": [
         177,
         49,
@@ -1975,7 +1981,7 @@
       ]
     },
     {
-      "name": "DepositEvent",
+      "name": "depositEvent",
       "discriminator": [
         120,
         248,
@@ -1988,7 +1994,7 @@
       ]
     },
     {
-      "name": "DisableEvent",
+      "name": "disableEvent",
       "discriminator": [
         107,
         253,
@@ -2001,7 +2007,7 @@
       ]
     },
     {
-      "name": "ExtendAccountEvent",
+      "name": "extendAccountEvent",
       "discriminator": [
         97,
         97,
@@ -2014,7 +2020,7 @@
       ]
     },
     {
-      "name": "SellEvent",
+      "name": "sellEvent",
       "discriminator": [
         62,
         47,
@@ -2027,7 +2033,7 @@
       ]
     },
     {
-      "name": "SetBondingCurveCoinCreatorEvent",
+      "name": "setBondingCurveCoinCreatorEvent",
       "discriminator": [
         242,
         231,
@@ -2040,7 +2046,7 @@
       ]
     },
     {
-      "name": "SetMetaplexCoinCreatorEvent",
+      "name": "setMetaplexCoinCreatorEvent",
       "discriminator": [
         150,
         107,
@@ -2053,7 +2059,7 @@
       ]
     },
     {
-      "name": "UpdateAdminEvent",
+      "name": "updateAdminEvent",
       "discriminator": [
         225,
         152,
@@ -2066,7 +2072,7 @@
       ]
     },
     {
-      "name": "UpdateFeeConfigEvent",
+      "name": "updateFeeConfigEvent",
       "discriminator": [
         90,
         23,
@@ -2079,7 +2085,7 @@
       ]
     },
     {
-      "name": "WithdrawEvent",
+      "name": "withdrawEvent",
       "discriminator": [
         22,
         9,
@@ -2095,145 +2101,145 @@
   "errors": [
     {
       "code": 6000,
-      "name": "FeeBasisPointsExceedsMaximum"
+      "name": "feeBasisPointsExceedsMaximum"
     },
     {
       "code": 6001,
-      "name": "ZeroBaseAmount"
+      "name": "zeroBaseAmount"
     },
     {
       "code": 6002,
-      "name": "ZeroQuoteAmount"
+      "name": "zeroQuoteAmount"
     },
     {
       "code": 6003,
-      "name": "TooLittlePoolTokenLiquidity"
+      "name": "tooLittlePoolTokenLiquidity"
     },
     {
       "code": 6004,
-      "name": "ExceededSlippage"
+      "name": "exceededSlippage"
     },
     {
       "code": 6005,
-      "name": "InvalidAdmin"
+      "name": "invalidAdmin"
     },
     {
       "code": 6006,
-      "name": "UnsupportedBaseMint"
+      "name": "unsupportedBaseMint"
     },
     {
       "code": 6007,
-      "name": "UnsupportedQuoteMint"
+      "name": "unsupportedQuoteMint"
     },
     {
       "code": 6008,
-      "name": "InvalidBaseMint"
+      "name": "invalidBaseMint"
     },
     {
       "code": 6009,
-      "name": "InvalidQuoteMint"
+      "name": "invalidQuoteMint"
     },
     {
       "code": 6010,
-      "name": "InvalidLpMint"
+      "name": "invalidLpMint"
     },
     {
       "code": 6011,
-      "name": "AllProtocolFeeRecipientsShouldBeNonZero"
+      "name": "allProtocolFeeRecipientsShouldBeNonZero"
     },
     {
       "code": 6012,
-      "name": "UnsortedNotUniqueProtocolFeeRecipients"
+      "name": "unsortedNotUniqueProtocolFeeRecipients"
     },
     {
       "code": 6013,
-      "name": "InvalidProtocolFeeRecipient"
+      "name": "invalidProtocolFeeRecipient"
     },
     {
       "code": 6014,
-      "name": "InvalidPoolBaseTokenAccount"
+      "name": "invalidPoolBaseTokenAccount"
     },
     {
       "code": 6015,
-      "name": "InvalidPoolQuoteTokenAccount"
+      "name": "invalidPoolQuoteTokenAccount"
     },
     {
       "code": 6016,
-      "name": "BuyMoreBaseAmountThanPoolReserves"
+      "name": "buyMoreBaseAmountThanPoolReserves"
     },
     {
       "code": 6017,
-      "name": "DisabledCreatePool"
+      "name": "disabledCreatePool"
     },
     {
       "code": 6018,
-      "name": "DisabledDeposit"
+      "name": "disabledDeposit"
     },
     {
       "code": 6019,
-      "name": "DisabledWithdraw"
+      "name": "disabledWithdraw"
     },
     {
       "code": 6020,
-      "name": "DisabledBuy"
+      "name": "disabledBuy"
     },
     {
       "code": 6021,
-      "name": "DisabledSell"
+      "name": "disabledSell"
     },
     {
       "code": 6022,
-      "name": "SameMint"
+      "name": "sameMint"
     },
     {
       "code": 6023,
-      "name": "Overflow"
+      "name": "overflow"
     },
     {
       "code": 6024,
-      "name": "Truncation"
+      "name": "truncation"
     },
     {
       "code": 6025,
-      "name": "DivisionByZero"
+      "name": "divisionByZero"
     },
     {
       "code": 6026,
-      "name": "NewSizeLessThanCurrentSize"
+      "name": "newSizeLessThanCurrentSize"
     },
     {
       "code": 6027,
-      "name": "AccountTypeNotSupported"
+      "name": "accountTypeNotSupported"
     },
     {
       "code": 6028,
-      "name": "OnlyCanonicalPumpPoolsCanHaveCoinCreator"
+      "name": "onlyCanonicalPumpPoolsCanHaveCoinCreator"
     }
   ],
   "types": [
     {
-      "name": "BondingCurve",
+      "name": "bondingCurve",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "virtual_token_reserves",
+            "name": "virtualTokenReserves",
             "type": "u64"
           },
           {
-            "name": "virtual_sol_reserves",
+            "name": "virtualSolReserves",
             "type": "u64"
           },
           {
-            "name": "real_token_reserves",
+            "name": "realTokenReserves",
             "type": "u64"
           },
           {
-            "name": "real_sol_reserves",
+            "name": "realSolReserves",
             "type": "u64"
           },
           {
-            "name": "token_total_supply",
+            "name": "tokenTotalSupply",
             "type": "u64"
           },
           {
@@ -2248,7 +2254,7 @@
       }
     },
     {
-      "name": "BuyEvent",
+      "name": "buyEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2257,55 +2263,55 @@
             "type": "i64"
           },
           {
-            "name": "base_amount_out",
+            "name": "baseAmountOut",
             "type": "u64"
           },
           {
-            "name": "max_quote_amount_in",
+            "name": "maxQuoteAmountIn",
             "type": "u64"
           },
           {
-            "name": "user_base_token_reserves",
+            "name": "userBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "user_quote_token_reserves",
+            "name": "userQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_base_token_reserves",
+            "name": "poolBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_quote_token_reserves",
+            "name": "poolQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "quote_amount_in",
+            "name": "quoteAmountIn",
             "type": "u64"
           },
           {
-            "name": "lp_fee_basis_points",
+            "name": "lpFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "lp_fee",
+            "name": "lpFee",
             "type": "u64"
           },
           {
-            "name": "protocol_fee_basis_points",
+            "name": "protocolFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "protocol_fee",
+            "name": "protocolFee",
             "type": "u64"
           },
           {
-            "name": "quote_amount_in_with_lp_fee",
+            "name": "quoteAmountInWithLpFee",
             "type": "u64"
           },
           {
-            "name": "user_quote_amount_in",
+            "name": "userQuoteAmountIn",
             "type": "u64"
           },
           {
@@ -2317,38 +2323,38 @@
             "type": "pubkey"
           },
           {
-            "name": "user_base_token_account",
+            "name": "userBaseTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_quote_token_account",
+            "name": "userQuoteTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "protocol_fee_recipient",
+            "name": "protocolFeeRecipient",
             "type": "pubkey"
           },
           {
-            "name": "protocol_fee_recipient_token_account",
+            "name": "protocolFeeRecipientTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator_fee_basis_points",
+            "name": "coinCreatorFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "coin_creator_fee",
+            "name": "coinCreatorFee",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "CollectCoinCreatorFeeEvent",
+      "name": "collectCoinCreatorFeeEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2357,26 +2363,26 @@
             "type": "i64"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator_fee",
+            "name": "coinCreatorFee",
             "type": "u64"
           },
           {
-            "name": "coin_creator_vault_ata",
+            "name": "coinCreatorVaultAta",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator_token_account",
+            "name": "coinCreatorTokenAccount",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "CreateConfigEvent",
+      "name": "createConfigEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2389,15 +2395,15 @@
             "type": "pubkey"
           },
           {
-            "name": "lp_fee_basis_points",
+            "name": "lpFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "protocol_fee_basis_points",
+            "name": "protocolFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "protocol_fee_recipients",
+            "name": "protocolFeeRecipients",
             "type": {
               "array": [
                 "pubkey",
@@ -2406,14 +2412,14 @@
             }
           },
           {
-            "name": "coin_creator_fee_basis_points",
+            "name": "coinCreatorFeeBasisPoints",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "CreatePoolEvent",
+      "name": "createPoolEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2430,51 +2436,51 @@
             "type": "pubkey"
           },
           {
-            "name": "base_mint",
+            "name": "baseMint",
             "type": "pubkey"
           },
           {
-            "name": "quote_mint",
+            "name": "quoteMint",
             "type": "pubkey"
           },
           {
-            "name": "base_mint_decimals",
+            "name": "baseMintDecimals",
             "type": "u8"
           },
           {
-            "name": "quote_mint_decimals",
+            "name": "quoteMintDecimals",
             "type": "u8"
           },
           {
-            "name": "base_amount_in",
+            "name": "baseAmountIn",
             "type": "u64"
           },
           {
-            "name": "quote_amount_in",
+            "name": "quoteAmountIn",
             "type": "u64"
           },
           {
-            "name": "pool_base_amount",
+            "name": "poolBaseAmount",
             "type": "u64"
           },
           {
-            "name": "pool_quote_amount",
+            "name": "poolQuoteAmount",
             "type": "u64"
           },
           {
-            "name": "minimum_liquidity",
+            "name": "minimumLiquidity",
             "type": "u64"
           },
           {
-            "name": "initial_liquidity",
+            "name": "initialLiquidity",
             "type": "u64"
           },
           {
-            "name": "lp_token_amount_out",
+            "name": "lpTokenAmountOut",
             "type": "u64"
           },
           {
-            "name": "pool_bump",
+            "name": "poolBump",
             "type": "u8"
           },
           {
@@ -2482,26 +2488,26 @@
             "type": "pubkey"
           },
           {
-            "name": "lp_mint",
+            "name": "lpMint",
             "type": "pubkey"
           },
           {
-            "name": "user_base_token_account",
+            "name": "userBaseTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_quote_token_account",
+            "name": "userQuoteTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "DepositEvent",
+      "name": "depositEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2510,43 +2516,43 @@
             "type": "i64"
           },
           {
-            "name": "lp_token_amount_out",
+            "name": "lpTokenAmountOut",
             "type": "u64"
           },
           {
-            "name": "max_base_amount_in",
+            "name": "maxBaseAmountIn",
             "type": "u64"
           },
           {
-            "name": "max_quote_amount_in",
+            "name": "maxQuoteAmountIn",
             "type": "u64"
           },
           {
-            "name": "user_base_token_reserves",
+            "name": "userBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "user_quote_token_reserves",
+            "name": "userQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_base_token_reserves",
+            "name": "poolBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_quote_token_reserves",
+            "name": "poolQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "base_amount_in",
+            "name": "baseAmountIn",
             "type": "u64"
           },
           {
-            "name": "quote_amount_in",
+            "name": "quoteAmountIn",
             "type": "u64"
           },
           {
-            "name": "lp_mint_supply",
+            "name": "lpMintSupply",
             "type": "u64"
           },
           {
@@ -2558,22 +2564,22 @@
             "type": "pubkey"
           },
           {
-            "name": "user_base_token_account",
+            "name": "userBaseTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_quote_token_account",
+            "name": "userQuoteTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_pool_token_account",
+            "name": "userPoolTokenAccount",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "DisableEvent",
+      "name": "disableEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2586,30 +2592,30 @@
             "type": "pubkey"
           },
           {
-            "name": "disable_create_pool",
+            "name": "disableCreatePool",
             "type": "bool"
           },
           {
-            "name": "disable_deposit",
+            "name": "disableDeposit",
             "type": "bool"
           },
           {
-            "name": "disable_withdraw",
+            "name": "disableWithdraw",
             "type": "bool"
           },
           {
-            "name": "disable_buy",
+            "name": "disableBuy",
             "type": "bool"
           },
           {
-            "name": "disable_sell",
+            "name": "disableSell",
             "type": "bool"
           }
         ]
       }
     },
     {
-      "name": "ExtendAccountEvent",
+      "name": "extendAccountEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2626,18 +2632,18 @@
             "type": "pubkey"
           },
           {
-            "name": "current_size",
+            "name": "currentSize",
             "type": "u64"
           },
           {
-            "name": "new_size",
+            "name": "newSize",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "GlobalConfig",
+      "name": "globalConfig",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2649,21 +2655,21 @@
             "type": "pubkey"
           },
           {
-            "name": "lp_fee_basis_points",
+            "name": "lpFeeBasisPoints",
             "docs": [
               "The lp fee in basis points (0.01%)"
             ],
             "type": "u64"
           },
           {
-            "name": "protocol_fee_basis_points",
+            "name": "protocolFeeBasisPoints",
             "docs": [
               "The protocol fee in basis points (0.01%)"
             ],
             "type": "u64"
           },
           {
-            "name": "disable_flags",
+            "name": "disableFlags",
             "docs": [
               "Flags to disable certain functionality",
               "bit 0 - Disable create pool",
@@ -2675,7 +2681,7 @@
             "type": "u8"
           },
           {
-            "name": "protocol_fee_recipients",
+            "name": "protocolFeeRecipients",
             "docs": [
               "Addresses of the protocol fee recipients"
             ],
@@ -2687,7 +2693,7 @@
             }
           },
           {
-            "name": "coin_creator_fee_basis_points",
+            "name": "coinCreatorFeeBasisPoints",
             "docs": [
               "The coin creator fee in basis points (0.01%)"
             ],
@@ -2697,12 +2703,12 @@
       }
     },
     {
-      "name": "Pool",
+      "name": "pool",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "pool_bump",
+            "name": "poolBump",
             "type": "u8"
           },
           {
@@ -2714,41 +2720,41 @@
             "type": "pubkey"
           },
           {
-            "name": "base_mint",
+            "name": "baseMint",
             "type": "pubkey"
           },
           {
-            "name": "quote_mint",
+            "name": "quoteMint",
             "type": "pubkey"
           },
           {
-            "name": "lp_mint",
+            "name": "lpMint",
             "type": "pubkey"
           },
           {
-            "name": "pool_base_token_account",
+            "name": "poolBaseTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "pool_quote_token_account",
+            "name": "poolQuoteTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "lp_supply",
+            "name": "lpSupply",
             "docs": [
               "True circulating supply without burns and lock-ups"
             ],
             "type": "u64"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "SellEvent",
+      "name": "sellEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2757,55 +2763,55 @@
             "type": "i64"
           },
           {
-            "name": "base_amount_in",
+            "name": "baseAmountIn",
             "type": "u64"
           },
           {
-            "name": "min_quote_amount_out",
+            "name": "minQuoteAmountOut",
             "type": "u64"
           },
           {
-            "name": "user_base_token_reserves",
+            "name": "userBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "user_quote_token_reserves",
+            "name": "userQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_base_token_reserves",
+            "name": "poolBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_quote_token_reserves",
+            "name": "poolQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "quote_amount_out",
+            "name": "quoteAmountOut",
             "type": "u64"
           },
           {
-            "name": "lp_fee_basis_points",
+            "name": "lpFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "lp_fee",
+            "name": "lpFee",
             "type": "u64"
           },
           {
-            "name": "protocol_fee_basis_points",
+            "name": "protocolFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "protocol_fee",
+            "name": "protocolFee",
             "type": "u64"
           },
           {
-            "name": "quote_amount_out_without_lp_fee",
+            "name": "quoteAmountOutWithoutLpFee",
             "type": "u64"
           },
           {
-            "name": "user_quote_amount_out",
+            "name": "userQuoteAmountOut",
             "type": "u64"
           },
           {
@@ -2817,38 +2823,38 @@
             "type": "pubkey"
           },
           {
-            "name": "user_base_token_account",
+            "name": "userBaseTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_quote_token_account",
+            "name": "userQuoteTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "protocol_fee_recipient",
+            "name": "protocolFeeRecipient",
             "type": "pubkey"
           },
           {
-            "name": "protocol_fee_recipient_token_account",
+            "name": "protocolFeeRecipientTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator_fee_basis_points",
+            "name": "coinCreatorFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "coin_creator_fee",
+            "name": "coinCreatorFee",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "SetBondingCurveCoinCreatorEvent",
+      "name": "setBondingCurveCoinCreatorEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2857,7 +2863,7 @@
             "type": "i64"
           },
           {
-            "name": "base_mint",
+            "name": "baseMint",
             "type": "pubkey"
           },
           {
@@ -2865,18 +2871,18 @@
             "type": "pubkey"
           },
           {
-            "name": "bonding_curve",
+            "name": "bondingCurve",
             "type": "pubkey"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "SetMetaplexCoinCreatorEvent",
+      "name": "setMetaplexCoinCreatorEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2885,7 +2891,7 @@
             "type": "i64"
           },
           {
-            "name": "base_mint",
+            "name": "baseMint",
             "type": "pubkey"
           },
           {
@@ -2897,14 +2903,14 @@
             "type": "pubkey"
           },
           {
-            "name": "coin_creator",
+            "name": "coinCreator",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "UpdateAdminEvent",
+      "name": "updateAdminEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2917,14 +2923,14 @@
             "type": "pubkey"
           },
           {
-            "name": "new_admin",
+            "name": "newAdmin",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "UpdateFeeConfigEvent",
+      "name": "updateFeeConfigEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2937,15 +2943,15 @@
             "type": "pubkey"
           },
           {
-            "name": "lp_fee_basis_points",
+            "name": "lpFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "protocol_fee_basis_points",
+            "name": "protocolFeeBasisPoints",
             "type": "u64"
           },
           {
-            "name": "protocol_fee_recipients",
+            "name": "protocolFeeRecipients",
             "type": {
               "array": [
                 "pubkey",
@@ -2954,14 +2960,14 @@
             }
           },
           {
-            "name": "coin_creator_fee_basis_points",
+            "name": "coinCreatorFeeBasisPoints",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "WithdrawEvent",
+      "name": "withdrawEvent",
       "type": {
         "kind": "struct",
         "fields": [
@@ -2970,43 +2976,43 @@
             "type": "i64"
           },
           {
-            "name": "lp_token_amount_in",
+            "name": "lpTokenAmountIn",
             "type": "u64"
           },
           {
-            "name": "min_base_amount_out",
+            "name": "minBaseAmountOut",
             "type": "u64"
           },
           {
-            "name": "min_quote_amount_out",
+            "name": "minQuoteAmountOut",
             "type": "u64"
           },
           {
-            "name": "user_base_token_reserves",
+            "name": "userBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "user_quote_token_reserves",
+            "name": "userQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_base_token_reserves",
+            "name": "poolBaseTokenReserves",
             "type": "u64"
           },
           {
-            "name": "pool_quote_token_reserves",
+            "name": "poolQuoteTokenReserves",
             "type": "u64"
           },
           {
-            "name": "base_amount_out",
+            "name": "baseAmountOut",
             "type": "u64"
           },
           {
-            "name": "quote_amount_out",
+            "name": "quoteAmountOut",
             "type": "u64"
           },
           {
-            "name": "lp_mint_supply",
+            "name": "lpMintSupply",
             "type": "u64"
           },
           {
@@ -3018,19 +3024,19 @@
             "type": "pubkey"
           },
           {
-            "name": "user_base_token_account",
+            "name": "userBaseTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_quote_token_account",
+            "name": "userQuoteTokenAccount",
             "type": "pubkey"
           },
           {
-            "name": "user_pool_token_account",
+            "name": "userPoolTokenAccount",
             "type": "pubkey"
           }
         ]
       }
     }
   ]
-}
+};
