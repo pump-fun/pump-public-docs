@@ -74,7 +74,8 @@ pub struct GlobalConfig {
 
 Currently, the `GlobalConfig::coin_creator_fee_basis_points` field is set to `0`. But you can start using the new fee
 calculation logic from now to be ready for the coin creator fee update. The latest `@pump-fun/pump-swap-sdk` NPM package
-version contains all the updates for coin creator fee support: https://www.npmjs.com/package/@pump-fun/pump-swap-sdk.
+version contains all the updates for coin creator fee support:
+[PumpSwap SDK](https://www.npmjs.com/package/@pump-fun/pump-swap-sdk) (including the source code of the SDK).
 
 All Pump canonical pools will start receiving coin creator fees on each swap after the coin creator fee update is
 deployed and `GlobalConfig::coin_creator_fee_basis_points` is set something else apart from `0`.

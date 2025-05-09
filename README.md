@@ -19,6 +19,10 @@ Who will not receive coin creator fees?
 You should start by using the latest IDL files for both programs from the [idl](idl) directory. They are 
 backwards-compatible with current programs deployed on Mainnet, so you can start using them now.
 
+You can also use our Typescript SDKs for easier integration:
+- [Pump SDK](https://www.npmjs.com/package/@pump-fun/pump-sdk)
+- [PumpSwap SDK](https://www.npmjs.com/package/@pump-fun/pump-swap-sdk)
+
 If you implement and test the changes described in these two documents on Devnet before the creator fee upgrade, you
 should not experience any downtime. Ideally, you should use exactly the same code for both Devnet and Mainnet, before
 we update the programs on Mainnet.

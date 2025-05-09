@@ -65,11 +65,8 @@ pub struct Global {
 ```
 
 Currently, the `Global::creator_fee_basis_points` field is set to `0`. But you can start using the new fee calculation
-logic from now to be ready for the creator fee update. The [bondingCurve.ts](bondingCurve.ts) file includes the input calculation logic
-for `buy` / `sell` instructions:
-- `getBuyTokenAmountFromSolAmount`: computes the coin amount you get for a given sol amount.
-- `getBuySolAmountFromTokenAmount`: computes the sol amount you get for a given coin amount.
-- `getSellSolAmountFromTokenAmount`: computes the sol amount you get for a given coin amount.
+logic from now to be ready for the creator fee update. The latest version of our Typescript SDK includes the updated fee 
+logic: [Pump SDK](https://www.npmjs.com/package/@pump-fun/pump-sdk) (including the source code of the SDK).
 
 These functions do not include slippage in their calculations, but the slippage needs to be applied to sol amount for
 both `buy` and `sell` instructions. Instructions which allow slippage for coin amount will be added to the Pump program
