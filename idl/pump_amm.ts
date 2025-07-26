@@ -14,6 +14,265 @@ export type PumpAmm = {
   },
   "instructions": [
     {
+      "name": "adminSetCoinCreator",
+      "docs": [
+        "Overrides the coin creator for a canonical pump pool"
+      ],
+      "discriminator": [
+        242,
+        40,
+        117,
+        145,
+        73,
+        96,
+        105,
+        104
+      ],
+      "accounts": [
+        {
+          "name": "adminSetCoinCreatorAuthority",
+          "signer": true,
+          "relations": [
+            "globalConfig"
+          ]
+        },
+        {
+          "name": "globalConfig"
+        },
+        {
+          "name": "pool",
+          "writable": true
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "coinCreator",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "adminUpdateTokenIncentives",
+      "discriminator": [
+        209,
+        11,
+        115,
+        87,
+        213,
+        23,
+        124,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "globalConfig"
+          ]
+        },
+        {
+          "name": "globalConfig"
+        },
+        {
+          "name": "globalVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "globalIncentiveTokenAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "globalVolumeAccumulator"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "tokenProgram"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "startTime",
+          "type": "i64"
+        },
+        {
+          "name": "endTime",
+          "type": "i64"
+        },
+        {
+          "name": "secondsInADay",
+          "type": "i64"
+        },
+        {
+          "name": "dayNumber",
+          "type": "u64"
+        },
+        {
+          "name": "tokenSupplyPerDay",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "buy",
       "discriminator": [
         102,
@@ -263,6 +522,84 @@ export type PumpAmm = {
               }
             ]
           }
+        },
+        {
+          "name": "globalVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
         }
       ],
       "args": [
@@ -275,6 +612,270 @@ export type PumpAmm = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "claimTokenIncentives",
+      "discriminator": [
+        16,
+        4,
+        71,
+        28,
+        204,
+        1,
+        40,
+        27
+      ],
+      "accounts": [
+        {
+          "name": "user"
+        },
+        {
+          "name": "userAta",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "user"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "globalVolumeAccumulator",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "globalIncentiveTokenAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "globalVolumeAccumulator"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "mint",
+          "relations": [
+            "globalVolumeAccumulator"
+          ]
+        },
+        {
+          "name": "tokenProgram"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
     },
     {
       "name": "collectCoinCreatorFee",
@@ -296,8 +897,7 @@ export type PumpAmm = {
           "name": "quoteTokenProgram"
         },
         {
-          "name": "coinCreator",
-          "signer": true
+          "name": "coinCreator"
         },
         {
           "name": "coinCreatorVaultAuthority",
@@ -527,6 +1127,10 @@ export type PumpAmm = {
         {
           "name": "coinCreatorFeeBasisPoints",
           "type": "u64"
+        },
+        {
+          "name": "adminSetCoinCreatorAuthority",
+          "type": "pubkey"
         }
       ]
     },
@@ -1757,6 +2361,10 @@ export type PumpAmm = {
         {
           "name": "coinCreatorFeeBasisPoints",
           "type": "u64"
+        },
+        {
+          "name": "adminSetCoinCreatorAuthority",
+          "type": "pubkey"
         }
       ]
     },
@@ -1914,6 +2522,19 @@ export type PumpAmm = {
       ]
     },
     {
+      "name": "globalVolumeAccumulator",
+      "discriminator": [
+        202,
+        42,
+        246,
+        43,
+        142,
+        190,
+        30,
+        255
+      ]
+    },
+    {
       "name": "pool",
       "discriminator": [
         241,
@@ -1925,9 +2546,48 @@ export type PumpAmm = {
         109,
         188
       ]
+    },
+    {
+      "name": "userVolumeAccumulator",
+      "discriminator": [
+        86,
+        255,
+        112,
+        14,
+        102,
+        53,
+        154,
+        250
+      ]
     }
   ],
   "events": [
+    {
+      "name": "adminSetCoinCreatorEvent",
+      "discriminator": [
+        45,
+        220,
+        93,
+        24,
+        25,
+        97,
+        172,
+        104
+      ]
+    },
+    {
+      "name": "adminUpdateTokenIncentivesEvent",
+      "discriminator": [
+        147,
+        250,
+        108,
+        120,
+        247,
+        29,
+        67,
+        222
+      ]
+    },
     {
       "name": "buyEvent",
       "discriminator": [
@@ -1939,6 +2599,19 @@ export type PumpAmm = {
         245,
         119,
         119
+      ]
+    },
+    {
+      "name": "claimTokenIncentivesEvent",
+      "discriminator": [
+        79,
+        172,
+        246,
+        49,
+        205,
+        91,
+        206,
+        232
       ]
     },
     {
@@ -2214,9 +2887,105 @@ export type PumpAmm = {
     {
       "code": 6028,
       "name": "onlyCanonicalPumpPoolsCanHaveCoinCreator"
+    },
+    {
+      "code": 6029,
+      "name": "invalidAdminSetCoinCreatorAuthority"
+    },
+    {
+      "code": 6030,
+      "name": "startTimeInThePast"
+    },
+    {
+      "code": 6031,
+      "name": "endTimeInThePast"
+    },
+    {
+      "code": 6032,
+      "name": "endTimeBeforeStartTime"
+    },
+    {
+      "code": 6033,
+      "name": "timeRangeTooLarge"
+    },
+    {
+      "code": 6034,
+      "name": "endTimeBeforeCurrentDay"
+    },
+    {
+      "code": 6035,
+      "name": "supplyUpdateForFinishedRange"
+    },
+    {
+      "code": 6036,
+      "name": "dayIndexAfterEndIndex"
+    },
+    {
+      "code": 6037,
+      "name": "dayInActiveRange"
+    },
+    {
+      "code": 6038,
+      "name": "invalidIncentiveMint"
     }
   ],
   "types": [
+    {
+      "name": "adminSetCoinCreatorEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "adminSetCoinCreatorAuthority",
+            "type": "pubkey"
+          },
+          {
+            "name": "baseMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "oldCoinCreator",
+            "type": "pubkey"
+          },
+          {
+            "name": "newCoinCreator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "adminUpdateTokenIncentivesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "startTime",
+            "type": "i64"
+          },
+          {
+            "name": "endTime",
+            "type": "i64"
+          },
+          {
+            "name": "dayNumber",
+            "type": "u64"
+          },
+          {
+            "name": "tokenSupplyPerDay",
+            "type": "u64"
+          }
+        ]
+      }
+    },
     {
       "name": "bondingCurve",
       "type": {
@@ -2354,6 +3123,26 @@ export type PumpAmm = {
       }
     },
     {
+      "name": "claimTokenIncentivesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "collectCoinCreatorFeeEvent",
       "type": {
         "kind": "struct",
@@ -2414,6 +3203,10 @@ export type PumpAmm = {
           {
             "name": "coinCreatorFeeBasisPoints",
             "type": "u64"
+          },
+          {
+            "name": "adminSetCoinCreatorAuthority",
+            "type": "pubkey"
           }
         ]
       }
@@ -2698,6 +3491,55 @@ export type PumpAmm = {
               "The coin creator fee in basis points (0.01%)"
             ],
             "type": "u64"
+          },
+          {
+            "name": "adminSetCoinCreatorAuthority",
+            "docs": [
+              "The admin authority for setting coin creators"
+            ],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "globalVolumeAccumulator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "startTime",
+            "type": "i64"
+          },
+          {
+            "name": "endTime",
+            "type": "i64"
+          },
+          {
+            "name": "secondsInADay",
+            "type": "i64"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "totalTokenSupply",
+            "type": {
+              "array": [
+                "u64",
+                30
+              ]
+            }
+          },
+          {
+            "name": "solVolumes",
+            "type": {
+              "array": [
+                "u64",
+                30
+              ]
+            }
           }
         ]
       }
@@ -2962,6 +3804,42 @@ export type PumpAmm = {
           {
             "name": "coinCreatorFeeBasisPoints",
             "type": "u64"
+          },
+          {
+            "name": "adminSetCoinCreatorAuthority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "userVolumeAccumulator",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "needsClaim",
+            "type": "bool"
+          },
+          {
+            "name": "totalUnclaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
+          },
+          {
+            "name": "lastUpdateTimestamp",
+            "type": "i64"
           }
         ]
       }
