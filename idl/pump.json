@@ -2716,6 +2716,134 @@
       ]
     },
     {
+      "name": "sync_user_volume_accumulator",
+      "discriminator": [
+        86,
+        31,
+        192,
+        87,
+        163,
+        87,
+        79,
+        238
+      ],
+      "accounts": [
+        {
+          "name": "user"
+        },
+        {
+          "name": "global_volume_accumulator",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user_volume_accumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "update_global_authority",
       "discriminator": [
         227,
@@ -2989,6 +3117,19 @@
         48,
         143,
         131
+      ]
+    },
+    {
+      "name": "SyncUserVolumeAccumulatorEvent",
+      "discriminator": [
+        197,
+        122,
+        167,
+        124,
+        116,
+        81,
+        91,
+        255
       ]
     },
     {
@@ -3735,6 +3876,26 @@
       }
     },
     {
+      "name": "SyncUserVolumeAccumulatorEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_claimed_tokens_before",
+            "type": "u64"
+          },
+          {
+            "name": "total_claimed_tokens_after",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "TradeEvent",
       "type": {
         "kind": "struct",
@@ -3858,6 +4019,10 @@
           {
             "name": "last_update_timestamp",
             "type": "i64"
+          },
+          {
+            "name": "has_total_claimed_tokens",
+            "type": "bool"
           }
         ]
       }

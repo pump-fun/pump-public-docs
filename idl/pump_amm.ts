@@ -2222,6 +2222,134 @@ export type PumpAmm = {
       "args": []
     },
     {
+      "name": "syncUserVolumeAccumulator",
+      "discriminator": [
+        86,
+        31,
+        192,
+        87,
+        163,
+        87,
+        79,
+        238
+      ],
+      "accounts": [
+        {
+          "name": "user"
+        },
+        {
+          "name": "globalVolumeAccumulator",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "updateAdmin",
       "discriminator": [
         161,
@@ -2729,6 +2857,19 @@ export type PumpAmm = {
         207,
         102,
         228
+      ]
+    },
+    {
+      "name": "syncUserVolumeAccumulatorEvent",
+      "discriminator": [
+        197,
+        122,
+        167,
+        124,
+        116,
+        81,
+        91,
+        255
       ]
     },
     {
@@ -3752,6 +3893,26 @@ export type PumpAmm = {
       }
     },
     {
+      "name": "syncUserVolumeAccumulatorEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "totalClaimedTokensBefore",
+            "type": "u64"
+          },
+          {
+            "name": "totalClaimedTokensAfter",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "updateAdminEvent",
       "type": {
         "kind": "struct",
@@ -3840,6 +4001,10 @@ export type PumpAmm = {
           {
             "name": "lastUpdateTimestamp",
             "type": "i64"
+          },
+          {
+            "name": "hasTotalClaimedTokens",
+            "type": "bool"
           }
         ]
       }
