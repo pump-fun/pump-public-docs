@@ -618,10 +618,15 @@ export type PumpAmm = {
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "userAccTarget"
               }
             ]
           }
+        },
+        {
+          "name": "userAccTarget",
+          "writable": true,
+          "signer": true
         }
       ],
       "args": [

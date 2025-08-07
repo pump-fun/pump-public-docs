@@ -612,10 +612,15 @@
               },
               {
                 "kind": "account",
-                "path": "user"
+                "path": "user_acc_target"
               }
             ]
           }
+        },
+        {
+          "name": "user_acc_target",
+          "writable": true,
+          "signer": true
         }
       ],
       "args": [
