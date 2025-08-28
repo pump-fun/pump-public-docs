@@ -450,7 +450,8 @@
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
           "name": "coin_creator_vault_ata",
@@ -612,15 +613,79 @@
               },
               {
                 "kind": "account",
-                "path": "user_acc_target"
+                "path": "user"
               }
             ]
           }
         },
         {
-          "name": "user_acc_target",
-          "writable": true,
-          "signer": true
+          "name": "fee_config",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  12,
+                  20,
+                  222,
+                  252,
+                  130,
+                  94,
+                  198,
+                  118,
+                  148,
+                  37,
+                  8,
+                  24,
+                  187,
+                  101,
+                  64,
+                  101,
+                  244,
+                  41,
+                  141,
+                  49,
+                  86,
+                  213,
+                  113,
+                  180,
+                  212,
+                  248,
+                  9,
+                  12,
+                  24,
+                  233,
+                  168,
+                  99
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            }
+          }
+        },
+        {
+          "name": "fee_program",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -631,6 +696,14 @@
         {
           "name": "max_quote_amount_in",
           "type": "u64"
+        },
+        {
+          "name": "track_volume",
+          "type": {
+            "defined": {
+              "name": "OptionBool"
+            }
+          }
         }
       ]
     },
@@ -888,7 +961,8 @@
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
           "name": "payer",
@@ -2113,7 +2187,8 @@
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
           "name": "coin_creator_vault_ata",
@@ -2201,6 +2276,75 @@
               }
             ]
           }
+        },
+        {
+          "name": "fee_config",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  12,
+                  20,
+                  222,
+                  252,
+                  130,
+                  94,
+                  198,
+                  118,
+                  148,
+                  37,
+                  8,
+                  24,
+                  187,
+                  101,
+                  64,
+                  101,
+                  244,
+                  41,
+                  141,
+                  49,
+                  86,
+                  213,
+                  113,
+                  180,
+                  212,
+                  248,
+                  9,
+                  12,
+                  24,
+                  233,
+                  168,
+                  99
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            }
+          }
+        },
+        {
+          "name": "fee_program",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -2848,6 +2992,19 @@
         216,
         172,
         96
+      ]
+    },
+    {
+      "name": "FeeConfig",
+      "discriminator": [
+        143,
+        52,
+        146,
+        187,
+        219,
+        123,
+        76,
+        155
       ]
     },
     {
@@ -3511,6 +3668,26 @@
           {
             "name": "coin_creator_fee",
             "type": "u64"
+          },
+          {
+            "name": "track_volume",
+            "type": "bool"
+          },
+          {
+            "name": "total_unclaimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "total_claimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "current_sol_volume",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_timestamp",
+            "type": "i64"
           }
         ]
       }
@@ -3535,6 +3712,14 @@
           {
             "name": "timestamp",
             "type": "i64"
+          },
+          {
+            "name": "total_claimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "current_sol_volume",
+            "type": "u64"
           }
         ]
       }
@@ -3550,6 +3735,22 @@
           },
           {
             "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "total_unclaimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "total_claimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "current_sol_volume",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_timestamp",
             "type": "i64"
           }
         ]
@@ -3849,6 +4050,80 @@
       }
     },
     {
+      "name": "FeeConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "flat_fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          },
+          {
+            "name": "fee_tiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeTier",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market_cap_lamports_threshold",
+            "type": "u128"
+          },
+          {
+            "name": "fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lp_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "creator_fee_bps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "GlobalConfig",
       "type": {
         "kind": "struct",
@@ -3862,16 +4137,10 @@
           },
           {
             "name": "lp_fee_basis_points",
-            "docs": [
-              "The lp fee in basis points (0.01%)"
-            ],
             "type": "u64"
           },
           {
             "name": "protocol_fee_basis_points",
-            "docs": [
-              "The protocol fee in basis points (0.01%)"
-            ],
             "type": "u64"
           },
           {
@@ -3900,9 +4169,6 @@
           },
           {
             "name": "coin_creator_fee_basis_points",
-            "docs": [
-              "The coin creator fee in basis points (0.01%)"
-            ],
             "type": "u64"
           },
           {
@@ -3974,6 +4240,15 @@
             "name": "timestamp",
             "type": "i64"
           }
+        ]
+      }
+    },
+    {
+      "name": "OptionBool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          "bool"
         ]
       }
     },

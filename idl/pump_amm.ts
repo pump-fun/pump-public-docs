@@ -456,7 +456,8 @@ export type PumpAmm = {
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
           "name": "coinCreatorVaultAta",
@@ -618,15 +619,79 @@ export type PumpAmm = {
               },
               {
                 "kind": "account",
-                "path": "userAccTarget"
+                "path": "user"
               }
             ]
           }
         },
         {
-          "name": "userAccTarget",
-          "writable": true,
-          "signer": true
+          "name": "feeConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  12,
+                  20,
+                  222,
+                  252,
+                  130,
+                  94,
+                  198,
+                  118,
+                  148,
+                  37,
+                  8,
+                  24,
+                  187,
+                  101,
+                  64,
+                  101,
+                  244,
+                  41,
+                  141,
+                  49,
+                  86,
+                  213,
+                  113,
+                  180,
+                  212,
+                  248,
+                  9,
+                  12,
+                  24,
+                  233,
+                  168,
+                  99
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "feeProgram"
+            }
+          }
+        },
+        {
+          "name": "feeProgram",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -637,6 +702,14 @@ export type PumpAmm = {
         {
           "name": "maxQuoteAmountIn",
           "type": "u64"
+        },
+        {
+          "name": "trackVolume",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
         }
       ]
     },
@@ -894,7 +967,8 @@ export type PumpAmm = {
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
           "name": "payer",
@@ -2119,7 +2193,8 @@ export type PumpAmm = {
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA"
         },
         {
           "name": "coinCreatorVaultAta",
@@ -2207,6 +2282,75 @@ export type PumpAmm = {
               }
             ]
           }
+        },
+        {
+          "name": "feeConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  12,
+                  20,
+                  222,
+                  252,
+                  130,
+                  94,
+                  198,
+                  118,
+                  148,
+                  37,
+                  8,
+                  24,
+                  187,
+                  101,
+                  64,
+                  101,
+                  244,
+                  41,
+                  141,
+                  49,
+                  86,
+                  213,
+                  113,
+                  180,
+                  212,
+                  248,
+                  9,
+                  12,
+                  24,
+                  233,
+                  168,
+                  99
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "feeProgram"
+            }
+          }
+        },
+        {
+          "name": "feeProgram",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -2854,6 +2998,19 @@ export type PumpAmm = {
         216,
         172,
         96
+      ]
+    },
+    {
+      "name": "feeConfig",
+      "discriminator": [
+        143,
+        52,
+        146,
+        187,
+        219,
+        123,
+        76,
+        155
       ]
     },
     {
@@ -3517,6 +3674,26 @@ export type PumpAmm = {
           {
             "name": "coinCreatorFee",
             "type": "u64"
+          },
+          {
+            "name": "trackVolume",
+            "type": "bool"
+          },
+          {
+            "name": "totalUnclaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
+          },
+          {
+            "name": "lastUpdateTimestamp",
+            "type": "i64"
           }
         ]
       }
@@ -3541,6 +3718,14 @@ export type PumpAmm = {
           {
             "name": "timestamp",
             "type": "i64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
           }
         ]
       }
@@ -3556,6 +3741,22 @@ export type PumpAmm = {
           },
           {
             "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "totalUnclaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
+          },
+          {
+            "name": "lastUpdateTimestamp",
             "type": "i64"
           }
         ]
@@ -3855,6 +4056,80 @@ export type PumpAmm = {
       }
     },
     {
+      "name": "feeConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "flatFees",
+            "type": {
+              "defined": {
+                "name": "fees"
+              }
+            }
+          },
+          {
+            "name": "feeTiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "feeTier"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "feeTier",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "marketCapLamportsThreshold",
+            "type": "u128"
+          },
+          {
+            "name": "fees",
+            "type": {
+              "defined": {
+                "name": "fees"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lpFeeBps",
+            "type": "u64"
+          },
+          {
+            "name": "protocolFeeBps",
+            "type": "u64"
+          },
+          {
+            "name": "creatorFeeBps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "globalConfig",
       "type": {
         "kind": "struct",
@@ -3868,16 +4143,10 @@ export type PumpAmm = {
           },
           {
             "name": "lpFeeBasisPoints",
-            "docs": [
-              "The lp fee in basis points (0.01%)"
-            ],
             "type": "u64"
           },
           {
             "name": "protocolFeeBasisPoints",
-            "docs": [
-              "The protocol fee in basis points (0.01%)"
-            ],
             "type": "u64"
           },
           {
@@ -3906,9 +4175,6 @@ export type PumpAmm = {
           },
           {
             "name": "coinCreatorFeeBasisPoints",
-            "docs": [
-              "The coin creator fee in basis points (0.01%)"
-            ],
             "type": "u64"
           },
           {
@@ -3980,6 +4246,15 @@ export type PumpAmm = {
             "name": "timestamp",
             "type": "i64"
           }
+        ]
+      }
+    },
+    {
+      "name": "optionBool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          "bool"
         ]
       }
     },

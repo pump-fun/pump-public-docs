@@ -1,0 +1,792 @@
+{
+  "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+  "metadata": {
+    "name": "pump_fees",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "get_fees",
+      "docs": [
+        "Get Fees"
+      ],
+      "discriminator": [
+        231,
+        37,
+        126,
+        85,
+        207,
+        91,
+        63,
+        52
+      ],
+      "accounts": [
+        {
+          "name": "fee_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config_program_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "config_program_id"
+        }
+      ],
+      "args": [
+        {
+          "name": "is_pump_pool",
+          "type": "bool"
+        },
+        {
+          "name": "market_cap_lamports",
+          "type": "u128"
+        },
+        {
+          "name": "trade_size_lamports",
+          "type": "u64"
+        }
+      ],
+      "returns": {
+        "defined": {
+          "name": "Fees"
+        }
+      }
+    },
+    {
+      "name": "initialize_fee_config",
+      "docs": [
+        "Initialize FeeConfig admin"
+      ],
+      "discriminator": [
+        62,
+        162,
+        20,
+        133,
+        121,
+        65,
+        145,
+        27
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "address": "8LWu7QM2dGR1G8nKDHthckea57bkCzXyBTAKPJUBDHo8"
+        },
+        {
+          "name": "fee_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config_program_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "config_program_id"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_admin",
+      "docs": [
+        "Update admin (only callable by admin)"
+      ],
+      "discriminator": [
+        161,
+        176,
+        40,
+        213,
+        60,
+        184,
+        179,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "fee_config"
+          ]
+        },
+        {
+          "name": "fee_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config_program_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "new_admin"
+        },
+        {
+          "name": "config_program_id"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_fee_config",
+      "docs": [
+        "Set/Replace fee parameters entirely (only callable by admin)"
+      ],
+      "discriminator": [
+        104,
+        184,
+        103,
+        242,
+        88,
+        151,
+        107,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "fee_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config_program_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "fee_config"
+          ]
+        },
+        {
+          "name": "config_program_id"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "fee_tiers",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "FeeTier"
+              }
+            }
+          }
+        },
+        {
+          "name": "flat_fees",
+          "type": {
+            "defined": {
+              "name": "Fees"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "upsert_fee_tiers",
+      "docs": [
+        "Update or expand fee tiers (only callable by admin)"
+      ],
+      "discriminator": [
+        227,
+        23,
+        150,
+        12,
+        77,
+        86,
+        94,
+        4
+      ],
+      "accounts": [
+        {
+          "name": "fee_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config_program_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "fee_config"
+          ]
+        },
+        {
+          "name": "config_program_id"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "fee_tiers",
+          "type": {
+            "vec": {
+              "defined": {
+                "name": "FeeTier"
+              }
+            }
+          }
+        },
+        {
+          "name": "offset",
+          "type": "u8"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "FeeConfig",
+      "discriminator": [
+        143,
+        52,
+        146,
+        187,
+        219,
+        123,
+        76,
+        155
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "InitializeFeeConfigEvent",
+      "discriminator": [
+        89,
+        138,
+        244,
+        230,
+        10,
+        56,
+        226,
+        126
+      ]
+    },
+    {
+      "name": "UpdateAdminEvent",
+      "discriminator": [
+        225,
+        152,
+        171,
+        87,
+        246,
+        63,
+        66,
+        234
+      ]
+    },
+    {
+      "name": "UpdateFeeConfigEvent",
+      "discriminator": [
+        90,
+        23,
+        65,
+        35,
+        62,
+        244,
+        188,
+        208
+      ]
+    },
+    {
+      "name": "UpsertFeeTiersEvent",
+      "discriminator": [
+        171,
+        89,
+        169,
+        187,
+        122,
+        186,
+        33,
+        204
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "UnauthorizedProgram",
+      "msg": "Only Pump and PumpSwap programs can call this instruction"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidAdmin",
+      "msg": "Invalid admin"
+    },
+    {
+      "code": 6002,
+      "name": "NoFeeTiers",
+      "msg": "No fee tiers provided"
+    },
+    {
+      "code": 6003,
+      "name": "TooManyFeeTiers",
+      "msg": "format"
+    },
+    {
+      "code": 6004,
+      "name": "OffsetNotContinuous",
+      "msg": "The offset should be <= fee_config.fee_tiers.len()"
+    },
+    {
+      "code": 6005,
+      "name": "FeeTiersNotSorted",
+      "msg": "Fee tiers must be sorted by market cap threshold (ascending)"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidFeeTotal",
+      "msg": "Fee total must not exceed 10_000bps"
+    },
+    {
+      "code": 6007,
+      "name": "ZeroMarketCap",
+      "msg": "Market cap must be greater than 0"
+    },
+    {
+      "code": 6008,
+      "name": "ZeroTradeSize",
+      "msg": "Trade size must be greater than 0"
+    }
+  ],
+  "types": [
+    {
+      "name": "FeeConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "docs": [
+              "The bump for the PDA"
+            ],
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "docs": [
+              "The admin account that can update the fee config"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "flat_fees",
+            "docs": [
+              "The flat fees for non-pump pools"
+            ],
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          },
+          {
+            "name": "fee_tiers",
+            "docs": [
+              "The fee tiers"
+            ],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeTier",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market_cap_lamports_threshold",
+            "type": "u128"
+          },
+          {
+            "name": "fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lp_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "creator_fee_bps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeFeeConfigEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_config",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateAdminEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "old_admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_admin",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpdateFeeConfigEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_config",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_tiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          },
+          {
+            "name": "flat_fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "UpsertFeeTiersEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_config",
+            "type": "pubkey"
+          },
+          {
+            "name": "fee_tiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          },
+          {
+            "name": "offset",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ],
+  "constants": [
+    {
+      "name": "FEE_CONFIG_SEED",
+      "type": "bytes",
+      "value": "[102, 101, 101, 95, 99, 111, 110, 102, 105, 103]"
+    }
+  ]
+}

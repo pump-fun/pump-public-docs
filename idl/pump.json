@@ -656,7 +656,8 @@
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
         },
         {
           "name": "global_volume_accumulator",
@@ -731,15 +732,79 @@
               },
               {
                 "kind": "account",
-                "path": "user_acc_target"
+                "path": "user"
               }
             ]
           }
         },
         {
-          "name": "user_acc_target",
-          "writable": true,
-          "signer": true
+          "name": "fee_config",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            }
+          }
+        },
+        {
+          "name": "fee_program",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -750,6 +815,14 @@
         {
           "name": "max_sol_cost",
           "type": "u64"
+        },
+        {
+          "name": "track_volume",
+          "type": {
+            "defined": {
+              "name": "OptionBool"
+            }
+          }
         }
       ]
     },
@@ -1007,7 +1080,8 @@
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
         },
         {
           "name": "payer",
@@ -2489,7 +2563,77 @@
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        },
+        {
+          "name": "fee_config",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "fee_program"
+            }
+          }
+        },
+        {
+          "name": "fee_program",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -3241,6 +3385,19 @@
       ]
     },
     {
+      "name": "FeeConfig",
+      "discriminator": [
+        143,
+        52,
+        146,
+        187,
+        219,
+        123,
+        76,
+        155
+      ]
+    },
+    {
       "name": "Global",
       "discriminator": [
         167,
@@ -3833,6 +3990,14 @@
           {
             "name": "timestamp",
             "type": "i64"
+          },
+          {
+            "name": "total_claimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "current_sol_volume",
+            "type": "u64"
           }
         ]
       }
@@ -3848,6 +4013,22 @@
           },
           {
             "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "total_unclaimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "total_claimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "current_sol_volume",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_timestamp",
             "type": "i64"
           }
         ]
@@ -4022,6 +4203,80 @@
       }
     },
     {
+      "name": "FeeConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "flat_fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          },
+          {
+            "name": "fee_tiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "FeeTier",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "market_cap_lamports_threshold",
+            "type": "u128"
+          },
+          {
+            "name": "fees",
+            "type": {
+              "defined": {
+                "name": "Fees"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lp_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u64"
+          },
+          {
+            "name": "creator_fee_bps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "Global",
       "type": {
         "kind": "struct",
@@ -4159,6 +4414,15 @@
             "name": "timestamp",
             "type": "i64"
           }
+        ]
+      }
+    },
+    {
+      "name": "OptionBool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          "bool"
         ]
       }
     },
@@ -4375,6 +4639,26 @@
           {
             "name": "creator_fee",
             "type": "u64"
+          },
+          {
+            "name": "track_volume",
+            "type": "bool"
+          },
+          {
+            "name": "total_unclaimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "total_claimed_tokens",
+            "type": "u64"
+          },
+          {
+            "name": "current_sol_volume",
+            "type": "u64"
+          },
+          {
+            "name": "last_update_timestamp",
+            "type": "i64"
           }
         ]
       }

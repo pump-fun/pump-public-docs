@@ -662,7 +662,8 @@ export type Pump = {
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
         },
         {
           "name": "globalVolumeAccumulator",
@@ -737,15 +738,79 @@ export type Pump = {
               },
               {
                 "kind": "account",
-                "path": "userAccTarget"
+                "path": "user"
               }
             ]
           }
         },
         {
-          "name": "userAccTarget",
-          "writable": true,
-          "signer": true
+          "name": "feeConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "feeProgram"
+            }
+          }
+        },
+        {
+          "name": "feeProgram",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -756,6 +821,14 @@ export type Pump = {
         {
           "name": "maxSolCost",
           "type": "u64"
+        },
+        {
+          "name": "trackVolume",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
         }
       ]
     },
@@ -1013,7 +1086,8 @@ export type Pump = {
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
         },
         {
           "name": "payer",
@@ -2495,7 +2569,77 @@ export type Pump = {
           }
         },
         {
-          "name": "program"
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        },
+        {
+          "name": "feeConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "feeProgram"
+            }
+          }
+        },
+        {
+          "name": "feeProgram",
+          "optional": true,
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
       "args": [
@@ -3247,6 +3391,19 @@ export type Pump = {
       ]
     },
     {
+      "name": "feeConfig",
+      "discriminator": [
+        143,
+        52,
+        146,
+        187,
+        219,
+        123,
+        76,
+        155
+      ]
+    },
+    {
       "name": "global",
       "discriminator": [
         167,
@@ -3839,6 +3996,14 @@ export type Pump = {
           {
             "name": "timestamp",
             "type": "i64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
           }
         ]
       }
@@ -3854,6 +4019,22 @@ export type Pump = {
           },
           {
             "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "totalUnclaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
+          },
+          {
+            "name": "lastUpdateTimestamp",
             "type": "i64"
           }
         ]
@@ -4028,6 +4209,80 @@ export type Pump = {
       }
     },
     {
+      "name": "feeConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "flatFees",
+            "type": {
+              "defined": {
+                "name": "fees"
+              }
+            }
+          },
+          {
+            "name": "feeTiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "feeTier"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "feeTier",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "marketCapLamportsThreshold",
+            "type": "u128"
+          },
+          {
+            "name": "fees",
+            "type": {
+              "defined": {
+                "name": "fees"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "fees",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "lpFeeBps",
+            "type": "u64"
+          },
+          {
+            "name": "protocolFeeBps",
+            "type": "u64"
+          },
+          {
+            "name": "creatorFeeBps",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "global",
       "type": {
         "kind": "struct",
@@ -4165,6 +4420,15 @@ export type Pump = {
             "name": "timestamp",
             "type": "i64"
           }
+        ]
+      }
+    },
+    {
+      "name": "optionBool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          "bool"
         ]
       }
     },
@@ -4381,6 +4645,26 @@ export type Pump = {
           {
             "name": "creatorFee",
             "type": "u64"
+          },
+          {
+            "name": "trackVolume",
+            "type": "bool"
+          },
+          {
+            "name": "totalUnclaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "totalClaimedTokens",
+            "type": "u64"
+          },
+          {
+            "name": "currentSolVolume",
+            "type": "u64"
+          },
+          {
+            "name": "lastUpdateTimestamp",
+            "type": "i64"
           }
         ]
       }
