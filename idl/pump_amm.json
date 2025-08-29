@@ -620,7 +620,6 @@
         },
         {
           "name": "fee_config",
-          "optional": true,
           "pda": {
             "seeds": [
               {
@@ -684,7 +683,6 @@
         },
         {
           "name": "fee_program",
-          "optional": true,
           "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
@@ -2279,7 +2277,6 @@
         },
         {
           "name": "fee_config",
-          "optional": true,
           "pda": {
             "seeds": [
               {
@@ -2343,7 +2340,6 @@
         },
         {
           "name": "fee_program",
-          "optional": true,
           "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
         }
       ],
