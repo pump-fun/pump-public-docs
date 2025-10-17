@@ -831,6 +831,422 @@ export type Pump = {
       ]
     },
     {
+      "name": "buyExactSolIn",
+      "docs": [
+        "Given a budget of spendable SOL, buy at least min_tokens_out",
+        "Account creation and fees will be deducted from the spendable SOL",
+        "",
+        "f(sol) = tokens, where tokens >= min_tokens_out and sol > rent + fees",
+        "",
+        "max_slippage = min_tokens_out = 1",
+        "",
+        "Make sure the sol budget is enough to cover creation of the following accounts (unless already created):",
+        "- creator_vault: rent.minimum_balance(SystemAccount::LEN)",
+        "- user_volume_accumulator: rent.minimum_balance(UserVolumeAccumulator::LEN)"
+      ],
+      "discriminator": [
+        56,
+        252,
+        116,
+        8,
+        158,
+        223,
+        205,
+        95
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "feeRecipient",
+          "writable": true
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedBondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associatedUser",
+          "writable": true
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "creatorVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve.creator",
+                "account": "bondingCurve"
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        },
+        {
+          "name": "globalVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "feeConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "feeProgram"
+            }
+          }
+        },
+        {
+          "name": "feeProgram",
+          "address": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ"
+        }
+      ],
+      "args": [
+        {
+          "name": "spendableSolIn",
+          "type": "u64"
+        },
+        {
+          "name": "minTokensOut",
+          "type": "u64"
+        },
+        {
+          "name": "trackVolume",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "claimTokenIncentives",
       "discriminator": [
         16,
@@ -3853,6 +4269,21 @@ export type Pump = {
     {
       "code": 6039,
       "name": "invalidIncentiveMint"
+    },
+    {
+      "code": 6040,
+      "name": "buyNotEnoughSolToCoverRent",
+      "msg": "Buy: Not enough SOL to cover for rent exemption."
+    },
+    {
+      "code": 6041,
+      "name": "buyNotEnoughSolToCoverFees",
+      "msg": "Buy: Not enough SOL to cover for fees."
+    },
+    {
+      "code": 6042,
+      "name": "buySlippageBelowMinTokensOut",
+      "msg": "Slippage: Would buy less tokens than expected min_tokens_out"
     }
   ],
   "types": [
@@ -4575,6 +5006,9 @@ export type Pump = {
     },
     {
       "name": "tradeEvent",
+      "docs": [
+        "ix_name: \"buy\" | \"sell\" | \"buy_exact_sol_in\""
+      ],
       "type": {
         "kind": "struct",
         "fields": [
@@ -4661,6 +5095,10 @@ export type Pump = {
           {
             "name": "lastUpdateTimestamp",
             "type": "i64"
+          },
+          {
+            "name": "ixName",
+            "type": "string"
           }
         ]
       }
