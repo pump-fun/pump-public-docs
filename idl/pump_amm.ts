@@ -308,7 +308,8 @@ export type PumpAmm = {
       ],
       "accounts": [
         {
-          "name": "pool"
+          "name": "pool",
+          "writable": true
         },
         {
           "name": "user",
@@ -736,7 +737,8 @@ export type PumpAmm = {
       ],
       "accounts": [
         {
-          "name": "pool"
+          "name": "pool",
+          "writable": true
         },
         {
           "name": "user",
@@ -2471,7 +2473,8 @@ export type PumpAmm = {
       ],
       "accounts": [
         {
-          "name": "pool"
+          "name": "pool",
+          "writable": true
         },
         {
           "name": "user",
