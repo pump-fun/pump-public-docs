@@ -2,6 +2,24 @@
 
 [Pump fee program docs](docs/FEE_PROGRAM_README.md)
 
+## Pump.fun Event Tracker
+
+A real-time event tracker for monitoring Pump.fun token creation, buy, and sell events using gRPC.
+
+**[Tracker Documentation](TRACKER_README.md)**
+
+### Quick Start
+
+```bash
+npm install
+npm start
+```
+
+The tracker monitors:
+- 🚀 Token Creation events
+- 💰 Buy events
+- 💸 Sell events
+
 ## Other documentation
 
 - [Pump Program](docs/PUMP_PROGRAM_README.md)

@@ -1,0 +1,20 @@
+{
+  "name": "pump-fun-tracker",
+  "version": "1.0.0",
+  "description": "Pump.fun event tracker using gRPC",
+  "main": "tracker.js",
+  "type": "module",
+  "scripts": {
+    "start": "node tracker.js",
+    "dev": "node --watch tracker.js"
+  },
+  "keywords": ["pump.fun", "solana", "grpc", "tracker"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@solana/web3.js": "^1.95.8",
+    "@solana/buffer-layout": "^4.0.1",
+    "@triton-one/yellowstone-grpc": "^1.0.0",
+    "borsh": "^2.0.0"
+  }
+}
