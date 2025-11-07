@@ -504,41 +504,8 @@ export type Pump = {
                 "path": "bondingCurve"
               },
               {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
+                "kind": "account",
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
@@ -598,8 +565,7 @@ export type Pump = {
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          "name": "tokenProgram"
         },
         {
           "name": "creatorVault",
@@ -920,41 +886,8 @@ export type Pump = {
                 "path": "bondingCurve"
               },
               {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
+                "kind": "account",
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
@@ -1014,8 +947,7 @@ export type Pump = {
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "tokenProgram",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          "name": "tokenProgram"
         },
         {
           "name": "creatorVault",
@@ -2022,6 +1954,480 @@ export type Pump = {
       ]
     },
     {
+      "name": "createV2",
+      "docs": [
+        "Creates a new spl-22 coin and bonding curve."
+      ],
+      "discriminator": [
+        214,
+        144,
+        76,
+        236,
+        95,
+        139,
+        49,
+        180
+      ],
+      "accounts": [
+        {
+          "name": "mint",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mintAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  105,
+                  110,
+                  116,
+                  45,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedBondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "mayhemProgramId",
+          "writable": true,
+          "address": "MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e"
+        },
+        {
+          "name": "globalParams",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  45,
+                  112,
+                  97,
+                  114,
+                  97,
+                  109,
+                  115
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                5,
+                42,
+                229,
+                215,
+                167,
+                218,
+                167,
+                36,
+                166,
+                234,
+                176,
+                167,
+                41,
+                84,
+                145,
+                133,
+                90,
+                212,
+                160,
+                103,
+                22,
+                96,
+                103,
+                76,
+                78,
+                3,
+                69,
+                89,
+                128,
+                61,
+                101,
+                163
+              ]
+            }
+          }
+        },
+        {
+          "name": "solVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  111,
+                  108,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                5,
+                42,
+                229,
+                215,
+                167,
+                218,
+                167,
+                36,
+                166,
+                234,
+                176,
+                167,
+                41,
+                84,
+                145,
+                133,
+                90,
+                212,
+                160,
+                103,
+                22,
+                96,
+                103,
+                76,
+                78,
+                3,
+                69,
+                89,
+                128,
+                61,
+                101,
+                163
+              ]
+            }
+          }
+        },
+        {
+          "name": "mayhemState",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  109,
+                  97,
+                  121,
+                  104,
+                  101,
+                  109,
+                  45,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                5,
+                42,
+                229,
+                215,
+                167,
+                218,
+                167,
+                36,
+                166,
+                234,
+                176,
+                167,
+                41,
+                84,
+                145,
+                133,
+                90,
+                212,
+                160,
+                103,
+                22,
+                96,
+                103,
+                76,
+                78,
+                3,
+                69,
+                89,
+                128,
+                61,
+                101,
+                163
+              ]
+            }
+          }
+        },
+        {
+          "name": "mayhemTokenVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "solVault"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "symbol",
+          "type": "string"
+        },
+        {
+          "name": "uri",
+          "type": "string"
+        },
+        {
+          "name": "creator",
+          "type": "pubkey"
+        },
+        {
+          "name": "isMayhemMode",
+          "type": "bool"
+        }
+      ]
+    },
+    {
       "name": "extendAccount",
       "docs": [
         "Extends the size of program-owned accounts"
@@ -2315,41 +2721,8 @@ export type Pump = {
                 "path": "bondingCurve"
               },
               {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
+                "kind": "account",
+                "path": "mint"
               },
               {
                 "kind": "account",
@@ -2493,7 +2866,7 @@ export type Pump = {
               },
               {
                 "kind": "account",
-                "path": "tokenProgram"
+                "path": "mint"
               },
               {
                 "kind": "account",
@@ -2631,7 +3004,7 @@ export type Pump = {
               },
               {
                 "kind": "account",
-                "path": "tokenProgram"
+                "path": "mint"
               },
               {
                 "kind": "account",
@@ -2825,41 +3198,8 @@ export type Pump = {
                 "path": "bondingCurve"
               },
               {
-                "kind": "const",
-                "value": [
-                  6,
-                  221,
-                  246,
-                  225,
-                  215,
-                  101,
-                  161,
-                  147,
-                  217,
-                  203,
-                  225,
-                  70,
-                  206,
-                  235,
-                  121,
-                  172,
-                  28,
-                  180,
-                  133,
-                  237,
-                  95,
-                  91,
-                  55,
-                  145,
-                  58,
-                  140,
-                  245,
-                  133,
-                  126,
-                  255,
-                  0,
-                  169
-                ]
+                "kind": "account",
+                "path": "tokenProgram"
               },
               {
                 "kind": "account",
@@ -2950,8 +3290,7 @@ export type Pump = {
           }
         },
         {
-          "name": "tokenProgram",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+          "name": "tokenProgram"
         },
         {
           "name": "eventAuthority",
@@ -3583,6 +3922,90 @@ export type Pump = {
       ]
     },
     {
+      "name": "setReservedFeeRecipient",
+      "discriminator": [
+        207,
+        189,
+        178,
+        71,
+        167,
+        122,
+        68,
+        180
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global"
+          ]
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "reservedFeeRecipient",
+          "type": "pubkey"
+        },
+        {
+          "name": "whitelistPda",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "syncUserVolumeAccumulator",
       "discriminator": [
         86,
@@ -3709,6 +4132,166 @@ export type Pump = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "toggleCreateV2",
+      "discriminator": [
+        28,
+        255,
+        230,
+        240,
+        172,
+        107,
+        203,
+        171
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global"
+          ]
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "toggleMayhemMode",
+      "discriminator": [
+        1,
+        9,
+        111,
+        208,
+        100,
+        31,
+        255,
+        163
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global"
+          ]
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
     },
     {
       "name": "updateGlobalAuthority",
@@ -4284,6 +4867,30 @@ export type Pump = {
       "code": 6042,
       "name": "buySlippageBelowMinTokensOut",
       "msg": "Slippage: Would buy less tokens than expected min_tokens_out"
+    },
+    {
+      "code": 6043,
+      "name": "nameTooLong"
+    },
+    {
+      "code": 6044,
+      "name": "symbolTooLong"
+    },
+    {
+      "code": 6045,
+      "name": "uriTooLong"
+    },
+    {
+      "code": 6046,
+      "name": "createV2Disabled"
+    },
+    {
+      "code": 6047,
+      "name": "cpitializeMayhemFailed"
+    },
+    {
+      "code": 6048,
+      "name": "mayhemModeDisabled"
     }
   ],
   "types": [
@@ -4399,6 +5006,10 @@ export type Pump = {
           {
             "name": "creator",
             "type": "pubkey"
+          },
+          {
+            "name": "isMayhemMode",
+            "type": "bool"
           }
         ]
       }
@@ -4603,6 +5214,14 @@ export type Pump = {
           {
             "name": "tokenTotalSupply",
             "type": "u64"
+          },
+          {
+            "name": "tokenProgram",
+            "type": "pubkey"
+          },
+          {
+            "name": "isMayhemMode",
+            "type": "bool"
           }
         ]
       }
@@ -4784,6 +5403,22 @@ export type Pump = {
           {
             "name": "adminSetCreatorAuthority",
             "type": "pubkey"
+          },
+          {
+            "name": "createV2Enabled",
+            "type": "bool"
+          },
+          {
+            "name": "whitelistPda",
+            "type": "pubkey"
+          },
+          {
+            "name": "reservedFeeRecipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "mayhemModeEnabled",
+            "type": "bool"
           }
         ]
       }

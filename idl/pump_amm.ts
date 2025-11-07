@@ -2091,6 +2091,10 @@ export type PumpAmm = {
         {
           "name": "coinCreator",
           "type": "pubkey"
+        },
+        {
+          "name": "isMayhemMode",
+          "type": "bool"
         }
       ]
     },
@@ -3013,6 +3017,74 @@ export type PumpAmm = {
       "args": []
     },
     {
+      "name": "setReservedFeeRecipient",
+      "discriminator": [
+        207,
+        189,
+        178,
+        71,
+        167,
+        122,
+        68,
+        180
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "globalConfig"
+          ]
+        },
+        {
+          "name": "globalConfig",
+          "writable": true
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "reservedFeeRecipient",
+          "type": "pubkey"
+        },
+        {
+          "name": "whitelistPda",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "syncUserVolumeAccumulator",
       "discriminator": [
         86,
@@ -3139,6 +3211,70 @@ export type PumpAmm = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "toggleMayhemMode",
+      "discriminator": [
+        1,
+        9,
+        111,
+        208,
+        100,
+        31,
+        255,
+        163
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "globalConfig"
+          ]
+        },
+        {
+          "name": "globalConfig",
+          "writable": true
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
     },
     {
       "name": "updateAdmin",
@@ -3908,6 +4044,18 @@ export type PumpAmm = {
       "code": 6040,
       "name": "buySlippageBelowMinBaseAmountOut",
       "msg": "buy: slippage - would buy less tokens than expected min_base_amount_out"
+    },
+    {
+      "code": 6041,
+      "name": "mayhemModeDisabled"
+    },
+    {
+      "code": 6042,
+      "name": "onlyPumpPoolsMayhemMode"
+    },
+    {
+      "code": 6043,
+      "name": "mayhemModeInDesiredState"
     }
   ],
   "types": [
@@ -4363,6 +4511,10 @@ export type PumpAmm = {
           {
             "name": "coinCreator",
             "type": "pubkey"
+          },
+          {
+            "name": "isMayhemMode",
+            "type": "bool"
           }
         ]
       }
@@ -4631,6 +4783,18 @@ export type PumpAmm = {
               "The admin authority for setting coin creators"
             ],
             "type": "pubkey"
+          },
+          {
+            "name": "whitelistPda",
+            "type": "pubkey"
+          },
+          {
+            "name": "reservedFeeRecipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "mayhemModeEnabled",
+            "type": "bool"
           }
         ]
       }
@@ -4753,6 +4917,10 @@ export type PumpAmm = {
           {
             "name": "coinCreator",
             "type": "pubkey"
+          },
+          {
+            "name": "isMayhemMode",
+            "type": "bool"
           }
         ]
       }
