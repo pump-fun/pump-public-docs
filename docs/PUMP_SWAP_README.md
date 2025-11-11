@@ -11,7 +11,7 @@ and [Devnet](https://solscan.io/account/pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMf
 The global configuration of the program is stored in the only `GlobalConfig` account, whose address is
 `ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw` (PDA-derived from `["global_config"]` seeds). The content of this account
 can be examined
-on [Mainnet Solscan](https://solscan.io/account/ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw#anchorData):
+on [Mainnet Solscan](https://solscan.io/account/ADyA8hdefvWN2dbGGWFotbzWxrAvLW83WG6QCVXvJKqw#accountData):
 
 ```json
 {
@@ -64,7 +64,7 @@ on [Mainnet Solscan](https://solscan.io/account/ADyA8hdefvWN2dbGGWFotbzWxrAvLW83
 
 Each pool is represented by a `Pool` account, which is PDA-derived from the
 `["pool", index, creator, baseMint, quoteMint]` seeds. An example Pool account data can be found
-at https://solscan.io/account/GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J#anchorData:
+at https://solscan.io/account/GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J#accountData:
 
 ```json
 {

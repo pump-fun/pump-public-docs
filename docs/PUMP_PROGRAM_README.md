@@ -18,7 +18,7 @@ and [Devnet](https://solscan.io/account/6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEw
 The global configuration of the program is stored in the only `Global` account, whose address is
 `4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SKy2uB4Jjaxnjf` (PDA-derived from `["global"]` seeds). The content of this account
 can be examined
-on [Mainnet Solscan](https://solscan.io/account/4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SKy2uB4Jjaxnjf#anchorData):
+on [Mainnet Solscan](https://solscan.io/account/4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SKy2uB4Jjaxnjf#accountData):
 
 ```json
 {
@@ -111,7 +111,7 @@ on [Mainnet Solscan](https://solscan.io/account/4wTV1YmiEkRvAtNtsSGPtUrqRYQMe5SK
 
 Each coin has an associated bonding curve account, which is PDA-derived from `["bonding-curve", mint]` seeds. An example
 bonding curve account can be found
-at https://solscan.io/account/EsmVk4MTsoT71JFaRM5DWFZboKpMQjfY6EYzAgUuksXw#anchorData:
+at https://solscan.io/account/EsmVk4MTsoT71JFaRM5DWFZboKpMQjfY6EYzAgUuksXw#accountData:
 
 ```json
 {
