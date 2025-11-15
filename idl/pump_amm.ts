@@ -549,7 +549,6 @@ export type PumpAmm = {
         },
         {
           "name": "globalVolumeAccumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -978,7 +977,6 @@ export type PumpAmm = {
         },
         {
           "name": "globalVolumeAccumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3017,28 +3015,50 @@ export type PumpAmm = {
       "args": []
     },
     {
-      "name": "setReservedFeeRecipient",
+      "name": "setReservedFeeRecipients",
       "discriminator": [
-        207,
-        189,
-        178,
-        71,
-        167,
-        122,
-        68,
-        180
+        111,
+        172,
+        162,
+        232,
+        114,
+        89,
+        213,
+        142
       ],
       "accounts": [
+        {
+          "name": "globalConfig",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
         {
           "name": "admin",
           "signer": true,
           "relations": [
             "globalConfig"
           ]
-        },
-        {
-          "name": "globalConfig",
-          "writable": true
         },
         {
           "name": "eventAuthority",
@@ -3074,10 +3094,6 @@ export type PumpAmm = {
         }
       ],
       "args": [
-        {
-          "name": "reservedFeeRecipient",
-          "type": "pubkey"
-        },
         {
           "name": "whitelistPda",
           "type": "pubkey"
@@ -3787,6 +3803,19 @@ export type PumpAmm = {
       ]
     },
     {
+      "name": "reservedFeeRecipientsEvent",
+      "discriminator": [
+        43,
+        188,
+        250,
+        18,
+        221,
+        75,
+        187,
+        95
+      ]
+    },
+    {
       "name": "sellEvent",
       "discriminator": [
         62,
@@ -4056,6 +4085,10 @@ export type PumpAmm = {
     {
       "code": 6043,
       "name": "mayhemModeInDesiredState"
+    },
+    {
+      "code": 6044,
+      "name": "notEnoughRemainingAccounts"
     }
   ],
   "types": [
@@ -4159,6 +4192,10 @@ export type PumpAmm = {
           {
             "name": "creator",
             "type": "pubkey"
+          },
+          {
+            "name": "isMayhemMode",
+            "type": "bool"
           }
         ]
       }
@@ -4795,6 +4832,15 @@ export type PumpAmm = {
           {
             "name": "mayhemModeEnabled",
             "type": "bool"
+          },
+          {
+            "name": "reservedFeeRecipients",
+            "type": {
+              "array": [
+                "pubkey",
+                7
+              ]
+            }
           }
         ]
       }
@@ -4921,6 +4967,31 @@ export type PumpAmm = {
           {
             "name": "isMayhemMode",
             "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "reservedFeeRecipientsEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "reservedFeeRecipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "reservedFeeRecipients",
+            "type": {
+              "array": [
+                "pubkey",
+                7
+              ]
+            }
           }
         ]
       }

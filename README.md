@@ -20,8 +20,16 @@
 
 ### Mayhem program id: 
 `MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e`
-### Mayhem fee recipient:
-`GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS` 
+### Mayhem fee recipients ( Use any one randomly ):
+`GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS`
+
+`4budycTjhs9fD6xw62VBducVTNgMgJJ5BgtKq7mAZwn6`,
+        `8SBKzEQU4nLSzcwF4a74F2iaUDQyTfjGndn6qUWBnrpR`,
+        `4UQeTP1T39KZ9Sfxzo3WR5skgsaP6NZa87BAkuazLEKH`,
+        `8sNeir4QsLsJdYpc9RZacohhK1Y5FLU3nC5LXgYB4aa6`,
+        `Fh9HmeLNUMVCvejxCtCL2DbYaRyBFVJ5xrWkLnMH6fdk`,
+        `463MEnMeGyJekNZFQSTUABBEbLnvMTALbT6ZmsxAbAdq`,
+        `6AUH3WEHucYZyC61hqpqYUWVto5qA5hjHuNQ32GNnNxA`
 
 ---
 
@@ -93,8 +101,7 @@ The **Protocol Fee Recipient Token Account** at **account index 11** of Pump Swa
 
 This new fee recipient for mayhem mode coins can be found from:
 - The **Global** account on **Bonding Curve**, and the **GlobalConfig** account on **Pump Swap**,  
-as the field: `reserved_fee_recipient`
-- The `reserved_fee_recipient` is set to Pubkey::default currently in mainnet. It will be changed to **Mayhem fee recipient** before the feature is live.
+as any one of the fields in: `reserved_fee_recipient` and `reserved_fee_recipients`
 ---
 
 ## 3. Summary of Action Items

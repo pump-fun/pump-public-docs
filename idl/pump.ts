@@ -633,7 +633,6 @@ export type Pump = {
         },
         {
           "name": "globalVolumeAccumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -1015,7 +1014,6 @@ export type Pump = {
         },
         {
           "name": "globalVolumeAccumulator",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -3922,16 +3920,16 @@ export type Pump = {
       ]
     },
     {
-      "name": "setReservedFeeRecipient",
+      "name": "setReservedFeeRecipients",
       "discriminator": [
-        207,
-        189,
-        178,
-        71,
-        167,
-        122,
-        68,
-        180
+        111,
+        172,
+        162,
+        232,
+        114,
+        89,
+        213,
+        142
       ],
       "accounts": [
         {
@@ -3955,7 +3953,6 @@ export type Pump = {
         },
         {
           "name": "authority",
-          "writable": true,
           "signer": true,
           "relations": [
             "global"
@@ -3995,10 +3992,6 @@ export type Pump = {
         }
       ],
       "args": [
-        {
-          "name": "reservedFeeRecipient",
-          "type": "pubkey"
-        },
         {
           "name": "whitelistPda",
           "type": "pubkey"
@@ -4580,6 +4573,19 @@ export type Pump = {
         101,
         130,
         216
+      ]
+    },
+    {
+      "name": "reservedFeeRecipientsEvent",
+      "discriminator": [
+        43,
+        188,
+        250,
+        18,
+        221,
+        75,
+        187,
+        95
       ]
     },
     {
@@ -5419,6 +5425,15 @@ export type Pump = {
           {
             "name": "mayhemModeEnabled",
             "type": "bool"
+          },
+          {
+            "name": "reservedFeeRecipients",
+            "type": {
+              "array": [
+                "pubkey",
+                7
+              ]
+            }
           }
         ]
       }
@@ -5491,6 +5506,31 @@ export type Pump = {
         "kind": "struct",
         "fields": [
           "bool"
+        ]
+      }
+    },
+    {
+      "name": "reservedFeeRecipientsEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "reservedFeeRecipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "reservedFeeRecipients",
+            "type": {
+              "array": [
+                "pubkey",
+                7
+              ]
+            }
+          }
         ]
       }
     },
