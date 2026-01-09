@@ -798,15 +798,30 @@ export type Pump = {
     {
       "name": "buyExactSolIn",
       "docs": [
-        "Given a budget of spendable SOL, buy at least min_tokens_out",
-        "Account creation and fees will be deducted from the spendable SOL",
+        "Given a budget of spendable SOL, buy at least min_tokens_out tokens.",
+        "Fees are deducted from spendable_sol_in.",
         "",
-        "f(sol) = tokens, where tokens >= min_tokens_out and sol > rent + fees",
+        "# Quote formulas",
+        "Where:",
+        "- total_fee_bps = protocol_fee_bps + creator_fee_bps (creator_fee_bps is 0 if no creator)",
+        "- floor(a/b) = a / b (integer division)",
+        "- ceil(a/b) = (a + b - 1) / b",
         "",
-        "max_slippage = min_tokens_out = 1",
+        "SOL → tokens quote",
+        "To calculate tokens_out for a given spendable_sol_in:",
+        "1. net_sol = floor(spendable_sol_in * 10_000 / (10_000 + total_fee_bps))",
+        "2. fees = ceil(net_sol * protocol_fee_bps / 10_000) + ceil(net_sol * creator_fee_bps / 10_000) (creator_fee_bps is 0 if no creator)",
+        "3. if net_sol + fees > spendable_sol_in: net_sol = net_sol - (net_sol + fees - spendable_sol_in)",
+        "4. tokens_out = floor((net_sol - 1) * virtual_token_reserves / (virtual_sol_reserves + net_sol - 1))",
         "",
-        "Make sure the sol budget is enough to cover creation of the following accounts (unless already created):",
-        "- creator_vault: rent.minimum_balance(SystemAccount::LEN)",
+        "Reverse quote (tokens → SOL)",
+        "To calculate spendable_sol_in for a desired number of tokens:",
+        "1. net_sol = ceil(tokens * virtual_sol_reserves / (virtual_token_reserves - tokens)) + 1",
+        "2. spendable_sol_in = ceil(net_sol * (10_000 + total_fee_bps) / 10_000)",
+        "",
+        "Rent",
+        "Separately make sure the instruction's payer has enough SOL to cover rent for:",
+        "- creator_vault: rent.minimum_balance(0)",
         "- user_volume_accumulator: rent.minimum_balance(UserVolumeAccumulator::LEN)"
       ],
       "discriminator": [
@@ -2314,60 +2329,7 @@ export type Pump = {
         },
         {
           "name": "mayhemTokenVault",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "solVault"
-              },
-              {
-                "kind": "account",
-                "path": "tokenProgram"
-              },
-              {
-                "kind": "account",
-                "path": "mint"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                140,
-                151,
-                37,
-                143,
-                78,
-                36,
-                137,
-                241,
-                187,
-                61,
-                16,
-                41,
-                20,
-                142,
-                13,
-                131,
-                11,
-                90,
-                19,
-                153,
-                218,
-                255,
-                16,
-                132,
-                4,
-                142,
-                123,
-                216,
-                219,
-                233,
-                248,
-                89
-              ]
-            }
-          }
+          "writable": true
         },
         {
           "name": "eventAuthority",
@@ -2424,6 +2386,202 @@ export type Pump = {
           "type": "bool"
         }
       ]
+    },
+    {
+      "name": "distributeCreatorFees",
+      "docs": [
+        "Distributes creator fees to shareholders based on their share percentages",
+        "The creator vault needs to have at least the minimum distributable amount to distribute fees",
+        "This can be checked with the get_minimum_distributable_fee instruction"
+      ],
+      "discriminator": [
+        165,
+        114,
+        103,
+        0,
+        121,
+        206,
+        247,
+        81
+      ],
+      "accounts": [
+        {
+          "name": "mint",
+          "relations": [
+            "sharingConfig"
+          ]
+        },
+        {
+          "name": "bondingCurve",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sharingConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "creatorVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve.creator",
+                "account": "bondingCurve"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "distributeCreatorFeesEvent"
+        }
+      }
     },
     {
       "name": "extendAccount",
@@ -2487,6 +2645,163 @@ export type Pump = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "getMinimumDistributableFee",
+      "docs": [
+        "Permissionless instruction to check the minimum required fees for distribution",
+        "Returns the minimum required balance from the creator_vault and whether distribution can proceed"
+      ],
+      "discriminator": [
+        117,
+        225,
+        127,
+        202,
+        134,
+        95,
+        68,
+        35
+      ],
+      "accounts": [
+        {
+          "name": "mint",
+          "relations": [
+            "sharingConfig"
+          ]
+        },
+        {
+          "name": "bondingCurve",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sharingConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "creatorVault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve.creator",
+                "account": "bondingCurve"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "minimumDistributableFeeEvent"
+        }
+      }
     },
     {
       "name": "initUserVolumeAccumulator",
@@ -3116,6 +3431,157 @@ export type Pump = {
       "args": []
     },
     {
+      "name": "migrateBondingCurveCreator",
+      "discriminator": [
+        87,
+        124,
+        52,
+        191,
+        52,
+        38,
+        214,
+        232
+      ],
+      "accounts": [
+        {
+          "name": "mint",
+          "relations": [
+            "sharingConfig"
+          ]
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sharingConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "sell",
       "docs": [
         "Sells tokens into a bonding curve."
@@ -3613,6 +4079,226 @@ export type Pump = {
           "type": "pubkey"
         }
       ]
+    },
+    {
+      "name": "setMayhemVirtualParams",
+      "discriminator": [
+        61,
+        169,
+        188,
+        191,
+        153,
+        149,
+        42,
+        97
+      ],
+      "accounts": [
+        {
+          "name": "solVaultAuthority",
+          "writable": true,
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  111,
+                  108,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                5,
+                42,
+                229,
+                215,
+                167,
+                218,
+                167,
+                36,
+                166,
+                234,
+                176,
+                167,
+                41,
+                84,
+                145,
+                133,
+                90,
+                212,
+                160,
+                103,
+                22,
+                96,
+                103,
+                76,
+                78,
+                3,
+                69,
+                89,
+                128,
+                61,
+                101,
+                163
+              ]
+            }
+          }
+        },
+        {
+          "name": "mayhemTokenVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "solVaultAuthority"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "mint"
+        },
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
     },
     {
       "name": "setMetaplexCreator",
@@ -4418,6 +5104,19 @@ export type Pump = {
       ]
     },
     {
+      "name": "sharingConfig",
+      "discriminator": [
+        216,
+        74,
+        9,
+        0,
+        56,
+        140,
+        93,
+        75
+      ]
+    },
+    {
       "name": "userVolumeAccumulator",
       "discriminator": [
         86,
@@ -4550,6 +5249,19 @@ export type Pump = {
       ]
     },
     {
+      "name": "distributeCreatorFeesEvent",
+      "discriminator": [
+        165,
+        55,
+        129,
+        112,
+        4,
+        179,
+        202,
+        40
+      ]
+    },
+    {
       "name": "extendAccountEvent",
       "discriminator": [
         97,
@@ -4573,6 +5285,32 @@ export type Pump = {
         101,
         130,
         216
+      ]
+    },
+    {
+      "name": "migrateBondingCurveCreatorEvent",
+      "discriminator": [
+        155,
+        167,
+        104,
+        220,
+        213,
+        108,
+        243,
+        3
+      ]
+    },
+    {
+      "name": "minimumDistributableFeeEvent",
+      "discriminator": [
+        168,
+        216,
+        132,
+        239,
+        235,
+        182,
+        49,
+        52
       ]
     },
     {
@@ -4664,6 +5402,19 @@ export type Pump = {
         206,
         207,
         247
+      ]
+    },
+    {
+      "name": "updateMayhemVirtualParamsEvent",
+      "discriminator": [
+        117,
+        123,
+        228,
+        182,
+        161,
+        168,
+        220,
+        214
       ]
     }
   ],
@@ -4897,6 +5648,41 @@ export type Pump = {
     {
       "code": 6048,
       "name": "mayhemModeDisabled"
+    },
+    {
+      "code": 6049,
+      "name": "creatorMigratedToSharingConfig",
+      "msg": "creator has been migrated to sharing config, use pump_fees::reset_fee_sharing_config instead"
+    },
+    {
+      "code": 6050,
+      "name": "unableToDistributeCreatorVaultMigratedToSharingConfig",
+      "msg": "creator_vault has been migrated to sharing config, use pump:distribute_creator_fees instead"
+    },
+    {
+      "code": 6051,
+      "name": "sharingConfigNotActive",
+      "msg": "Sharing config is not active"
+    },
+    {
+      "code": 6052,
+      "name": "unableToDistributeCreatorFeesToExecutableRecipient",
+      "msg": "The recipient account is executable, so it cannot receive lamports, remove it from the team first"
+    },
+    {
+      "code": 6053,
+      "name": "BondingCurveAndSharingConfigCreatorMismatch",
+      "msg": "Bonding curve creator does not match sharing config"
+    },
+    {
+      "code": 6054,
+      "name": "shareholdersAndRemainingAccountsMismatch",
+      "msg": "Remaining accounts do not match shareholders, make sure to pass exactly the same pubkeys in the same order"
+    },
+    {
+      "code": 6055,
+      "name": "invalidShareBps",
+      "msg": "Share bps must be greater than 0"
     }
   ],
   "types": [
@@ -5169,6 +5955,20 @@ export type Pump = {
       }
     },
     {
+      "name": "configStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "paused"
+          },
+          {
+            "name": "active"
+          }
+        ]
+      }
+    },
+    {
       "name": "createEvent",
       "type": {
         "kind": "struct",
@@ -5228,6 +6028,48 @@ export type Pump = {
           {
             "name": "isMayhemMode",
             "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "distributeCreatorFeesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondingCurve",
+            "type": "pubkey"
+          },
+          {
+            "name": "sharingConfig",
+            "type": "pubkey"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "shareholders",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "shareholder"
+                }
+              }
+            }
+          },
+          {
+            "name": "distributed",
+            "type": "u64"
           }
         ]
       }
@@ -5501,6 +6343,58 @@ export type Pump = {
       }
     },
     {
+      "name": "migrateBondingCurveCreatorEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondingCurve",
+            "type": "pubkey"
+          },
+          {
+            "name": "sharingConfig",
+            "type": "pubkey"
+          },
+          {
+            "name": "oldCreator",
+            "type": "pubkey"
+          },
+          {
+            "name": "newCreator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "minimumDistributableFeeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "minimumRequired",
+            "type": "u64"
+          },
+          {
+            "name": "distributableFees",
+            "type": "u64"
+          },
+          {
+            "name": "canDistribute",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
       "name": "optionBool",
       "type": {
         "kind": "struct",
@@ -5656,6 +6550,68 @@ export type Pump = {
       }
     },
     {
+      "name": "shareholder",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "pubkey"
+          },
+          {
+            "name": "shareBps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "sharingConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "configStatus"
+              }
+            }
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "adminRevoked",
+            "type": "bool"
+          },
+          {
+            "name": "shareholders",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "shareholder"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "syncUserVolumeAccumulatorEvent",
       "type": {
         "kind": "struct",
@@ -5774,6 +6730,10 @@ export type Pump = {
           {
             "name": "ixName",
             "type": "string"
+          },
+          {
+            "name": "mayhemMode",
+            "type": "bool"
           }
         ]
       }
@@ -5798,6 +6758,46 @@ export type Pump = {
           {
             "name": "timestamp",
             "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "updateMayhemVirtualParamsEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "virtualTokenReserves",
+            "type": "u64"
+          },
+          {
+            "name": "virtualSolReserves",
+            "type": "u64"
+          },
+          {
+            "name": "newVirtualTokenReserves",
+            "type": "u64"
+          },
+          {
+            "name": "newVirtualSolReserves",
+            "type": "u64"
+          },
+          {
+            "name": "realTokenReserves",
+            "type": "u64"
+          },
+          {
+            "name": "realSolReserves",
+            "type": "u64"
           }
         ]
       }

@@ -2462,6 +2462,162 @@ export type PumpAmm = {
       "args": []
     },
     {
+      "name": "migratePoolCoinCreator",
+      "docs": [
+        "Migrate Pool Coin Creator to Sharing Config"
+      ],
+      "discriminator": [
+        208,
+        8,
+        159,
+        4,
+        74,
+        175,
+        16,
+        58
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool.index",
+                "account": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "pool.creator",
+                "account": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "pool.base_mint",
+                "account": "pool"
+              },
+              {
+                "kind": "account",
+                "path": "pool.quote_mint",
+                "account": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sharingConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pool.base_mint",
+                "account": "pool"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "sell",
       "discriminator": [
         51,
@@ -3293,6 +3449,233 @@ export type PumpAmm = {
       ]
     },
     {
+      "name": "transferCreatorFeesToPump",
+      "docs": [
+        "Transfer creator fees to pump creator vault",
+        "If coin creator fees are currently below rent.minimum_balance(TokenAccount::LEN)",
+        "The transfer will be skipped"
+      ],
+      "discriminator": [
+        139,
+        52,
+        134,
+        85,
+        228,
+        229,
+        108,
+        241
+      ],
+      "accounts": [
+        {
+          "name": "wsolMint",
+          "docs": [
+            "Pump Canonical Pool are quoted in wSOL"
+          ]
+        },
+        {
+          "name": "tokenProgram"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "coinCreator"
+        },
+        {
+          "name": "coinCreatorVaultAuthority",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "coinCreator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "coinCreatorVaultAta",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "coinCreatorVaultAuthority"
+              },
+              {
+                "kind": "account",
+                "path": "tokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "wsolMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "pumpCreatorVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "coinCreator"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                1,
+                86,
+                224,
+                246,
+                147,
+                102,
+                90,
+                207,
+                68,
+                219,
+                21,
+                104,
+                191,
+                23,
+                91,
+                170,
+                81,
+                137,
+                203,
+                151,
+                245,
+                210,
+                255,
+                59,
+                101,
+                93,
+                43,
+                182,
+                253,
+                109,
+                24,
+                176
+              ]
+            }
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "updateAdmin",
       "discriminator": [
         161,
@@ -3632,6 +4015,19 @@ export type PumpAmm = {
       ]
     },
     {
+      "name": "sharingConfig",
+      "discriminator": [
+        216,
+        74,
+        9,
+        0,
+        56,
+        140,
+        93,
+        75
+      ]
+    },
+    {
       "name": "userVolumeAccumulator",
       "discriminator": [
         86,
@@ -3800,6 +4196,19 @@ export type PumpAmm = {
         101,
         130,
         216
+      ]
+    },
+    {
+      "name": "migratePoolCoinCreatorEvent",
+      "discriminator": [
+        170,
+        221,
+        82,
+        199,
+        147,
+        165,
+        247,
+        46
       ]
     },
     {
@@ -4089,6 +4498,24 @@ export type PumpAmm = {
     {
       "code": 6044,
       "name": "notEnoughRemainingAccounts"
+    },
+    {
+      "code": 6045,
+      "name": "invalidSharingConfigBaseMint"
+    },
+    {
+      "code": 6046,
+      "name": "invalidSharingConfigCoinCreator"
+    },
+    {
+      "code": 6047,
+      "name": "coinCreatorMigratedToSharingConfig",
+      "msg": "coin creator has been migrated to sharing config, use pump_fees::reset_fee_sharing_config instead"
+    },
+    {
+      "code": 6048,
+      "name": "creatorVaultMigratedToSharingConfig",
+      "msg": "creator_vault has been migrated to sharing config, use pump:distribute_creator_fees instead"
     }
   ],
   "types": [
@@ -4419,6 +4846,20 @@ export type PumpAmm = {
           {
             "name": "coinCreatorTokenAccount",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "configStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "paused"
+          },
+          {
+            "name": "active"
           }
         ]
       }
@@ -4908,6 +5349,38 @@ export type PumpAmm = {
       }
     },
     {
+      "name": "migratePoolCoinCreatorEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "baseMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "sharingConfig",
+            "type": "pubkey"
+          },
+          {
+            "name": "oldCoinCreator",
+            "type": "pubkey"
+          },
+          {
+            "name": "newCoinCreator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "optionBool",
       "type": {
         "kind": "struct",
@@ -5148,6 +5621,68 @@ export type PumpAmm = {
           {
             "name": "coinCreator",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "shareholder",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "address",
+            "type": "pubkey"
+          },
+          {
+            "name": "shareBps",
+            "type": "u16"
+          }
+        ]
+      }
+    },
+    {
+      "name": "sharingConfig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "configStatus"
+              }
+            }
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "adminRevoked",
+            "type": "bool"
+          },
+          {
+            "name": "shareholders",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "shareholder"
+                }
+              }
+            }
           }
         ]
       }
