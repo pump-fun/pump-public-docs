@@ -1186,6 +1186,103 @@
       ]
     },
     {
+      "name": "claim_cashback",
+      "discriminator": [
+        37,
+        58,
+        35,
+        126,
+        190,
+        53,
+        228,
+        197
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true
+        },
+        {
+          "name": "user_volume_accumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "claim_token_incentives",
       "discriminator": [
         16,
@@ -2378,6 +2475,14 @@
         {
           "name": "is_mayhem_mode",
           "type": "bool"
+        },
+        {
+          "name": "is_cashback_enabled",
+          "type": {
+            "defined": {
+              "name": "OptionBool"
+            }
+          }
         }
       ]
     },
@@ -3578,7 +3683,10 @@
     {
       "name": "sell",
       "docs": [
-        "Sells tokens into a bonding curve."
+        "Sells tokens into a bonding curve.",
+        "For cashback coins, optionally pass user_volume_accumulator as remaining_accounts[0].",
+        "If provided and valid, creator_fee goes to user_volume_accumulator.",
+        "Otherwise, falls back to transferring creator_fee to creator_vault."
       ],
       "discriminator": [
         51,
@@ -4807,6 +4915,86 @@
       "args": []
     },
     {
+      "name": "toggle_cashback_enabled",
+      "discriminator": [
+        115,
+        103,
+        224,
+        255,
+        189,
+        89,
+        86,
+        195
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global"
+          ]
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "enabled",
+          "type": "bool"
+        }
+      ]
+    },
+    {
       "name": "toggle_create_v2",
       "discriminator": [
         28,
@@ -5162,6 +5350,19 @@
         29,
         67,
         222
+      ]
+    },
+    {
+      "name": "ClaimCashbackEvent",
+      "discriminator": [
+        226,
+        214,
+        246,
+        33,
+        7,
+        242,
+        147,
+        229
       ]
     },
     {
@@ -5677,6 +5878,11 @@
       "code": 6055,
       "name": "InvalidShareBps",
       "msg": "Share bps must be greater than 0"
+    },
+    {
+      "code": 6056,
+      "name": "CashbackNotEnabled",
+      "msg": "Cashback is not enabled"
     }
   ],
   "types": [
@@ -5796,6 +6002,38 @@
           {
             "name": "is_mayhem_mode",
             "type": "bool"
+          },
+          {
+            "name": "is_cashback_coin",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClaimCashbackEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "total_claimed",
+            "type": "u64"
+          },
+          {
+            "name": "total_cashback_earned",
+            "type": "u64"
           }
         ]
       }
@@ -6021,6 +6259,10 @@
           },
           {
             "name": "is_mayhem_mode",
+            "type": "bool"
+          },
+          {
+            "name": "is_cashback_enabled",
             "type": "bool"
           }
         ]
@@ -6270,6 +6512,10 @@
                 7
               ]
             }
+          },
+          {
+            "name": "is_cashback_enabled",
+            "type": "bool"
           }
         ]
       }
@@ -6728,6 +6974,14 @@
           {
             "name": "mayhem_mode",
             "type": "bool"
+          },
+          {
+            "name": "cashback_fee_basis_points",
+            "type": "u64"
+          },
+          {
+            "name": "cashback",
+            "type": "u64"
           }
         ]
       }
@@ -6828,6 +7082,14 @@
           {
             "name": "has_total_claimed_tokens",
             "type": "bool"
+          },
+          {
+            "name": "cashback_earned",
+            "type": "u64"
+          },
+          {
+            "name": "total_cashback_claimed",
+            "type": "u64"
           }
         ]
       }
