@@ -8,7 +8,9 @@ This is a backwards compatible change, so if you do not update to the latest IDs
 
 You can also use our Typescript SDKs for easier integration:
 - [Pump SDK](https://www.npmjs.com/package/@pump-fun/pump-sdk)
+  - Latest version is `1.28.0`
 - [PumpSwap SDK](https://www.npmjs.com/package/@pump-fun/pump-swap-sdk)
+  - Latest version is `1.14.0`
 
 ## Changes to Instructions
 
