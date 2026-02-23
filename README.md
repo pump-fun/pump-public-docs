@@ -2,6 +2,83 @@
 
 [Pump fee program docs](docs/FEE_PROGRAM_README.md)
 
+## Official Pump SDK
+
+The official Pump program SDK is available on npm: [@pump-fun/pump-sdk](https://www.npmjs.com/package/@pump-fun/pump-sdk)
+
+### Installation
+
+```bash
+npm install @pump-fun/pump-sdk
+```
+
+### Basic Setup
+
+```typescript
+import { PumpSdk, OnlinePumpSdk } from '@pump-fun/pump-sdk'
+import { Connection } from '@solana/web3.js'
+
+const connection = new Connection(
+  "https://api.devnet.solana.com",
+  "confirmed",
+);
+const sdk = new PumpSdk();
+const onlineSdk = new OnlinePumpSdk(connection);
+```
+
+### Coin Creation
+
+```typescript
+const mint = PublicKey.unique()
+const creator = PublicKey.unique()
+const user = PublicKey.unique()
+const mayhemMode = false
+const cashback = false
+
+const instruction = await pumpSdk.createV2Instruction({
+  mint,
+  name: 'name',
+  symbol: 'symbol',
+  uri: 'uri',
+  creator,
+  user,
+  mayhemMode,
+  cashback
+})
+```
+
+### Creating and Buying in the Same Transaction
+
+```typescript
+const mint = PublicKey.unique()
+const user = PublicKey.unique()
+const creator = PublicKey.unique()
+const global = await onlinePumpSdk.fetchGlobal()
+const solAmount = new BN(0.1 * 10 ** 9) // 0.1 SOL
+
+const { bondingCurve } = await onlinePumpSdk.fetchBuyState(mint, user)
+
+const createIx = await pumpSdk.createV2AndBuyInstructions({
+  global,
+  mint,
+  name: 'name',
+  symbol: 'symbol',
+  uri: 'uri',
+  creator,
+  user,
+  amount: getBuyTokenAmountFromSolAmount({
+    global,
+    feeConfig: null,
+    mintSupply: null,
+    bondingCurve,
+    amount: solAmount
+  }),
+  solAmount,
+  mayhemMode: false,
+  cashback: false
+})
+```
+
 ## Other documentation
 
 - [Pump Program](docs/PUMP_PROGRAM_README.md)
