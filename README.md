@@ -11,6 +11,55 @@
 - [PumpSwap creator fee update](docs/PUMP_SWAP_CREATOR_FEE_README.md)
 - [FAQ](docs/FAQ.md)
 
+---
+
+## GitHub Recipient and Social Fee PDA Requirements
+
+If you are adding a **GitHub recipient** as a fee recipient in sharing config, make sure to initialize the social fee pda before adding it as a recipient. Use one of these methods:
+
+```ts
+import {
+  Platform,
+  PUMP_SDK,
+} from "@pump-fun/pump-sdk";
+
+// 1) Update an existing sharing config
+await PUMP_SDK.updateSharingConfigWithSocialRecipients({
+  authority,
+  mint,
+  currentShareholders,
+  newShareholders: [
+    { address: authority, shareBps: 7000 },
+    { userId: "1234567", platform: Platform.GitHub, shareBps: 3000 },
+  ],
+});
+
+// 2) Create sharing config + set social recipients in one flow
+//    - Use pool for graduated coins or null for ungraduated
+await PUMP_SDK.createSharingConfigWithSocialRecipients({
+  creator,
+  mint,
+  pool,
+  newShareholders: [
+    { address: creator, shareBps: 7000 },
+    { userId: "1234567", platform: Platform.GitHub, shareBps: 3000 },
+  ],
+});
+```
+
+Method selection:
+- `updateSharingConfigWithSocialRecipients`: use when sharing config already exists.
+- `createSharingConfigWithSocialRecipients`: use for first-time setup (creates config, then updates shares).
+
+✅ Checklist
+
+- [ ] The GitHub user must be able to log in to claim fees. **GitHub organizations are not supported** for social fee recipients; adding an organization account can result in fees being permanently lost.
+- [ ] Only `Platform.GitHub` is supported. Any attempt to use a different platform value can result in the coin being banned or **fees lost**.
+- [ ] Fees in a GitHub vault can only be claimed by the linked GitHub user, and only through Pump.fun (web or mobile). You are responsible for directing users to claim there; we do not support any claim flow outside our apps.
+- [ ] You have initialized the social fee recipient pda by using one of the above helper or `createSocialFeePda`
+
+---
+
 
 
 # ⚠️ Breaking Change Announcement — Bonding Curve and Pump Swap Programs on 12:00 UTC, 11 November 2025 

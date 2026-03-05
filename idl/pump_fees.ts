@@ -14,6 +14,115 @@ export type PumpFees = {
   },
   "instructions": [
     {
+      "name": "claimSocialFeePda",
+      "discriminator": [
+        225,
+        21,
+        251,
+        133,
+        161,
+        30,
+        199,
+        226
+      ],
+      "accounts": [
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "socialFeePda",
+          "writable": true
+        },
+        {
+          "name": "feeProgramGlobal",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "socialClaimAuthority",
+          "signer": true,
+          "relations": [
+            "feeProgramGlobal"
+          ]
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "userId",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "u8"
+        }
+      ],
+      "returns": {
+        "option": {
+          "defined": {
+            "name": "socialFeePdaClaimed"
+          }
+        }
+      }
+    },
+    {
       "name": "createFeeSharingConfig",
       "docs": [
         "Create Fee Sharing Config"
@@ -378,6 +487,106 @@ export type PumpFees = {
       "args": []
     },
     {
+      "name": "createSocialFeePda",
+      "discriminator": [
+        144,
+        224,
+        59,
+        211,
+        78,
+        248,
+        202,
+        220
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "socialFeePda",
+          "writable": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "feeProgramGlobal",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "userId",
+          "type": "string"
+        },
+        {
+          "name": "platform",
+          "type": "u8"
+        }
+      ]
+    },
+    {
       "name": "getFees",
       "docs": [
         "Get Fees"
@@ -533,6 +742,165 @@ export type PumpFees = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "initializeFeeProgramGlobal",
+      "discriminator": [
+        35,
+        215,
+        130,
+        84,
+        233,
+        56,
+        124,
+        167
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "pumpGlobal"
+          ]
+        },
+        {
+          "name": "pumpGlobal",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                1,
+                86,
+                224,
+                246,
+                147,
+                102,
+                90,
+                207,
+                68,
+                219,
+                21,
+                104,
+                191,
+                23,
+                91,
+                170,
+                81,
+                137,
+                203,
+                151,
+                245,
+                210,
+                255,
+                59,
+                101,
+                93,
+                43,
+                182,
+                253,
+                109,
+                24,
+                176
+              ]
+            }
+          }
+        },
+        {
+          "name": "feeProgramGlobal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "socialClaimAuthority",
+          "type": "pubkey"
+        },
+        {
+          "name": "disableFlags",
+          "type": "u8"
+        },
+        {
+          "name": "claimRateLimit",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "resetFeeSharingConfig",
@@ -830,6 +1198,374 @@ export type PumpFees = {
         }
       ],
       "args": []
+    },
+    {
+      "name": "setAuthority",
+      "discriminator": [
+        133,
+        250,
+        37,
+        21,
+        110,
+        163,
+        26,
+        121
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "feeProgramGlobal"
+          ]
+        },
+        {
+          "name": "feeProgramGlobal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "newAuthority",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "setClaimRateLimit",
+      "discriminator": [
+        185,
+        211,
+        159,
+        174,
+        212,
+        49,
+        88,
+        4
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "feeProgramGlobal"
+          ]
+        },
+        {
+          "name": "feeProgramGlobal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "claimRateLimit",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "setDisableFlags",
+      "discriminator": [
+        194,
+        217,
+        112,
+        35,
+        114,
+        222,
+        51,
+        190
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "feeProgramGlobal"
+          ]
+        },
+        {
+          "name": "feeProgramGlobal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "disableFlags",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "setSocialClaimAuthority",
+      "discriminator": [
+        147,
+        54,
+        184,
+        154,
+        136,
+        237,
+        185,
+        153
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "feeProgramGlobal"
+          ]
+        },
+        {
+          "name": "feeProgramGlobal",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  45,
+                  112,
+                  114,
+                  111,
+                  103,
+                  114,
+                  97,
+                  109,
+                  45,
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "socialClaimAuthority",
+          "type": "pubkey"
+        }
+      ]
     },
     {
       "name": "transferFeeSharingAuthority",
@@ -1830,6 +2566,19 @@ export type PumpFees = {
       ]
     },
     {
+      "name": "feeProgramGlobal",
+      "discriminator": [
+        162,
+        165,
+        245,
+        49,
+        29,
+        37,
+        55,
+        242
+      ]
+    },
+    {
       "name": "global",
       "discriminator": [
         167,
@@ -1867,6 +2616,19 @@ export type PumpFees = {
         93,
         75
       ]
+    },
+    {
+      "name": "socialFeePda",
+      "discriminator": [
+        139,
+        96,
+        53,
+        17,
+        42,
+        169,
+        206,
+        150
+      ]
     }
   ],
   "events": [
@@ -1897,6 +2659,19 @@ export type PumpFees = {
       ]
     },
     {
+      "name": "initializeFeeProgramGlobalEvent",
+      "discriminator": [
+        40,
+        233,
+        156,
+        78,
+        95,
+        0,
+        8,
+        199
+      ]
+    },
+    {
       "name": "resetFeeSharingConfigEvent",
       "discriminator": [
         203,
@@ -1920,6 +2695,84 @@ export type PumpFees = {
         190,
         153,
         62
+      ]
+    },
+    {
+      "name": "setAuthorityEvent",
+      "discriminator": [
+        18,
+        175,
+        132,
+        66,
+        208,
+        201,
+        87,
+        242
+      ]
+    },
+    {
+      "name": "setClaimRateLimitEvent",
+      "discriminator": [
+        13,
+        143,
+        143,
+        235,
+        181,
+        19,
+        51,
+        40
+      ]
+    },
+    {
+      "name": "setDisableFlagsEvent",
+      "discriminator": [
+        5,
+        8,
+        179,
+        65,
+        49,
+        55,
+        145,
+        126
+      ]
+    },
+    {
+      "name": "setSocialClaimAuthorityEvent",
+      "discriminator": [
+        60,
+        118,
+        127,
+        132,
+        239,
+        52,
+        254,
+        14
+      ]
+    },
+    {
+      "name": "socialFeePdaClaimed",
+      "discriminator": [
+        50,
+        18,
+        193,
+        65,
+        237,
+        210,
+        234,
+        236
+      ]
+    },
+    {
+      "name": "socialFeePdaCreated",
+      "discriminator": [
+        183,
+        183,
+        218,
+        147,
+        24,
+        124,
+        137,
+        169
       ]
     },
     {
@@ -2093,6 +2946,16 @@ export type PumpFees = {
       "code": 6020,
       "name": "shareholderAccountMismatch",
       "msg": "Remaining account key doesn't match shareholder address"
+    },
+    {
+      "code": 6021,
+      "name": "featureDeactivated",
+      "msg": "Feature is currently deactivated"
+    },
+    {
+      "code": 6022,
+      "name": "userIdTooLong",
+      "msg": "User ID exceeds maximum length"
     }
   ],
   "types": [
@@ -2243,6 +3106,43 @@ export type PumpFees = {
                   "name": "feeTier"
                 }
               }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "feeProgramGlobal",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "disableFlags",
+            "type": "u8"
+          },
+          {
+            "name": "socialClaimAuthority",
+            "type": "pubkey"
+          },
+          {
+            "name": "claimRateLimit",
+            "type": "u64"
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": [
+                "u8",
+                256
+              ]
             }
           }
         ]
@@ -2407,6 +3307,34 @@ export type PumpFees = {
       }
     },
     {
+      "name": "initializeFeeProgramGlobalEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "socialClaimAuthority",
+            "type": "pubkey"
+          },
+          {
+            "name": "disableFlags",
+            "type": "u8"
+          },
+          {
+            "name": "claimRateLimit",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "pool",
       "type": {
         "kind": "struct",
@@ -2531,6 +3459,74 @@ export type PumpFees = {
       }
     },
     {
+      "name": "setAuthorityEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "oldAuthority",
+            "type": "pubkey"
+          },
+          {
+            "name": "newAuthority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "setClaimRateLimitEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "claimRateLimit",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "setDisableFlagsEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "disableFlags",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "setSocialClaimAuthorityEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "socialClaimAuthority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "shareholder",
       "type": {
         "kind": "struct",
@@ -2588,6 +3584,134 @@ export type PumpFees = {
                 }
               }
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "socialFeePda",
+      "docs": [
+        "Platform identifier: 0=pump, 1=twitter, etc."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "userId",
+            "docs": [
+              "Max 20 characters to fit u64::MAX (18,446,744,073,709,551,615) as a string.",
+              "Actual storage: 4 bytes (length prefix) + 20 bytes (content) = 24 bytes."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "type": "u8"
+          },
+          {
+            "name": "totalClaimed",
+            "type": "u64"
+          },
+          {
+            "name": "lastClaimed",
+            "type": "u64"
+          },
+          {
+            "name": "reserved",
+            "type": {
+              "array": [
+                "u8",
+                128
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "socialFeePdaClaimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "userId",
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "type": "u8"
+          },
+          {
+            "name": "socialFeePda",
+            "type": "pubkey"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "socialClaimAuthority",
+            "type": "pubkey"
+          },
+          {
+            "name": "amountClaimed",
+            "type": "u64"
+          },
+          {
+            "name": "claimableBefore",
+            "type": "u64"
+          },
+          {
+            "name": "lifetimeClaimed",
+            "type": "u64"
+          },
+          {
+            "name": "recipientBalanceBefore",
+            "type": "u64"
+          },
+          {
+            "name": "recipientBalanceAfter",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "socialFeePdaCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "userId",
+            "type": "string"
+          },
+          {
+            "name": "platform",
+            "type": "u8"
+          },
+          {
+            "name": "socialFeePda",
+            "type": "pubkey"
+          },
+          {
+            "name": "createdBy",
+            "type": "pubkey"
           }
         ]
       }
@@ -2754,6 +3878,29 @@ export type PumpFees = {
       "value": "[102, 101, 101, 95, 99, 111, 110, 102, 105, 103]"
     },
     {
+      "name": "feeProgramGlobalSeed",
+      "type": {
+        "array": [
+          "u8",
+          18
+        ]
+      },
+      "value": "[102, 101, 101, 45, 112, 114, 111, 103, 114, 97, 109, 45, 103, 108, 111, 98, 97, 108]"
+    },
+    {
+      "name": "pumpGlobalSeed",
+      "docs": [
+        "Bonding Curve Program Global Seed"
+      ],
+      "type": {
+        "array": [
+          "u8",
+          6
+        ]
+      },
+      "value": "[103, 108, 111, 98, 97, 108]"
+    },
+    {
       "name": "sharingConfigSeed",
       "type": {
         "array": [
@@ -2762,6 +3909,16 @@ export type PumpFees = {
         ]
       },
       "value": "[115, 104, 97, 114, 105, 110, 103, 45, 99, 111, 110, 102, 105, 103]"
+    },
+    {
+      "name": "socialFeePdaSeed",
+      "type": {
+        "array": [
+          "u8",
+          14
+        ]
+      },
+      "value": "[115, 111, 99, 105, 97, 108, 45, 102, 101, 101, 45, 112, 100, 97]"
     }
   ]
 };
