@@ -13,6 +13,26 @@
 
 ---
 
+### One-Time Creator Reward Distribution Policy
+
+This update only affects fee-sharing configuration. Trading instructions are unchanged and do not require an upgrade.
+
+
+**TLDR:** After the first configuration, reward distribution is locked and cannot be changed.
+
+What changed:
+- Reward distribution can be configured **only once**.
+- You can configure it using either `updateFeeShares` or `updateSharingConfigWithSocialRecipients`.
+- After it is configured, it is **locked** and cannot be changed again.
+
+What did **not** change:
+- Buy and sell instructions are unchanged.
+
+Migration/compatibility notes:
+- Reward distributions created before this policy are treated as final (locked).
+- `RevokeFeeSharingAuthority` and `TransferFeeSharingAuthority` are no longer supported.
+- If you are unsure whether a reward distribution is still editable, call `isSharingConfigEditable`.
+
 ## GitHub Recipient and Social Fee PDA Requirements
 
 If you are adding a **GitHub recipient** as a fee recipient in sharing config, make sure to initialize the social fee pda before adding it as a recipient. Use one of these methods:
@@ -51,6 +71,8 @@ Method selection:
 - `updateSharingConfigWithSocialRecipients`: use when sharing config already exists.
 - `createSharingConfigWithSocialRecipients`: use for first-time setup (creates config, then updates shares).
 
+> **Important:** Reward split can be setup once and once only by calling either `updateFeeShares` or `updateSharingConfigWithSocialRecipients`. Double-check final recipients and `shareBps` before submitting.
+
 ✅ Checklist
 
 - [ ] The GitHub user must be able to log in to claim fees. **GitHub organizations are not supported** for social fee recipients; adding an organization account can result in fees being permanently lost.
@@ -62,12 +84,12 @@ Method selection:
 
 
 
-# ⚠️ Breaking Change Announcement — Bonding Curve and Pump Swap Programs on 12:00 UTC, 11 November 2025 
+# ⚠️ Breaking Change Announcement — Bonding Curve and Pump Swap Programs on 12:00 UTC, 11 November 2025
 
 ---
 
 
-### Mayhem program id: 
+### Mayhem program id:
 `MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e`
 ### Mayhem fee recipients ( Use any one randomly ):
 `GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS`
@@ -84,15 +106,15 @@ Method selection:
 
 ## 1. Changes Summary
 
-1. **BondingCurve and Pool struct size increase**  
-   The `bondingCurve` account now needs to be at least **82 bytes** in size (was 81 earlier) and the `pool` structure needs to be **244 bytes** (was 243 earlier).  
-   This is because of a new field called `is_mayhem_mode` on both structs which is a boolean. 
+1. **BondingCurve and Pool struct size increase**
+   The `bondingCurve` account now needs to be at least **82 bytes** in size (was 81 earlier) and the `pool` structure needs to be **244 bytes** (was 243 earlier).
+   This is because of a new field called `is_mayhem_mode` on both structs which is a boolean.
    If the account lengths are insufficient, the buy and sell instruction will handle the size extension under the hood, no change needed on your end.
 
-2. **New instruction to create tokens called `create_v2`**  
+2. **New instruction to create tokens called `create_v2`**
    This instruction will use the **Token2022 program** for token creations and to host the metadata, instead of Metaplex.
 
-3. **New fee recipient requirement for mayhem mode coins**  
+3. **New fee recipient requirement for mayhem mode coins**
    For coins which have `is_mayhem_mode = true` (on both the bonding curve and pool), the fee recipient that should be passed must be changed.
 
 ---
@@ -102,8 +124,8 @@ Method selection:
 
 ### 1️⃣ Introducing `create_v2`
 
-We will move to a new standard of token creation with a new instruction called `create_v2`.  
-This instruction will use the **Token2022 program** for minting tokens and managing metadata, replacing the legacy Metaplex approach.  
+We will move to a new standard of token creation with a new instruction called `create_v2`.
+This instruction will use the **Token2022 program** for minting tokens and managing metadata, replacing the legacy Metaplex approach.
 The original `create` instruction will also be active and will be **deprecated** at a later time (to be announced).
 
 | Index | Account | Change needed | Seeds |
@@ -126,11 +148,11 @@ The original `create` instruction will also be active and will be **deprecated**
 
 #### Key Points about trading `create_v2` coins:
 
-- The **associated bonding curve account** will be owned by the **Token2022 program**, not the legacy token program.  
-- The **user token account** should also be derived with Token2022 instead of the legacy token program.  
-- There is a **new boolean instruction parameter** for `create_v2` called `is_mayhem_mode`.  
+- The **associated bonding curve account** will be owned by the **Token2022 program**, not the legacy token program.
+- The **user token account** should also be derived with Token2022 instead of the legacy token program.
+- There is a **new boolean instruction parameter** for `create_v2` called `is_mayhem_mode`.
 - Pass the token2022 program instead of the legacy token program.
-- All coins previously (and in the future) created with the `create` instruction and owned by the legacy token program will have `is_mayhem_mode` as **false** and cannot be changed.  
+- All coins previously (and in the future) created with the `create` instruction and owned by the legacy token program will have `is_mayhem_mode` as **false** and cannot be changed.
   This means you do not have to handle fee recipients differently for such coins, and existing trade instructions will work as they are.
 
 ---
@@ -139,17 +161,17 @@ The original `create` instruction will also be active and will be **deprecated**
 
 Any new coin created with `create_v2` can have `is_mayhem_mode` as **true** or **false**.
 
-- If it’s **false**, the trade accounts required do not change.  
+- If it’s **false**, the trade accounts required do not change.
 - If it’s **true**, you need to **pass a different fee_recipient** for both buys and sells.
 
 #### Fee recipient details:
-- **Pump Swap:** 10th account → should be **Mayhem fee recipient**  
+- **Pump Swap:** 10th account → should be **Mayhem fee recipient**
 - **Bonding Curve:** 2nd account → should be **Mayhem fee recipient**
 
 The **Protocol Fee Recipient Token Account** at **account index 11** of Pump Swap should be the **WSOL token account of Mayhem fee recipient**.
 
 This new fee recipient for mayhem mode coins can be found from:
-- The **Global** account on **Bonding Curve**, and the **GlobalConfig** account on **Pump Swap**,  
+- The **Global** account on **Bonding Curve**, and the **GlobalConfig** account on **Pump Swap**,
 as any one of the fields in: `reserved_fee_recipient` and `reserved_fee_recipients`
 ---
 
@@ -164,17 +186,17 @@ as any one of the fields in: `reserved_fee_recipient` and `reserved_fee_recipien
 
 ### ✅ Checklist
 
- 
+
 - [ ] Migrate to `create_v2` for new tokens
-- [ ] For mints owned by token2022, ensure you're passing the right associated bonding curve, user token account and token program  
-- [ ] Handle `is_mayhem_mode = true` by setting the correct fee recipient  
-- [ ] Confirm fee recipient WSOL token account configuration  
+- [ ] For mints owned by token2022, ensure you're passing the right associated bonding curve, user token account and token program
+- [ ] Handle `is_mayhem_mode = true` by setting the correct fee recipient
+- [ ] Confirm fee recipient WSOL token account configuration
 
 ---
 
 > ⚙️ **Summary:**
-> - `create_v2` introduces Token2022-based token creation and optional mayhem mode.  
+> - `create_v2` introduces Token2022-based token creation and optional mayhem mode.
 > - Mayhem mode coins require a different fee recipient (**Mayhem fee recipient**) configured per program indices.
 
 
-### Please use the devnet program of the bonding curve and pump swap to test coin creations with the new instruction and trading such coins. They're updated to what will go live on mainnet. 
+### Please use the devnet program of the bonding curve and pump swap to test coin creations with the new instruction and trading such coins. They're updated to what will go live on mainnet.
