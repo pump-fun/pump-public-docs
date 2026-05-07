@@ -1,6 +1,85 @@
 # pump-public-docs
 
-[Pump fee program docs](docs/FEE_PROGRAM_README.md)
+# New Bonding Curve Trade Instructions
+
+Hello everyone. As part of supporting stable paired meme coins, we are announcing three new trading instructions for the bonding curve program:
+
+- `buy_v2`
+- `sell_v2`
+- `buy_exact_quote_in_v2`
+
+These new instructions have no optional accounts. All accounts are mandatory and are passed in the same order for all kinds of coins.
+
+This should alleviate many of the issues integrations are facing when choosing which accounts to pass based on the type of coin being traded.
+
+We are moving to this new unified interface and would urge all integrations to switch to these instructions to future proof their setup.
+
+## Existing Trade Instructions
+
+All existing trade instructions will continue to work with the same setup. No changes are needed to continue trading coins with the existing coins.
+
+You can switch to the new instructions to trade coins paired with both SOL and USDC, with no change to quotes or costs.
+
+The first feature we are looking to support with the new interface is the addition of USDC as a quote asset for meme coins.
+
+## Important Note For Existing Coins
+
+These new interfaces can be used to trade all coins ever created by passing the quote mint as the wrapped SOL mint:
+
+```text
+So11111111111111111111111111111111111111112
+```
+
+Trading and transfer will continue to happen with native SOL for these coins. However, to provide a unified interface regardless of `quote_mint`, please pass the wrapped SOL mint shown above.
+
+## What's New
+
+- `user_volume_accumulator` account is mandatory for all buys and sells.
+- `sharing_config` PDA is mandatory for all buys and sells.
+- Added the following accounts to support more quote mints:
+  - `quote_mint`
+  - `associated_quote_bonding_curve`
+  - `associated_quote_fee_recipient`
+  - `associated_quote_buyback_fee_recipient`
+  - `associated_creator_vault`
+  - `associated_quote_user`
+- Added a new `quote_mint` field in the bonding curve struct. This field is `Pubkey::default()` for all coins created to date and for all coins created with SOL as the quote mint.
+- Renamed `real_sol_reserves` to `real_quote_reserves` in the BondingCurve.
+- Renamed `virtual_sol_reserves` to `virtual_quote_reserves` in the BondingCurve.
+- New Global field called `initial_virtual_quote_reserves`. Coins paired with SOL have their BondingCurve.`virtual_quote_reserves` start at `initial_virtual_sol_reserves`. All other quote mints will start theirs at `initial_virtual_quote_reserves`.
+
+## SOL-Paired Meme Coins
+
+Trading will continue to happen with native SOL for all SOL-paired coins. For those coins, the following accounts are only Anchor seed constrained to the quote mint and do not need to be initialized for the instruction to work:
+
+- `associated_quote_fee_recipient`
+- `associated_quote_buyback_fee_recipient`
+- `associated_quote_bonding_curve`
+- `associated_quote_user`
+- `associated_creator_vault`
+- `associated_user_volume_accumulator`
+
+When using the new instructions (`buy_v2`, `sell_v2`, `buy_exact_quote_in_v2`) for SOL-paired meme coins, there will be no extra cost compared to the legacy instructions (`buy`, `sell`, `buy_exact_quote_in`). All account initialization costs remain the same.
+
+## Launch Timeline
+
+Today we are only announcing the launch of the new interface.
+
+Currently, no quote mint other than native SOL can be used to create or trade coins. We will add USDC next week. Exact Date and time TBH. Trading USDC-paired coins will not be possible with the legacy instructions.
+
+## SDKS
+
+- TS SDK: https://www.npmjs.com/package/@pump-fun/pump-sdk
+- RUST crate: https://crates.io/crates/pump-rust-client
+
+## New docs
+- Fee recipients: [docs/FEE_RECIPIENTS.md](docs/FEE_RECIPIENTS.md)
+- Coin creation: [docs/instructions/COIN_CREATION.md](docs/instructions/COIN_CREATION.md)
+- Buy: [docs/instructions/BUY.md](docs/instructions/BUY.md)
+- Sell: [docs/instructions/SELL.md](docs/instructions/SELL.md)
+- Claim cashback: [docs/instructions/CLAIM_CASHBACK.md](docs/instructions/CLAIM_CASHBACK.md)
+
+
 
 ## Other documentation
 
@@ -10,193 +89,6 @@
 - [Pump Program creator fee update](docs/PUMP_CREATOR_FEE_README.md)
 - [PumpSwap creator fee update](docs/PUMP_SWAP_CREATOR_FEE_README.md)
 - [FAQ](docs/FAQ.md)
+- [Pump fee program docs](docs/FEE_PROGRAM_README.md)
 
 ---
-
-### One-Time Creator Reward Distribution Policy
-
-This update only affects fee-sharing configuration. Trading instructions are unchanged and do not require an upgrade.
-
-
-**TLDR:** After the first configuration, reward distribution is locked and cannot be changed.
-
-What changed:
-- Reward distribution can be configured **only once**.
-- You can configure it using either `updateFeeShares` or `updateSharingConfigWithSocialRecipients`.
-- After it is configured, it is **locked** and cannot be changed again.
-
-What did **not** change:
-- Buy and sell instructions are unchanged.
-
-Migration/compatibility notes:
-- Reward distributions created before this policy are treated as final (locked).
-- `RevokeFeeSharingAuthority` and `TransferFeeSharingAuthority` are no longer supported.
-- If you are unsure whether a reward distribution is still editable, call `isSharingConfigEditable`.
-
-## GitHub Recipient and Social Fee PDA Requirements
-
-If you are adding a **GitHub recipient** as a fee recipient in sharing config, make sure to initialize the social fee pda before adding it as a recipient. Use one of these methods:
-
-```ts
-import {
-  Platform,
-  PUMP_SDK,
-} from "@pump-fun/pump-sdk";
-
-// 1) Update an existing sharing config
-await PUMP_SDK.updateSharingConfigWithSocialRecipients({
-  authority,
-  mint,
-  currentShareholders,
-  newShareholders: [
-    { address: authority, shareBps: 7000 },
-    { userId: "1234567", platform: Platform.GitHub, shareBps: 3000 },
-  ],
-});
-
-// 2) Create sharing config + set social recipients in one flow
-//    - Use pool for graduated coins or null for ungraduated
-await PUMP_SDK.createSharingConfigWithSocialRecipients({
-  creator,
-  mint,
-  pool,
-  newShareholders: [
-    { address: creator, shareBps: 7000 },
-    { userId: "1234567", platform: Platform.GitHub, shareBps: 3000 },
-  ],
-});
-```
-
-Method selection:
-- `updateSharingConfigWithSocialRecipients`: use when sharing config already exists.
-- `createSharingConfigWithSocialRecipients`: use for first-time setup (creates config, then updates shares).
-
-> **Important:** Reward split can be setup once and once only by calling either `updateFeeShares` or `updateSharingConfigWithSocialRecipients`. Double-check final recipients and `shareBps` before submitting.
-
-✅ Checklist
-
-- [ ] The GitHub user must be able to log in to claim fees. **GitHub organizations are not supported** for social fee recipients; adding an organization account can result in fees being permanently lost.
-- [ ] Only `Platform.GitHub` is supported. Any attempt to use a different platform value can result in the coin being banned or **fees lost**.
-- [ ] Fees in a GitHub vault can only be claimed by the linked GitHub user, and only through Pump.fun (web or mobile). You are responsible for directing users to claim there; we do not support any claim flow outside our apps.
-- [ ] You have initialized the social fee recipient pda by using one of the above helper or `createSocialFeePda`
-
----
-
-
-
-# ⚠️ Breaking Change Announcement — Bonding Curve and Pump Swap Programs on 12:00 UTC, 11 November 2025
-
----
-
-
-### Mayhem program id:
-`MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e`
-### Mayhem fee recipients ( Use any one randomly ):
-`GesfTA3X2arioaHp8bbKdjG9vJtskViWACZoYvxp4twS`
-
-`4budycTjhs9fD6xw62VBducVTNgMgJJ5BgtKq7mAZwn6`,
-        `8SBKzEQU4nLSzcwF4a74F2iaUDQyTfjGndn6qUWBnrpR`,
-        `4UQeTP1T39KZ9Sfxzo3WR5skgsaP6NZa87BAkuazLEKH`,
-        `8sNeir4QsLsJdYpc9RZacohhK1Y5FLU3nC5LXgYB4aa6`,
-        `Fh9HmeLNUMVCvejxCtCL2DbYaRyBFVJ5xrWkLnMH6fdk`,
-        `463MEnMeGyJekNZFQSTUABBEbLnvMTALbT6ZmsxAbAdq`,
-        `6AUH3WEHucYZyC61hqpqYUWVto5qA5hjHuNQ32GNnNxA`
-
----
-
-## 1. Changes Summary
-
-1. **BondingCurve and Pool struct size increase**
-   The `bondingCurve` account now needs to be at least **82 bytes** in size (was 81 earlier) and the `pool` structure needs to be **244 bytes** (was 243 earlier).
-   This is because of a new field called `is_mayhem_mode` on both structs which is a boolean.
-   If the account lengths are insufficient, the buy and sell instruction will handle the size extension under the hood, no change needed on your end.
-
-2. **New instruction to create tokens called `create_v2`**
-   This instruction will use the **Token2022 program** for token creations and to host the metadata, instead of Metaplex.
-
-3. **New fee recipient requirement for mayhem mode coins**
-   For coins which have `is_mayhem_mode = true` (on both the bonding curve and pool), the fee recipient that should be passed must be changed.
-
----
-
-## 2. What This Means to You
-
-
-### 1️⃣ Introducing `create_v2`
-
-We will move to a new standard of token creation with a new instruction called `create_v2`.
-This instruction will use the **Token2022 program** for minting tokens and managing metadata, replacing the legacy Metaplex approach.
-The original `create` instruction will also be active and will be **deprecated** at a later time (to be announced).
-
-| Index | Account | Change needed | Seeds |
-| ----- | ------ | ----- | ----- |
-| 1 | Mint | None | - |
-| 2 | Mint Authority | None | "mint-authority" + PUMP_PROGRAM_ID |
-| 3 | Bonding Curve | None | "bonding-curve" + mint + PUMP_PROGRAM_ID |
-| 4 | Associated Bonding Curve | Token account should now be owned by Token 2022 instead of Legacy Token | Token 2022 owned token account of Bonding curve account |
-| 5 | Global | None | "global" + PUMP_PROGRAM_ID |
-| 6 | User | None | - |
-| 7 | System Program | None | - |
-| 8 | Token Program | Pass Token 2022 instead of Legacy Token program | - |
-| 9 | Associated Token Program | None | - |
-| 10 | Mayhem Program ID | New Static account: `MAyhSmzXzV1pTf7LsNkrNwkWKTo4ougAJ1PPg47MD4e`| - |
-| 11 | Global Params | New Static account: `13ec7XdrjF3h3YcqBTFDSReRcUFwbCnJaAQspM4j6DDJ`| "global-params" + MAYHEM_PROGRAM_ID |
-| 12 | Sol Vault | New Static account: `BwWK17cbHxwWBKZkUYvzxLcNQ1YVyaFezduWbtm2de6s` | "sol-vault" + MAYHEM_PROGRAM_ID |
-| 13 | Mayhem State | New Account: dependent on the mint | "mayhem-state" + mint + MAYHEM_PROGRAM_ID |
-| 14 | Mayhem Token Vault | New Account: Token 2022 owned token account of Sol vault account | - |
-
-
-#### Key Points about trading `create_v2` coins:
-
-- The **associated bonding curve account** will be owned by the **Token2022 program**, not the legacy token program.
-- The **user token account** should also be derived with Token2022 instead of the legacy token program.
-- There is a **new boolean instruction parameter** for `create_v2` called `is_mayhem_mode`.
-- Pass the token2022 program instead of the legacy token program.
-- All coins previously (and in the future) created with the `create` instruction and owned by the legacy token program will have `is_mayhem_mode` as **false** and cannot be changed.
-  This means you do not have to handle fee recipients differently for such coins, and existing trade instructions will work as they are.
-
----
-
-### :two: Fee Recipient for Mayhem Mode Coins
-
-Any new coin created with `create_v2` can have `is_mayhem_mode` as **true** or **false**.
-
-- If it’s **false**, the trade accounts required do not change.
-- If it’s **true**, you need to **pass a different fee_recipient** for both buys and sells.
-
-#### Fee recipient details:
-- **Pump Swap:** 10th account → should be **Mayhem fee recipient**
-- **Bonding Curve:** 2nd account → should be **Mayhem fee recipient**
-
-The **Protocol Fee Recipient Token Account** at **account index 11** of Pump Swap should be the **WSOL token account of Mayhem fee recipient**.
-
-This new fee recipient for mayhem mode coins can be found from:
-- The **Global** account on **Bonding Curve**, and the **GlobalConfig** account on **Pump Swap**,
-as any one of the fields in: `reserved_fee_recipient` and `reserved_fee_recipients`
----
-
-## 3. Summary of Action Items
-
-| Change | Action Required |
-|---------|----------------|
-| Introduction of `create_v2` | Update creation flow to use `create_v2` instruction with Token2022 program |
-| Fee recipient handling for `is_mayhem_mode = true` coins | Pass **Mayhem fee recipient** as the fee recipient at specified account indexes (Pump Swap: 10, Bonding Curve: 2). Ensure protocol fee token account (index 11) is the WSOL account of Mayhem fee recipient for pump swap |
-
----
-
-### ✅ Checklist
-
-
-- [ ] Migrate to `create_v2` for new tokens
-- [ ] For mints owned by token2022, ensure you're passing the right associated bonding curve, user token account and token program
-- [ ] Handle `is_mayhem_mode = true` by setting the correct fee recipient
-- [ ] Confirm fee recipient WSOL token account configuration
-
----
-
-> ⚙️ **Summary:**
-> - `create_v2` introduces Token2022-based token creation and optional mayhem mode.
-> - Mayhem mode coins require a different fee recipient (**Mayhem fee recipient**) configured per program indices.
-
-
-### Please use the devnet program of the bonding curve and pump swap to test coin creations with the new instruction and trading such coins. They're updated to what will go live on mainnet.

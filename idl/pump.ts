@@ -4,7 +4,7 @@
  * Note that this is only a type helper and is not the actual IDL. The original
  * IDL can be found at `target/idl/pump.json`.
  */
-export interface Pump {
+export type Pump = {
   address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
   metadata: {
     name: "pump";
@@ -13,6 +13,68 @@ export interface Pump {
     description: "Created with Anchor";
   };
   instructions: [
+    {
+      name: "addQuoteMint";
+      discriminator: [111, 121, 21, 56, 40, 24, 94, 209];
+      accounts: [
+        {
+          name: "global";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "authority";
+          writable: true;
+          signer: true;
+          relations: ["global"];
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [
+        {
+          name: "quoteMint";
+          type: "pubkey";
+        },
+      ];
+    },
     {
       name: "adminSetCreator";
       docs: [
@@ -713,6 +775,768 @@ export interface Pump {
       ];
     },
     {
+      name: "buyExactQuoteInV2";
+      discriminator: [194, 171, 28, 70, 104, 77, 91, 47];
+      accounts: [
+        {
+          name: "global";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "baseMint";
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "baseTokenProgram";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "feeRecipient";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteFeeRecipient";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "feeRecipient";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "buybackFeeRecipient";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteBuybackFeeRecipient";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "buybackFeeRecipient";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "bondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedBaseBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "baseTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "associatedQuoteBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "user";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "associatedBaseUser";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteUser";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "user";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "creatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "bonding_curve.creator";
+                account: "bondingCurve";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedCreatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "creatorVault";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "sharingConfig";
+          docs: [
+            "seeds; the account is intentionally not deserialized here because it may be uninitialized",
+            "for mints that have not created a fee sharing config. Handlers must check",
+            "`data_is_empty()` / owner before reading.",
+          ];
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112,
+              ];
+            };
+          };
+        },
+        {
+          name: "globalVolumeAccumulator";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "userVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114,
+                ];
+              },
+              {
+                kind: "account";
+                path: "user";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedUserVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "userVolumeAccumulator";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "feeConfig";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [102, 101, 101, 95, 99, 111, 110, 102, 105, 103];
+              },
+              {
+                kind: "const";
+                value: [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176,
+                ];
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "feeProgram";
+            };
+          };
+        },
+        {
+          name: "feeProgram";
+          address: "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ";
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+          address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+        },
+      ];
+      args: [
+        {
+          name: "spendableQuoteIn";
+          type: "u64";
+        },
+        {
+          name: "minTokensOut";
+          type: "u64";
+        },
+      ];
+    },
+    {
       name: "buyExactSolIn";
       docs: [
         "Given a budget of spendable SOL, buy at least min_tokens_out tokens.",
@@ -1082,6 +1906,768 @@ export interface Pump {
       ];
     },
     {
+      name: "buyV2";
+      discriminator: [184, 23, 238, 97, 103, 197, 211, 61];
+      accounts: [
+        {
+          name: "global";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "baseMint";
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "baseTokenProgram";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "feeRecipient";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteFeeRecipient";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "feeRecipient";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "buybackFeeRecipient";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteBuybackFeeRecipient";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "buybackFeeRecipient";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "bondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedBaseBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "baseTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "associatedQuoteBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "user";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "associatedBaseUser";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteUser";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "user";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "creatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "bonding_curve.creator";
+                account: "bondingCurve";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedCreatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "creatorVault";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "sharingConfig";
+          docs: [
+            "seeds; the account is intentionally not deserialized here because it may be uninitialized",
+            "for mints that have not created a fee sharing config. Handlers must check",
+            "`data_is_empty()` / owner before reading.",
+          ];
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112,
+              ];
+            };
+          };
+        },
+        {
+          name: "globalVolumeAccumulator";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "userVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114,
+                ];
+              },
+              {
+                kind: "account";
+                path: "user";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedUserVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "userVolumeAccumulator";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "feeConfig";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [102, 101, 101, 95, 99, 111, 110, 102, 105, 103];
+              },
+              {
+                kind: "const";
+                value: [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176,
+                ];
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "feeProgram";
+            };
+          };
+        },
+        {
+          name: "feeProgram";
+          address: "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ";
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+          address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+        },
+      ];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        },
+        {
+          name: "maxSolCost";
+          type: "u64";
+        },
+      ];
+    },
+    {
       name: "claimCashback";
       discriminator: [37, 58, 35, 126, 190, 53, 228, 197];
       accounts: [
@@ -1127,6 +2713,152 @@ export interface Pump {
                 path: "user";
               },
             ];
+          };
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+          address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+        },
+      ];
+      args: [];
+    },
+    {
+      name: "claimCashbackV2";
+      discriminator: [122, 243, 204, 65, 94, 116, 29, 55];
+      accounts: [
+        {
+          name: "user";
+          writable: true;
+        },
+        {
+          name: "userVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114,
+                ];
+              },
+              {
+                kind: "account";
+                path: "user";
+              },
+            ];
+          };
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "associatedUserVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "userVolumeAccumulator";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "associatedQuoteUser";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "user";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
           };
         },
         {
@@ -3240,6 +4972,11 @@ export interface Pump {
         },
         {
           name: "program";
+          address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+        },
+        {
+          name: "rent";
+          address: "SysvarRent111111111111111111111111111111111";
         },
       ];
       args: [];
@@ -3385,11 +5122,524 @@ export interface Pump {
       args: [];
     },
     {
+      name: "migrateV2";
+      docs: ["Migrates liquidity to pump_amm if the bonding curve is complete"];
+      discriminator: [187, 203, 18, 31, 206, 237, 254, 41];
+      accounts: [
+        {
+          name: "global";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "withdrawAuthority";
+          writable: true;
+          relations: ["global"];
+        },
+        {
+          name: "baseMint";
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "bondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedBaseBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "baseTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "associatedQuoteBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "user";
+          signer: true;
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "pumpAmm";
+          address: "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA";
+        },
+        {
+          name: "pool";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [112, 111, 111, 108];
+              },
+              {
+                kind: "const";
+                value: [0, 0];
+              },
+              {
+                kind: "account";
+                path: "poolAuthority";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "pumpAmm";
+            };
+          };
+        },
+        {
+          name: "poolAuthority";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  112,
+                  111,
+                  111,
+                  108,
+                  45,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+          };
+        },
+        {
+          name: "poolAuthorityMintAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "poolAuthority";
+              },
+              {
+                kind: "account";
+                path: "baseTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "poolAuthorityQuoteAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "poolAuthority";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "ammGlobalConfig";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103,
+                ];
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "pumpAmm";
+            };
+          };
+        },
+        {
+          name: "lpMint";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  112,
+                  111,
+                  111,
+                  108,
+                  95,
+                  108,
+                  112,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "pool";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "pumpAmm";
+            };
+          };
+        },
+        {
+          name: "userPoolTokenAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "poolAuthority";
+              },
+              {
+                kind: "account";
+                path: "token2022Program";
+              },
+              {
+                kind: "account";
+                path: "lpMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "poolBaseTokenAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "pool";
+              },
+              {
+                kind: "account";
+                path: "baseTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "poolQuoteTokenAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "pool";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "baseTokenProgram";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "token2022Program";
+          address: "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "pumpAmmEventAuthority";
+        },
+        {
+          name: "rent";
+          address: "SysvarRent111111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [];
+    },
+    {
+      name: "removeQuoteMint";
+      discriminator: [177, 65, 223, 38, 88, 209, 158, 155];
+      accounts: [
+        {
+          name: "global";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "authority";
+          writable: true;
+          signer: true;
+          relations: ["global"];
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [
+        {
+          name: "quoteMint";
+          type: "pubkey";
+        },
+      ];
+    },
+    {
       name: "sell";
       docs: [
         "Sells tokens into a bonding curve.",
-        "For cashback coins, optionally pass user_volume_accumulator as remaining_accounts[0].",
-        "If provided and valid, creator_fee goes to user_volume_accumulator.",
+        "For cashback coins, pass as remaining_accounts: [0] user_volume_accumulator,",
+        "[1] bonding_curve_v2. If provided and valid, creator_fee goes to user_volume_accumulator.",
         "Otherwise, falls back to transferring creator_fee to creator_vault.",
       ];
       discriminator: [51, 230, 133, 164, 1, 127, 131, 173];
@@ -3634,6 +5884,731 @@ export interface Pump {
         {
           name: "feeProgram";
           address: "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ";
+        },
+      ];
+      args: [
+        {
+          name: "amount";
+          type: "u64";
+        },
+        {
+          name: "minSolOutput";
+          type: "u64";
+        },
+      ];
+    },
+    {
+      name: "sellV2";
+      discriminator: [93, 246, 130, 60, 231, 233, 64, 178];
+      accounts: [
+        {
+          name: "global";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "baseMint";
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "baseTokenProgram";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "feeRecipient";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteFeeRecipient";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "feeRecipient";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "buybackFeeRecipient";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteBuybackFeeRecipient";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "buybackFeeRecipient";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "bondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedBaseBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "baseTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "associatedQuoteBondingCurve";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "bondingCurve";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "user";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "associatedBaseUser";
+          writable: true;
+        },
+        {
+          name: "associatedQuoteUser";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "user";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "creatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "bonding_curve.creator";
+                account: "bondingCurve";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedCreatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "creatorVault";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "sharingConfig";
+          docs: [
+            "seeds; the account is intentionally not deserialized here because it may be uninitialized",
+            "for mints that have not created a fee sharing config. Handlers must check",
+            "`data_is_empty()` / owner before reading.",
+          ];
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103,
+                ];
+              },
+              {
+                kind: "account";
+                path: "baseMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112,
+              ];
+            };
+          };
+        },
+        {
+          name: "userVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114,
+                ];
+              },
+              {
+                kind: "account";
+                path: "user";
+              },
+            ];
+          };
+        },
+        {
+          name: "associatedUserVolumeAccumulator";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "userVolumeAccumulator";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "feeConfig";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [102, 101, 101, 95, 99, 111, 110, 102, 105, 103];
+              },
+              {
+                kind: "const";
+                value: [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176,
+                ];
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "feeProgram";
+            };
+          };
+        },
+        {
+          name: "feeProgram";
+          address: "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ";
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+          address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
         },
       ];
       args: [
@@ -4355,6 +7330,68 @@ export interface Pump {
       ];
     },
     {
+      name: "setVirtualQuoteReserves";
+      discriminator: [101, 135, 191, 104, 9, 88, 20, 96];
+      accounts: [
+        {
+          name: "global";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "authority";
+          writable: true;
+          signer: true;
+          relations: ["global"];
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [
+        {
+          name: "initialVirtualQuoteReserves";
+          type: "u64";
+        },
+      ];
+    },
+    {
       name: "syncUserVolumeAccumulator";
       discriminator: [86, 31, 192, 87, 163, 87, 79, 238];
       accounts: [
@@ -4656,6 +7693,70 @@ export interface Pump {
         {
           name: "enabled";
           type: "bool";
+        },
+      ];
+    },
+    {
+      name: "updateBuybackConfig";
+      discriminator: [251, 224, 171, 146, 160, 26, 113, 233];
+      accounts: [
+        {
+          name: "global";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [103, 108, 111, 98, 97, 108];
+              },
+            ];
+          };
+        },
+        {
+          name: "authority";
+          writable: true;
+          signer: true;
+          relations: ["global"];
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [
+        {
+          name: "buybackBasisPoints";
+          type: {
+            option: "u64";
+          };
         },
       ];
     },
@@ -5110,6 +8211,68 @@ export interface Pump {
       name: "cashbackNotEnabled";
       msg: "Cashback is not enabled";
     },
+    {
+      code: 6057;
+      name: "buybackFeeRecipientNotAuthorized";
+      msg: "Buyback fee recipient not authorized";
+    },
+    {
+      code: 6058;
+      name: "allBuybackFeeRecipientsShouldBeNonZero";
+    },
+    {
+      code: 6059;
+      name: "notUniqueBuybackFeeRecipients";
+    },
+    {
+      code: 6060;
+      name: "buybackBasisPointsOutOfRange";
+      msg: "buyback_basis_points must be <= 10_000";
+    },
+    {
+      code: 6061;
+      name: "wrongBuybackFeeRecipientsCount";
+      msg: "buyback fee recipients require exactly 8 remaining accounts (or none)";
+    },
+    {
+      code: 6062;
+      name: "buybackFeeRecipientMissing";
+    },
+    {
+      code: 6063;
+      name: "unsupportedQuoteMint";
+      msg: "Unsupported quote mint";
+    },
+    {
+      code: 6064;
+      name: "invalidQuoteTokenProgram";
+      msg: "Create v2: quote token program must be legacy SPL Token";
+    },
+    {
+      code: 6065;
+      name: "invalidAssociatedQuoteBondingCurve";
+      msg: "Create v2: associated quote bonding curve address does not match derivation";
+    },
+    {
+      code: 6066;
+      name: "quoteMintWhitelistFull";
+      msg: "Quote mint whitelist is full";
+    },
+    {
+      code: 6067;
+      name: "quoteMintAlreadyWhitelisted";
+      msg: "Quote mint is already whitelisted";
+    },
+    {
+      code: 6068;
+      name: "quoteMintNotWhitelisted";
+      msg: "Quote mint is not in the whitelist";
+    },
+    {
+      code: 6069;
+      name: "quoteMintNotEligibleForWhitelist";
+      msg: "Quote mint cannot be added or removed via whitelist (default or native SOL mint)";
+    },
   ];
   types: [
     {
@@ -5202,7 +8365,7 @@ export interface Pump {
             type: "u64";
           },
           {
-            name: "virtualSolReserves";
+            name: "virtualQuoteReserves";
             type: "u64";
           },
           {
@@ -5210,7 +8373,7 @@ export interface Pump {
             type: "u64";
           },
           {
-            name: "realSolReserves";
+            name: "realQuoteReserves";
             type: "u64";
           },
           {
@@ -5232,6 +8395,10 @@ export interface Pump {
           {
             name: "isCashbackCoin";
             type: "bool";
+          },
+          {
+            name: "quoteMint";
+            type: "pubkey";
           },
         ];
       };
@@ -5369,6 +8536,10 @@ export interface Pump {
             name: "timestamp";
             type: "i64";
           },
+          {
+            name: "quoteMint";
+            type: "pubkey";
+          },
         ];
       };
     },
@@ -5491,6 +8662,14 @@ export interface Pump {
             name: "isCashbackEnabled";
             type: "bool";
           },
+          {
+            name: "quoteMint";
+            type: "pubkey";
+          },
+          {
+            name: "virtualQuoteReserves";
+            type: "u64";
+          },
         ];
       };
     },
@@ -5587,6 +8766,16 @@ export interface Pump {
           },
           {
             name: "feeTiers";
+            type: {
+              vec: {
+                defined: {
+                  name: "feeTier";
+                };
+              };
+            };
+          },
+          {
+            name: "stableFeeTiers";
             type: {
               vec: {
                 defined: {
@@ -5732,6 +8921,26 @@ export interface Pump {
           {
             name: "isCashbackEnabled";
             type: "bool";
+          },
+          {
+            name: "buybackFeeRecipients";
+            type: {
+              array: ["pubkey", 8];
+            };
+          },
+          {
+            name: "buybackBasisPoints";
+            type: "u64";
+          },
+          {
+            name: "initialVirtualQuoteReserves";
+            type: "u64";
+          },
+          {
+            name: "whitelistedQuoteMints";
+            type: {
+              array: ["pubkey", 1];
+            };
           },
         ];
       };
@@ -6183,6 +9392,40 @@ export interface Pump {
             name: "cashback";
             type: "u64";
           },
+          {
+            name: "buybackFeeBasisPoints";
+            type: "u64";
+          },
+          {
+            name: "buybackFee";
+            type: "u64";
+          },
+          {
+            name: "shareholders";
+            type: {
+              vec: {
+                defined: {
+                  name: "shareholder";
+                };
+              };
+            };
+          },
+          {
+            name: "quoteMint";
+            type: "pubkey";
+          },
+          {
+            name: "quoteAmount";
+            type: "u64";
+          },
+          {
+            name: "virtualQuoteReserves";
+            type: "u64";
+          },
+          {
+            name: "realQuoteReserves";
+            type: "u64";
+          },
         ];
       };
     },
@@ -6295,4 +9538,4 @@ export interface Pump {
       };
     },
   ];
-}
+};
