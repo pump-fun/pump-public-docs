@@ -49,3 +49,47 @@ The `collect_coin_creator_fee` instruction sweeps coin creator fees that have ac
 | 6   | `coin_creator_token_account`   | Token account for `quote_mint` owned by `coin_creator`, using `quote_token_program`. Destination of the transfer.                                             | Must be initialized.        |
 | 7   | `event_authority`              | Pump AMM PDA: seeds `[b"__event_authority"]`.                                                                                                                 | -                           |
 | 8   | `program`                      | Pump AMM program account.                                                                                                                                     | -                           |
+
+## Rust SDK
+
+Sweep the bonding curve creator vault, and (if the coin has graduated) the AMM coin creator vault. `quote_mint` can be wrapped SOL or USDC, pass the matching token program as `quote_token_program`.
+
+```rust
+use pump_rust_client::accounts::pump_amm::decode_pool;
+use pump_rust_client::constants::NATIVE_MINT;
+use pump_rust_client::{constants, pda, PumpSdk};
+use solana_sdk::compute_budget::ComputeBudgetInstruction;
+
+let sdk = PumpSdk::new();
+
+// For SOL-paired coins:
+let quote_mint = NATIVE_MINT;
+let quote_token_program = constants::SPL_TOKEN_PROGRAM_ID;
+// For USDC-paired coins, set `quote_mint` to the USDC mint instead
+// (token program remains `SPL_TOKEN_PROGRAM_ID`).
+
+let mut ixs = vec![ComputeBudgetInstruction::set_compute_unit_limit(200_000)];
+
+if graduated {
+    let pool_creator = pda::pump::pool_authority(&mint).0;
+    let pool_address = pda::pump_amm::pool(0, &pool_creator, &mint, &quote_mint).0;
+    let pool = decode_pool(&rpc.get_account(&pool_address).await?.data)?;
+
+    ixs.extend(sdk.collect_coin_creator_fee_instructions(
+        payer,
+        pool.coin_creator,
+        quote_mint,
+        quote_token_program,
+        true,
+    ));
+}
+
+// 2. Sweep the bonding curve creator vault to `creator`.
+ixs.extend(sdk.collect_creator_fee_v2_instructions(
+    payer,
+    creator,
+    quote_mint,
+    quote_token_program,
+    true,
+));
+```
