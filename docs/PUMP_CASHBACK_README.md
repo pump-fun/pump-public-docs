@@ -15,7 +15,7 @@ You can also use our Typescript SDKs for easier integration:
 ## Changes to Instructions
 
 Cashback is only given to the user if the buy/sell instruction appends the proper remaining accounts.
-If the coin traded is a cashback coin but the cashback remaining accounts are now added, then the creator fee will
+If the coin traded is a cashback coin but the cashback remaining accounts are not added, then the creator fee will
 go to the creator as it normally would. 
 
 ### Bonding Curve Buy Instructions
