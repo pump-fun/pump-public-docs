@@ -4,7 +4,7 @@
  * Note that this is only a type helper and is not the actual IDL. The original
  * IDL can be found at `target/idl/pump_amm.json`.
  */
-export interface PumpAmm {
+export type PumpAmm = {
   address: "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA";
   metadata: {
     name: "pumpAmm";
@@ -3665,6 +3665,245 @@ export interface PumpAmm {
       args: [];
     },
     {
+      name: "transferCreatorFeesToPumpV2";
+      discriminator: [1, 33, 78, 185, 33, 67, 44, 92];
+      accounts: [
+        {
+          name: "payer";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "tokenProgram";
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "coinCreator";
+        },
+        {
+          name: "coinCreatorVaultAuthority";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "coinCreator";
+              },
+            ];
+          };
+        },
+        {
+          name: "coinCreatorVaultAta";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "coinCreatorVaultAuthority";
+              },
+              {
+                kind: "account";
+                path: "tokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89,
+              ];
+            };
+          };
+        },
+        {
+          name: "pumpCreatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "coinCreator";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                1,
+                86,
+                224,
+                246,
+                147,
+                102,
+                90,
+                207,
+                68,
+                219,
+                21,
+                104,
+                191,
+                23,
+                91,
+                170,
+                81,
+                137,
+                203,
+                151,
+                245,
+                210,
+                255,
+                59,
+                101,
+                93,
+                43,
+                182,
+                253,
+                109,
+                24,
+                176,
+              ];
+            };
+          };
+        },
+        {
+          name: "pumpCreatorVaultAta";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "pumpCreatorVault";
+              },
+              {
+                kind: "account";
+                path: "tokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [];
+    },
+    {
       name: "updateAdmin";
       discriminator: [161, 176, 40, 213, 60, 184, 179, 228];
       accounts: [
@@ -3714,6 +3953,61 @@ export interface PumpAmm {
         },
       ];
       args: [];
+    },
+    {
+      name: "updateBuybackConfig";
+      discriminator: [251, 224, 171, 146, 160, 26, 113, 233];
+      accounts: [
+        {
+          name: "admin";
+          signer: true;
+          relations: ["globalConfig"];
+        },
+        {
+          name: "globalConfig";
+          writable: true;
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [
+        {
+          name: "buybackBasisPoints";
+          type: {
+            option: "u64";
+          };
+        },
+      ];
     },
     {
       name: "updateFeeConfig";
@@ -4229,7 +4523,34 @@ export interface PumpAmm {
     },
     {
       code: 6052;
-      name: "cashbackEarnedDoesNotMatchTokenInVault";
+      name: "tokensInVaultLessThanCashbackEarned";
+    },
+    {
+      code: 6053;
+      name: "buybackFeeRecipientNotAuthorized";
+      msg: "Buyback fee recipient not authorized";
+    },
+    {
+      code: 6054;
+      name: "allBuybackFeeRecipientsShouldBeNonZero";
+    },
+    {
+      code: 6055;
+      name: "notUniqueBuybackFeeRecipients";
+    },
+    {
+      code: 6056;
+      name: "buybackBasisPointsOutOfRange";
+      msg: "buyback_basis_points must be <= 10_000";
+    },
+    {
+      code: 6057;
+      name: "wrongBuybackFeeRecipientsCount";
+      msg: "buyback fee recipients require exactly 8 remaining accounts (or none)";
+    },
+    {
+      code: 6058;
+      name: "buybackFeeRecipientMissing";
     },
   ];
   types: [
@@ -4477,6 +4798,14 @@ export interface PumpAmm {
           },
           {
             name: "cashback";
+            type: "u64";
+          },
+          {
+            name: "buybackFeeBasisPoints";
+            type: "u64";
+          },
+          {
+            name: "buybackFee";
             type: "u64";
           },
         ];
@@ -4913,6 +5242,16 @@ export interface PumpAmm {
               };
             };
           },
+          {
+            name: "stableFeeTiers";
+            type: {
+              vec: {
+                defined: {
+                  name: "feeTier";
+                };
+              };
+            };
+          },
         ];
       };
     },
@@ -5023,6 +5362,16 @@ export interface PumpAmm {
           {
             name: "isCashbackEnabled";
             type: "bool";
+          },
+          {
+            name: "buybackFeeRecipients";
+            type: {
+              array: ["pubkey", 8];
+            };
+          },
+          {
+            name: "buybackBasisPoints";
+            type: "u64";
           },
         ];
       };
@@ -5304,6 +5653,14 @@ export interface PumpAmm {
           },
           {
             name: "cashback";
+            type: "u64";
+          },
+          {
+            name: "buybackFeeBasisPoints";
+            type: "u64";
+          },
+          {
+            name: "buybackFee";
             type: "u64";
           },
         ];
@@ -5626,4 +5983,4 @@ export interface PumpAmm {
       };
     },
   ];
-}
+};

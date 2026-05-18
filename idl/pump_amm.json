@@ -3966,6 +3966,254 @@
       "args": []
     },
     {
+      "name": "transfer_creator_fees_to_pump_v2",
+      "discriminator": [
+        1,
+        33,
+        78,
+        185,
+        33,
+        67,
+        44,
+        92
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "token_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "coin_creator"
+        },
+        {
+          "name": "coin_creator_vault_authority",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "coin_creator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "coin_creator_vault_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "coin_creator_vault_authority"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "pump_creator_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "coin_creator"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                1,
+                86,
+                224,
+                246,
+                147,
+                102,
+                90,
+                207,
+                68,
+                219,
+                21,
+                104,
+                191,
+                23,
+                91,
+                170,
+                81,
+                137,
+                203,
+                151,
+                245,
+                210,
+                255,
+                59,
+                101,
+                93,
+                43,
+                182,
+                253,
+                109,
+                24,
+                176
+              ]
+            }
+          }
+        },
+        {
+          "name": "pump_creator_vault_ata",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pump_creator_vault"
+              },
+              {
+                "kind": "account",
+                "path": "token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            }
+          }
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "update_admin",
       "discriminator": [
         161,
@@ -4026,6 +4274,72 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "update_buyback_config",
+      "discriminator": [
+        251,
+        224,
+        171,
+        146,
+        160,
+        26,
+        113,
+        233
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "global_config"
+          ]
+        },
+        {
+          "name": "global_config",
+          "writable": true
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "buyback_basis_points",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
     },
     {
       "name": "update_fee_config",
@@ -4835,7 +5149,34 @@
     },
     {
       "code": 6052,
-      "name": "CashbackEarnedDoesNotMatchTokenInVault"
+      "name": "TokensInVaultLessThanCashbackEarned"
+    },
+    {
+      "code": 6053,
+      "name": "BuybackFeeRecipientNotAuthorized",
+      "msg": "Buyback fee recipient not authorized"
+    },
+    {
+      "code": 6054,
+      "name": "AllBuybackFeeRecipientsShouldBeNonZero"
+    },
+    {
+      "code": 6055,
+      "name": "NotUniqueBuybackFeeRecipients"
+    },
+    {
+      "code": 6056,
+      "name": "BuybackBasisPointsOutOfRange",
+      "msg": "buyback_basis_points must be <= 10_000"
+    },
+    {
+      "code": 6057,
+      "name": "WrongBuybackFeeRecipientsCount",
+      "msg": "buyback fee recipients require exactly 8 remaining accounts (or none)"
+    },
+    {
+      "code": 6058,
+      "name": "BuybackFeeRecipientMissing"
     }
   ],
   "types": [
@@ -5085,6 +5426,14 @@
           },
           {
             "name": "cashback",
+            "type": "u64"
+          },
+          {
+            "name": "buyback_fee_basis_points",
+            "type": "u64"
+          },
+          {
+            "name": "buyback_fee",
             "type": "u64"
           }
         ]
@@ -5523,6 +5872,16 @@
                 }
               }
             }
+          },
+          {
+            "name": "stable_fee_tiers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "FeeTier"
+                }
+              }
+            }
           }
         ]
       }
@@ -5646,6 +6005,19 @@
           {
             "name": "is_cashback_enabled",
             "type": "bool"
+          },
+          {
+            "name": "buyback_fee_recipients",
+            "type": {
+              "array": [
+                "pubkey",
+                8
+              ]
+            }
+          },
+          {
+            "name": "buyback_basis_points",
+            "type": "u64"
           }
         ]
       }
@@ -5940,6 +6312,14 @@
           },
           {
             "name": "cashback",
+            "type": "u64"
+          },
+          {
+            "name": "buyback_fee_basis_points",
+            "type": "u64"
+          },
+          {
+            "name": "buyback_fee",
             "type": "u64"
           }
         ]

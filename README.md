@@ -78,6 +78,9 @@ Currently, no quote mint other than native SOL can be used to create or trade co
 - Buy: [docs/instructions/BUY.md](docs/instructions/BUY.md)
 - Sell: [docs/instructions/SELL.md](docs/instructions/SELL.md)
 - Claim cashback: [docs/instructions/CLAIM_CASHBACK.md](docs/instructions/CLAIM_CASHBACK.md)
+- Collect creator fee: [docs/instructions/COLLECT_CREATOR_FEE.md](docs/instructions/COLLECT_CREATOR_FEE.md)
+- Creator fee sharing: [docs/instructions/CREATOR_FEE_SHARING.md](docs/instructions/CREATOR_FEE_SHARING.md)
+
 
 
 

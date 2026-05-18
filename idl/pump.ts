@@ -3320,6 +3320,144 @@ export type Pump = {
       args: [];
     },
     {
+      name: "collectCreatorFeeV2";
+      docs: [
+        "Collects creator_fee from creator_vault to the coin creator account",
+      ];
+      discriminator: [207, 17, 138, 242, 4, 34, 19, 56];
+      accounts: [
+        {
+          name: "creator";
+          writable: true;
+        },
+        {
+          name: "creatorTokenAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "creator";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "creatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "creator";
+              },
+            ];
+          };
+        },
+        {
+          name: "creatorVaultTokenAccount";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "creatorVault";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+        },
+      ];
+      args: [];
+    },
+    {
       name: "create";
       docs: ["Creates a new coin and bonding curve."];
       discriminator: [24, 30, 200, 40, 5, 28, 7, 119];
@@ -4200,6 +4338,233 @@ export type Pump = {
         },
       ];
       args: [];
+      returns: {
+        defined: {
+          name: "distributeCreatorFeesEvent";
+        };
+      };
+    },
+    {
+      name: "distributeCreatorFeesV2";
+      discriminator: [255, 203, 19, 79, 244, 68, 8, 159];
+      accounts: [
+        {
+          name: "payer";
+          writable: true;
+          signer: true;
+        },
+        {
+          name: "mint";
+          relations: ["sharingConfig"];
+        },
+        {
+          name: "bondingCurve";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101,
+                ];
+              },
+              {
+                kind: "account";
+                path: "mint";
+              },
+            ];
+          };
+        },
+        {
+          name: "sharingConfig";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  115,
+                  104,
+                  97,
+                  114,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103,
+                ];
+              },
+              {
+                kind: "account";
+                path: "mint";
+              },
+            ];
+            program: {
+              kind: "const";
+              value: [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112,
+              ];
+            };
+          };
+        },
+        {
+          name: "creatorVault";
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  99,
+                  114,
+                  101,
+                  97,
+                  116,
+                  111,
+                  114,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                ];
+              },
+              {
+                kind: "account";
+                path: "bonding_curve.creator";
+                account: "bondingCurve";
+              },
+            ];
+          };
+        },
+        {
+          name: "systemProgram";
+          address: "11111111111111111111111111111111";
+        },
+        {
+          name: "eventAuthority";
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121,
+                ];
+              },
+            ];
+          };
+        },
+        {
+          name: "program";
+          address: "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+        },
+        {
+          name: "creatorVaultQuoteTokenAccount";
+          docs: [
+            "Deserialized manually in the handler for non-legacy quote mints.",
+          ];
+          writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "account";
+                path: "creatorVault";
+              },
+              {
+                kind: "account";
+                path: "quoteTokenProgram";
+              },
+              {
+                kind: "account";
+                path: "quoteMint";
+              },
+            ];
+            program: {
+              kind: "account";
+              path: "associatedTokenProgram";
+            };
+          };
+        },
+        {
+          name: "quoteMint";
+        },
+        {
+          name: "quoteTokenProgram";
+        },
+        {
+          name: "associatedTokenProgram";
+          address: "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL";
+        },
+      ];
+      args: [
+        {
+          name: "initializeAta";
+          type: "bool";
+        },
+      ];
       returns: {
         defined: {
           name: "distributeCreatorFeesEvent";
@@ -8273,6 +8638,16 @@ export type Pump = {
       name: "quoteMintNotEligibleForWhitelist";
       msg: "Quote mint cannot be added or removed via whitelist (default or native SOL mint)";
     },
+    {
+      code: 6070;
+      name: "unableToDistributeCreatorFeesToUninitializedAccount";
+      msg: "Unable to distribute creator fees to uninitialized account";
+    },
+    {
+      code: 6071;
+      name: "mayhemModeQuoteMintNotAllowed";
+      msg: "Mayhem mode quote mint not allowed";
+    },
   ];
   types: [
     {
@@ -8512,6 +8887,10 @@ export type Pump = {
             name: "creatorFee";
             type: "u64";
           },
+          {
+            name: "quoteMint";
+            type: "pubkey";
+          },
         ];
       };
     },
@@ -8578,6 +8957,10 @@ export type Pump = {
           },
           {
             name: "pool";
+            type: "pubkey";
+          },
+          {
+            name: "quoteMint";
             type: "pubkey";
           },
         ];
@@ -8711,6 +9094,10 @@ export type Pump = {
           {
             name: "distributed";
             type: "u64";
+          },
+          {
+            name: "quoteMint";
+            type: "pubkey";
           },
         ];
       };
@@ -9532,6 +9919,14 @@ export type Pump = {
           },
           {
             name: "totalCashbackClaimed";
+            type: "u64";
+          },
+          {
+            name: "stableCashbackEarned";
+            type: "u64";
+          },
+          {
+            name: "totalStableCashbackClaimed";
             type: "u64";
           },
         ];

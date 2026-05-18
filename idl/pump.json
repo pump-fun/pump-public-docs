@@ -1944,6 +1944,117 @@
       "args": []
     },
     {
+      "name": "collect_creator_fee_v2",
+      "docs": [
+        "Collects creator_fee from creator_vault to the coin creator account"
+      ],
+      "discriminator": [207, 17, 138, 242, 4, 34, 19, 56],
+      "accounts": [
+        {
+          "name": "creator",
+          "writable": true
+        },
+        {
+          "name": "creator_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            }
+          }
+        },
+        {
+          "name": "creator_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 114, 101, 97, 116, 111, 114, 45, 118, 97, 117, 108, 116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator_vault_token_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "creator_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            }
+          }
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "quote_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111,
+                  114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "create",
       "docs": ["Creates a new coin and bonding curve."],
       "discriminator": [24, 30, 200, 40, 5, 28, 7, 119],
@@ -2440,6 +2551,153 @@
         }
       ],
       "args": [],
+      "returns": {
+        "defined": {
+          "name": "DistributeCreatorFeesEvent"
+        }
+      }
+    },
+    {
+      "name": "distribute_creator_fees_v2",
+      "discriminator": [255, 203, 19, 79, 244, 68, 8, 159],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mint",
+          "relations": ["sharing_config"]
+        },
+        {
+          "name": "bonding_curve",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98, 111, 110, 100, 105, 110, 103, 45, 99, 117, 114, 118, 101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "sharing_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115, 104, 97, 114, 105, 110, 103, 45, 99, 111, 110, 102, 105,
+                  103
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12, 53, 255, 169, 5, 90, 142, 86, 141, 168, 247, 188, 7, 86, 21,
+                39, 76, 241, 201, 44, 164, 31, 64, 0, 156, 81, 106, 164, 20,
+                194, 124, 112
+              ]
+            }
+          }
+        },
+        {
+          "name": "creator_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 114, 101, 97, 116, 111, 114, 45, 118, 97, 117, 108, 116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "bonding_curve.creator",
+                "account": "BondingCurve"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "event_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95, 95, 101, 118, 101, 110, 116, 95, 97, 117, 116, 104, 111,
+                  114, 105, 116, 121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        },
+        {
+          "name": "creator_vault_quote_token_account",
+          "docs": [
+            "Deserialized manually in the handler for non-legacy quote mints."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "creator_vault"
+              },
+              {
+                "kind": "account",
+                "path": "quote_token_program"
+              },
+              {
+                "kind": "account",
+                "path": "quote_mint"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "associated_token_program"
+            }
+          }
+        },
+        {
+          "name": "quote_mint"
+        },
+        {
+          "name": "quote_token_program"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        }
+      ],
+      "args": [
+        {
+          "name": "initialize_ata",
+          "type": "bool"
+        }
+      ],
       "returns": {
         "defined": {
           "name": "DistributeCreatorFeesEvent"
@@ -5256,6 +5514,16 @@
       "code": 6069,
       "name": "QuoteMintNotEligibleForWhitelist",
       "msg": "Quote mint cannot be added or removed via whitelist (default or native SOL mint)"
+    },
+    {
+      "code": 6070,
+      "name": "UnableToDistributeCreatorFeesToUninitializedAccount",
+      "msg": "Unable to distribute creator fees to uninitialized account"
+    },
+    {
+      "code": 6071,
+      "name": "MayhemModeQuoteMintNotAllowed",
+      "msg": "Mayhem mode quote mint not allowed"
     }
   ],
   "types": [
@@ -5495,6 +5763,10 @@
           {
             "name": "creator_fee",
             "type": "u64"
+          },
+          {
+            "name": "quote_mint",
+            "type": "pubkey"
           }
         ]
       }
@@ -5562,6 +5834,10 @@
           },
           {
             "name": "pool",
+            "type": "pubkey"
+          },
+          {
+            "name": "quote_mint",
             "type": "pubkey"
           }
         ]
@@ -5695,6 +5971,10 @@
           {
             "name": "distributed",
             "type": "u64"
+          },
+          {
+            "name": "quote_mint",
+            "type": "pubkey"
           }
         ]
       }
@@ -6516,6 +6796,14 @@
           },
           {
             "name": "total_cashback_claimed",
+            "type": "u64"
+          },
+          {
+            "name": "stable_cashback_earned",
+            "type": "u64"
+          },
+          {
+            "name": "total_stable_cashback_claimed",
             "type": "u64"
           }
         ]
