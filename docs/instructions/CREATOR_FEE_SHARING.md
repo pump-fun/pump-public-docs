@@ -284,3 +284,64 @@ const distributeIx = await PUMP_SDK.distributeCreatorFeesV2({
   quoteTokenProgram,
 });
 ```
+
+## Rust SDK
+
+Sweep AMM-side creator fees into the bonding curve vault, then distribute them to the shareholders. `quote_mint` can be wrapped SOL or USDC, pass the matching token program as `quote_token_program`.
+
+```rust
+use pump_rust_client::accounts::decode_sharing_config;
+use pump_rust_client::accounts::pump_amm::decode_pool;
+use pump_rust_client::constants::NATIVE_MINT;
+use pump_rust_client::{constants, pda, PumpSdk};
+use solana_sdk::compute_budget::ComputeBudgetInstruction;
+use solana_sdk::pubkey::Pubkey;
+
+let sdk = PumpSdk::new();
+
+// For SOL-paired coins:
+let quote_mint = NATIVE_MINT;
+let quote_token_program = constants::SPL_TOKEN_PROGRAM_ID;
+// For USDC-paired coins, set `quote_mint` to the USDC mint instead
+// (token program remains `SPL_TOKEN_PROGRAM_ID`).
+
+let pool_creator = pda::pump::pool_authority(&mint).0;
+let pool_address = pda::pump_amm::pool(0, &pool_creator, &mint, &quote_mint).0;
+let pool = decode_pool(&rpc.get_account(&pool_address).await?.data)?;
+
+// 1. (Graduated coins only.) Sweep AMM-side creator fees into the bonding
+//    curve creator vault.
+let transfer_ix = sdk.transfer_creator_fees_to_pump_v2_instruction(
+    payer,
+    pool.coin_creator,
+    quote_mint,
+    quote_token_program,
+);
+
+// 2. Distribute the bonding curve creator vault to the shareholders.
+let sharing_config = decode_sharing_config(
+    &rpc.get_account(&pda::pump::sharing_config(&mint).0).await?.data,
+)?;
+let shareholders: Vec<Pubkey> = sharing_config
+    .shareholders
+    .iter()
+    .map(|s| s.address)
+    .collect();
+
+let bc = client.fetch_bonding_curve(&mint).await?;
+
+let mut ixs = vec![
+    ComputeBudgetInstruction::set_compute_unit_limit(400_000),
+    transfer_ix,
+];
+ixs.extend(sdk.distribute_creator_fees_v2_instructions(
+    payer,
+    mint,
+    bc.creator,
+    quote_mint,
+    quote_token_program,
+    false,
+    true,
+    &shareholders,
+));
+```
