@@ -344,4 +344,25 @@ ixs.extend(sdk.distribute_creator_fees_v2_instructions(
     true,
     &shareholders,
 ));
+
+## Example
+
+Coin `PumpRun`, mint: `6oFs2C3Dsn5Tzm9SJcxyRei3DkGzmJuzBF2cYm9Lpump`, recipient: `Fz8oi6wMUB6Hpr6H7fcor5tY9FWmAmdnbiheNWacr2Dp`.
+
+1. **`create_fee_sharing_config`** — the recipient (or `admin_set_creator_authority`) opts `PumpRun` into fee sharing. This creates `sharing_config` at `["sharing-config", mint]` and migrates `bonding_curve.creator` (and `pool.coin_creator` if `PumpRun` has already graduated) from `Fz8oi6wMUB6Hpr6H7fcor5tY9FWmAmdnbiheNWacr2Dp` to the `sharing_config` PDA. Initial shareholder list: `[(Fz8oi6...r2Dp, 10_000 bps)]` — i.e. 100% still to the original recipient.
+
+2. **`update_fee_shares_v2`** — the recipient sets the final split, e.g.:
+   - `wallet1` → `5000 bps` (50%)
+   - `wallet2` → `3000 bps` (30%)
+   - `wallet3` → `2000 bps` (20%)
+
+   Before applying this new list, the instruction sweeps any creator fees already accrued (both AMM-side and bonding-curve-side) and pays them out to the *old* shareholder list (at this point, still 100% to `Fz8oi6...r2Dp`). This call can only be made once per `sharing_config` — after it runs, `admin_revoked = true`.
+
+3. Trading continues on `PumpRun`. Creator fees keep accruing — in the bonding curve's `creator_vault` if pre-graduation, and/or in the AMM coin creator vault if graduated.
+
+4. **`transfer_creator_fees_to_pump_v2`** (graduated coins only, permissionless) — sweeps whatever accrued in the AMM-side vault into the bonding curve's `creator_vault` (PDA seeded on `sharing_config`, not on the original recipient anymore), so it can be distributed alongside bonding-curve fees.
+
+5. **`distribute_creator_fees_v2`** (permissionless) — pays the bonding curve's `creator_vault` balance out to `wallet1` / `wallet2` / `wallet3` according to their `share_bps` (50/30/20), directly in lamports for a wrapped-SOL pair, or via each shareholder's ATA for a token-quoted pair like USDC.
+
+Net effect: once `sharing_config` is set up, `PumpRun`'s creator fees no longer go to a single wallet — they're split automatically among the configured shareholders on every distribution call.
 ```
