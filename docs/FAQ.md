@@ -15,7 +15,7 @@ As an example, for the
 tx https://solscan.io/tx/5frph8gBFyX7ayBmqntvwpTPwzZ8aF4kdfJAvC52Li2iDnnaRwtmcZP839Cm4YQUFx7GzsUUStCfAy3hAG69ir4u:
 
 ```Rust
-    let mint = Pubkey::from_str("Coyj3LtKn1BNSgWc9HsGK5SKoGfEoDaymig4wrN6pump").unwrap();
+    let mint = Pubkey::from_str("31uECUv6XnA8CtfWZREXbDxiJLBTfnFTsEzzswLaUSAT").unwrap();
 
 assert_eq!(
     Pubkey::find_program_address(&[b"bonding-curve", mint.as_ref()], &pump::ID).1,
@@ -23,7 +23,7 @@ assert_eq!(
 );
 ```
 
-The `bonding_curve` bump seed for mint `Coyj3LtKn1BNSgWc9HsGK5SKoGfEoDaymig4wrN6pump` is `255`.
+The `bonding_curve` bump seed for mint `31uECUv6XnA8CtfWZREXbDxiJLBTfnFTsEzzswLaUSAT` is `255`.
 
 While for the
 tx https://solscan.io/tx/5xozUcJFvRj4ySpE2epSSs95ySxs6cLjs1rV2uaFNkFgsEMBZW53VUa2uc3CVQLVJRYxfQ5JoSzZLiUvAgM4GEJM:
