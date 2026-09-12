@@ -149,6 +149,16 @@ at https://solscan.io/account/GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J#accou
   computed against the pool's **effective quote reserves**, not the raw quote-vault token balance, see
   [Quoting: effective quote reserves](#quoting-effective-quote-reserves). It is `0` on all pools today, so effective
   quote reserves currently equal the raw vault balance; some pools may carry a non-zero value in the future.
+- The `creator_fee_bps` (`u64`, appended) is the pool's own creator fee rate for coins on a custom pair (a quote asset
+  other than SOL or USDC), carried over from the bonding curve. `0` means the standard fee schedule applies, which is
+  always the case for SOL- and USDC-paired coins. Contact the CTO team to change it.
+- The `can_edit_creator_fee` (`bool`, appended) is reserved and always `false`.
+- The `is_holder_reward` (`bool`, appended) flag indicates whether the coin is a
+  [holder rewards coin](HOLDER_REWARDS_README.md): its creator fee is set aside for the coin's holders instead of a
+  creator wallet. Trading is unchanged; `BuyEvent` / `SellEvent` additionally report the fee in
+  `holder_rewards_bps` / `holder_rewards` on such pools.
+- Pools written before an appended field existed are shorter than the current layout; read the missing trailing fields
+  as `0` / `false`.
 
 ## Quoting: effective quote reserves
 
