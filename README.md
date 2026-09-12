@@ -1,5 +1,24 @@
 # pump-public-docs
 
+# Holder Rewards Coins and the End of Cashback
+
+Coins can now be created as **holder rewards coins**: the creator fee charged on every trade is set aside for the coin's
+holders and paid out to them by pump.fun, instead of going to a creator wallet.
+
+- `create_v2` takes one new trailing, optional `is_holder_reward` (`OptionBool`) argument. `[true]` creates a holder
+  rewards coin; omitted or `[false]` creates a regular coin, so existing integrations keep working unchanged.
+- **There are no trade interface changes.** `buy`, `sell`, `buy_v2`, `sell_v2`, `buy_exact_quote_in_v2` and the PumpSwap
+  `buy` / `sell` take the same accounts and arguments for every coin.
+- `BondingCurve` and PumpSwap `Pool` gain an `is_holder_reward` flag; `CreateEvent` / `CreatePoolEvent` gain
+  `is_holder_reward`; `TradeEvent` and PumpSwap `BuyEvent` / `SellEvent` gain `holder_rewards_bps` / `holder_rewards`.
+  The existing creator fee fields are unchanged.
+- **Cashback mode is deprecated.** `create_v2` rejects `is_cashback_enabled = [true]`, so no new cashback coins can be
+  created. Existing cashback coins keep trading as before and their accrued cashback stays claimable.
+- Contact the CTO team if you want the creator fee bps changed on a custom pair, or an existing coin converted into a
+  holder rewards coin.
+
+Full details: [Holder rewards coins](docs/HOLDER_REWARDS_README.md).
+
 # PumpSwap Update: Virtual Quote Reserves
 
 PumpSwap pools now carry a `virtual_quote_reserves` field (appended to the `Pool` account). Buys and sells are priced against the pool's **effective quote reserves**:
@@ -87,11 +106,12 @@ Currently, no quote mint other than native SOL can be used to create or trade co
 - RUST crate: https://crates.io/crates/pump-rust-client
 
 ## New docs
+- Holder rewards coins: [docs/HOLDER_REWARDS_README.md](docs/HOLDER_REWARDS_README.md)
 - Fee recipients: [docs/FEE_RECIPIENTS.md](docs/FEE_RECIPIENTS.md)
 - Coin creation: [docs/instructions/COIN_CREATION.md](docs/instructions/COIN_CREATION.md)
 - Buy: [docs/instructions/BUY.md](docs/instructions/BUY.md)
 - Sell: [docs/instructions/SELL.md](docs/instructions/SELL.md)
-- Claim cashback: [docs/instructions/CLAIM_CASHBACK.md](docs/instructions/CLAIM_CASHBACK.md)
+- Claim cashback (existing cashback coins only, cashback is deprecated): [docs/instructions/CLAIM_CASHBACK.md](docs/instructions/CLAIM_CASHBACK.md)
 - Collect creator fee: [docs/instructions/COLLECT_CREATOR_FEE.md](docs/instructions/COLLECT_CREATOR_FEE.md)
 - Creator fee sharing: [docs/instructions/CREATOR_FEE_SHARING.md](docs/instructions/CREATOR_FEE_SHARING.md)
 

@@ -40,7 +40,11 @@ The `create_v2` instruction takes the following instruction data arguments.
 | 3   | `uri`                 | `String`     | Metadata URI. Maximum 200 characters.             | No        |
 | 4   | `creator`             | `Pubkey`     | Creator address. Must not be `Pubkey::default()`. | No        |
 | 5   | `is_mayhem_mode`      | `bool`       | Enables mayhem mode for the coin.                 | No        |
-| 6   | `is_cashback_enabled` | `OptionBool` | Enables cashback for the coin.                    | Yes       |
+| 6   | `is_cashback_enabled` | `OptionBool` | **Deprecated.** Must be `[false]` or omitted: cashback coins can no longer be created and the instruction fails on `[true]`. Existing cashback coins are unaffected. | Yes       |
+| 7   | `creator_fee_bps`     | `OptionU64`  | Creator fee rate for coins on a custom pair (a quote asset other than SOL or USDC). Omitted or `0` means the standard fee schedule; on SOL- and USDC-paired coins the value is ignored and the schedule always applies. Contact the CTO team to change the rate of an existing coin. | Yes       |
+| 8   | `is_holder_reward`    | `OptionBool` | `[true]` creates a [holder rewards coin](../HOLDER_REWARDS_README.md): the creator fee of every trade is set aside for the coin's holders instead of a creator wallet, and `creator` is not used as the fee recipient. Permanent. Omitted or `[false]` creates a regular coin. | Yes       |
+
+The trailing optional arguments (6-8) may be left off the end of the instruction data; a missing argument reads as `false` / `0`.
 
 ## TS SDK
 
@@ -61,7 +65,30 @@ const createInstruction = await PUMP_SDK.createV2Instruction({
   creator,
   user,
   mayhemMode: false, // Can be set to true.
-  cashback: false, // Can be set to true.
+  holderReward: false, // true creates a holder rewards coin (see HOLDER_REWARDS_README.md).
+  // cashback is deprecated: create_v2 rejects true.
+});
+```
+
+### Holder Rewards Mint
+
+Pass `holderReward: true` to create a coin whose creator fee goes to its holders. See
+[HOLDER_REWARDS_README.md](../HOLDER_REWARDS_README.md) for what this means and how to read the new fields.
+
+```ts
+import { PUMP_SDK } from "@pump-fun/pump-sdk";
+
+const mintKeypair = Keypair.generate();
+
+const createInstruction = await PUMP_SDK.createV2Instruction({
+  mint: mintKeypair.publicKey,
+  name: "Name",
+  symbol: "symbol",
+  uri: "<your ipfs uri>",
+  creator, // not used as the fee recipient on a holder rewards coin
+  user,
+  mayhemMode: false,
+  holderReward: true,
 });
 ```
 
@@ -83,7 +110,6 @@ const createInstruction = await PUMP_SDK.createV2Instruction({
   creator,
   user,
   mayhemMode: false, // Can be set to true.
-  cashback: false, // Can be set to true.
   quoteMint,
 });
 ```
@@ -114,7 +140,7 @@ let ixs = sdk
         user.pubkey(),       // creator
         Pubkey::default(),   // quote_mint — default → wSOL
         false,               // mayhem_mode
-        false,               // cashback
+        false,               // cashback (deprecated: must stay false)
         None,                // tokenized_agent_buyback_bps
         &global,
         1_000_000_000,       // amount (token base units, 6 decimals)

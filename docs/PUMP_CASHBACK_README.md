@@ -1,3 +1,9 @@
+> **Deprecated.** Cashback mode is deprecated: `create_v2` now rejects `is_cashback_enabled = [true]`, so no new
+> cashback coins can be created. Existing cashback coins are not affected: they trade exactly as described below, their
+> creator fee is still routed to the buyer, and accrued cashback stays claimable with `claim_cashback` /
+> `claim_cashback_v2`. New coins that want to reward their community should be created as
+> [holder rewards coins](HOLDER_REWARDS_README.md) instead.
+
 ## Overview
 
 Cashback Rewards allows token creators to create coins with "cashback" enabled which redirects the creator fee to the users. Each user would get the creator fee on their swap volume as cashback rather than paying that fee to the coin creator.
@@ -33,8 +39,8 @@ Expects the WSOL associated token account of the `UserVolumeAccumulator` for the
 Expects the `UserVolumeAccumulator` for the Pump AMM Program (used to derive the WSOL ATA above) at the 1st index of the remaining accounts.
 
 ### Create V2
-New parameter expected for `create_v2` instruction which is an `OptionBool` to define whether the coin has cashback enabled or not.
-In typescript this is a tuple, so it would look like `[true]`.
+The `create_v2` instruction has an `OptionBool` parameter, `is_cashback_enabled`, that used to enable cashback for a new coin.
+It is deprecated: pass `[false]` or omit it. `create_v2` fails when it is `[true]`.
 
 ### Bonding Curve Claim Cashback
 New `claim_cashback` instruction for the Pump program.

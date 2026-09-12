@@ -1,5 +1,9 @@
 # Claim Cashback
 
+> **Note:** Cashback mode is deprecated and no new cashback coins can be created (see
+> [PUMP_CASHBACK_README.md](../PUMP_CASHBACK_README.md)). Cashback accrued on existing cashback coins stays claimable
+> with the instruction below, and those coins keep accruing it on every trade.
+
 The `claim_cashback_v2` instruction claims cashback accrued in a user's volume accumulator. It supports both legacy SOL cashback and non-SOL quote mint cashback through the same interface. The instruction is permissionless: `user` is the cashback recipient, but does not need to sign the transaction.
 
 ## Accounts

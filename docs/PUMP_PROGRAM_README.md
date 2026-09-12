@@ -156,6 +156,23 @@ at https://solscan.io/account/EsmVk4MTsoT71JFaRM5DWFZboKpMQjfY6EYzAgUuksXw#accou
 - The `complete` field is initially set to `false`. It is set to `true` at the end of a `buy` instruction, when
   `real_token_reserves == 0`, so there are no more real tokens left in the bonding curve.
 
+Fields appended to `BondingCurve` by later upgrades (accounts written before a field existed are shorter; read the
+missing trailing fields as `0` / `false` / `Pubkey::default()`):
+
+- `creator` (`pubkey`): the address the coin's creator fees accrue to, see
+  [PUMP_CREATOR_FEE_README.md](PUMP_CREATOR_FEE_README.md).
+- `is_mayhem_mode` (`bool`): whether the coin is a mayhem coin.
+- `is_cashback_coin` (`bool`): whether the coin routes its creator fee to buyers as cashback. Cashback mode is
+  deprecated and no new cashback coins can be created, see [PUMP_CASHBACK_README.md](PUMP_CASHBACK_README.md).
+- `quote_mint` (`pubkey`): the coin's quote asset; `Pubkey::default()` for SOL-paired coins.
+- `creator_fee_bps` (`u64`): the coin's own creator fee rate for coins on a custom pair (a quote asset other than SOL or
+  USDC). `0` means the standard fee schedule applies, which is always the case for SOL- and USDC-paired coins. Contact
+  the CTO team to change it.
+- `can_edit_creator_fee` (`bool`): reserved, always `false`.
+- `is_holder_reward` (`bool`): whether the coin is a [holder rewards coin](HOLDER_REWARDS_README.md) whose creator fee
+  is set aside for its holders instead of a creator wallet. Trading is unchanged; `TradeEvent` additionally reports the
+  fee in `holder_rewards_bps` / `holder_rewards` on such coins.
+
 ## Instructions
 
 - `create(user, name, symbol, uri, creator)` allows a `user` to create a new coin with the given `name`, `symbol` and
