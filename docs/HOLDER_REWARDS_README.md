@@ -9,8 +9,10 @@ coins and will not see the new fields described below.
 
 ## What changes for creators
 
-- A coin is either a regular coin or a holder rewards coin. The choice is made when the coin is created and cannot be
-  undone afterwards.
+- A coin is either a regular coin or a holder rewards coin. The choice is made when the coin is created. A regular
+  coin can later be converted into a holder rewards coin through a community takeover (see
+  [below](#community-takeovers-and-creator-fee-changes)), but a holder rewards coin can never go back to being a
+  regular coin.
 - On a holder rewards coin there is nothing for the creator to claim: the creator fee goes to holders.
 - Holders do not need to do anything to receive rewards. pump.fun pays them out; there is no claim instruction for
   holders to call.
