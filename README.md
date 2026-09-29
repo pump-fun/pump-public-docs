@@ -1,5 +1,11 @@
 # pump-public-docs
 
+# PumpSwap Update: Negative Virtual Quote Reserves (September 30)
+
+Starting **September 30**, `Pool::virtual_quote_reserves` can be **negative**. The field has been an `i128` since it was introduced and its type is not changing, so always treat it as a signed value: `effective_quote_reserves` may be above or below `pool_quote_token_account.amount`. We guarantee that `pool_quote_token_account.amount + virtual_quote_reserves` will never overflow and will never be negative, so integrations only need to do the signed addition and price against the result.
+
+Full details: [Negative virtual quote reserves](docs/NEGATIVE_VIRTUAL_QUOTE_RESERVES.md).
+
 # Holder Rewards Coins and the End of Cashback
 
 Coins can now be created as **holder rewards coins**: the creator fee charged on every trade is set aside for the coin's
