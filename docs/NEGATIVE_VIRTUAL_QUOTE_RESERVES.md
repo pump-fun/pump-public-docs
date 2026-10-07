@@ -2,6 +2,8 @@
 
 Starting **September 30**, `Pool::virtual_quote_reserves` on PumpSwap pools can be **negative**.
 
+Why it goes negative: the PumpSwap v2 trades keep the protocol and creator fee inside the pool's quote vault and subtract that amount from `virtual_quote_reserves`, so the waiting fees do not count as liquidity. See [Virtual quote reserves and fees](VIRTUAL_QUOTE_RESERVES_FEE_ADJUSTMENT.md). If you already handle a negative value, nothing changes for your quotes.
+
 The field is an `i128`, so treat it as a signed value everywhere and never read it as a `u64` / `u128`. A positive value
 puts `effective_quote_reserves` above `pool_quote_token_account.amount`; a negative value puts it below. In both cases
 `effective_quote_reserves` itself is **never negative**: the program never lets `virtual_quote_reserves` drop further

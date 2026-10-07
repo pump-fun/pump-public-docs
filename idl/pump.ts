@@ -1397,6 +1397,14 @@ export type Pump = {
               "name": "optionBool"
             }
           }
+        },
+        {
+          "name": "partialFill",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
         }
       ]
     },
@@ -2137,6 +2145,418 @@ export type Pump = {
         {
           "name": "minTokensOut",
           "type": "u64"
+        },
+        {
+          "name": "partialFill",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "buyExactQuoteInV3",
+      "discriminator": [
+        225,
+        247,
+        80,
+        30,
+        213,
+        179,
+        132,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "baseMint"
+        },
+        {
+          "name": "quoteMint"
+        },
+        {
+          "name": "baseTokenProgram"
+        },
+        {
+          "name": "quoteTokenProgram"
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedBaseBondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "baseTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associatedQuoteBondingCurve",
+          "docs": [
+            "Must already exist on a token quote (create_v2 creates it); ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "associatedBaseUser",
+          "writable": true
+        },
+        {
+          "name": "associatedQuoteUser",
+          "docs": [
+            "canonical SPL associated-token PDA. Validated in the handlers via",
+            "`validate_user_quote_token_account` for non-legacy mints; ignored for legacy (SOL) trades."
+          ],
+          "writable": true
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "feeConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "buybackFeeRecipient",
+          "writable": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        }
+      ],
+      "args": [
+        {
+          "name": "spendableQuoteIn",
+          "type": "u64"
+        },
+        {
+          "name": "minTokensOut",
+          "type": "u64"
+        },
+        {
+          "name": "partialFill",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
         }
       ]
     },
@@ -2528,6 +2948,14 @@ export type Pump = {
         },
         {
           "name": "trackVolume",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
+        },
+        {
+          "name": "partialFill",
           "type": {
             "defined": {
               "name": "optionBool"
@@ -3273,6 +3701,418 @@ export type Pump = {
         {
           "name": "maxSolCost",
           "type": "u64"
+        },
+        {
+          "name": "partialFill",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "buyV3",
+      "discriminator": [
+        7,
+        5,
+        29,
+        196,
+        245,
+        23,
+        101,
+        80
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "baseMint"
+        },
+        {
+          "name": "quoteMint"
+        },
+        {
+          "name": "baseTokenProgram"
+        },
+        {
+          "name": "quoteTokenProgram"
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedBaseBondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "baseTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associatedQuoteBondingCurve",
+          "docs": [
+            "Must already exist on a token quote (create_v2 creates it); ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "associatedBaseUser",
+          "writable": true
+        },
+        {
+          "name": "associatedQuoteUser",
+          "docs": [
+            "canonical SPL associated-token PDA. Validated in the handlers via",
+            "`validate_user_quote_token_account` for non-legacy mints; ignored for legacy (SOL) trades."
+          ],
+          "writable": true
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "feeConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "buybackFeeRecipient",
+          "writable": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "maxSolCost",
+          "type": "u64"
+        },
+        {
+          "name": "partialFill",
+          "type": {
+            "defined": {
+              "name": "optionBool"
+            }
+          }
         }
       ]
     },
@@ -4444,13 +5284,32 @@ export type Pump = {
         "the mint), plus an optional fourth account, the `quote-control` PDA, read only when `Global`",
         "does not whitelist the mint. A mint admitted through quote-control seeds the curve's",
         "virtual quote reserves from its quote-control entry instead of `Global`, and cannot be",
-        "used with `is_mayhem_mode` (`MayhemModeQuoteMintNotAllowed`). The Token-2022",
+        "used with `is_mayhem_mode` (`MayhemModeQuoteMintNotAllowed`). When neither list admits the",
+        "mint Q, an optional fifth account, Q's own pump `bonding-curve` PDA, admits a pump coin as",
+        "the quote (`InvalidQuoteBondingCurve` if it is not that PDA; missing keeps",
+        "`UnsupportedQuoteMint`): the new curve's depth, Q's depth plus one, must not exceed",
+        "`Global.max_curve_depth` (`CurveDepthExceeded`; 0 disables the path, 1 admits children of",
+        "depth-0 coins only, up to 5 planned), and Q's curve must not be mayhem mode; a depth-0 Q",
+        "must itself be quoted in SOL, a `Global`-whitelisted mint or a quote-control mint",
+        "(`QuoteBondingCurveNotEligible`). The new curve's virtual quote reserves are then derived",
+        "from Q's live price — the seed a fresh curve in Q's own quote would get for a depth-0 Q, or",
+        "Q's own stored `initial_virtual_quote_reserves` for a deeper Q (so every hop below Q is",
+        "pinned at its creation price and only Q is read), times Q's curve `virtual_token_reserves`",
+        "over `virtual_quote_reserves` while Q's curve trades, or times Q's canonical pump-amm pool",
+        "base vault balance over its quote vault balance plus `Pool.virtual_quote_reserves` once it is",
+        "migrated (a complete Q not yet migrated fails `QuoteCurveAwaitingMigration`);",
+        "a migrated Q requires accounts six to eight: the pool (index 0 under pump's",
+        "`pool-authority` PDA for Q, quote seed WSOL for a SOL-quoted Q) and its base and quote",
+        "vaults (`QuotePoolAccountsRequired`, `QuotePoolNotFound`, `InvalidQuotePool`). The derived",
+        "value must be at least 1 and its graduation raise at most Q's mint supply",
+        "(`QuoteReservesOutOfRange`); the new curve stores `depth = Q.depth + 1` and, like a",
+        "quote-control coin, cannot be mayhem mode. The Token-2022",
         "native mint is rejected, and a Token-2022 quote mint may only carry the xStock operable",
         "extension set (metadata pointer/metadata, permanent delegate, initialized default account",
         "state, scaled UI amount, pausable, confidential-transfer mint, and a transfer hook with no",
         "program). The trailing `creator_fee_bps` argument (EOF-tolerant) sets the coin's own creator",
-        "fee rate for a quote mint admitted through quote-control, and then requires",
-        "`Global.creator_fee_configurable`, a non-cashback coin and a value in",
+        "fee rate for a quote mint admitted through quote-control or through a pump coin's curve,",
+        "and then requires `Global.creator_fee_configurable`, a non-cashback coin and a value in",
         "`1..=Global.max_configurable_creator_fee_bps`; on a SOL or `Global`-whitelisted quote it is",
         "ignored, and omitted or zero stores 0 so the pump-fees schedule rate applies.",
         "`is_cashback_enabled` is deprecated and must be false. `is_holder_reward` (EOF-tolerant,",
@@ -7014,6 +7873,279 @@ export type Pump = {
       "args": []
     },
     {
+      "name": "multiHopCurveSwap",
+      "discriminator": [
+        225,
+        154,
+        117,
+        22,
+        215,
+        86,
+        246,
+        103
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "feeConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "pumpAmmGlobalConfig",
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                20,
+                222,
+                252,
+                130,
+                94,
+                198,
+                118,
+                148,
+                37,
+                8,
+                24,
+                187,
+                101,
+                64,
+                101,
+                244,
+                41,
+                141,
+                49,
+                86,
+                213,
+                113,
+                180,
+                212,
+                248,
+                9,
+                12,
+                24,
+                233,
+                168,
+                99
+              ]
+            }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sourceAuthority",
+          "signer": true
+        },
+        {
+          "name": "source",
+          "writable": true
+        },
+        {
+          "name": "destination",
+          "writable": true
+        },
+        {
+          "name": "buybackFeeRecipient",
+          "writable": true
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token2022Program",
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        }
+      ],
+      "args": [
+        {
+          "name": "amountIn",
+          "type": "u64"
+        },
+        {
+          "name": "hopFees",
+          "type": "bytes"
+        }
+      ],
+      "returns": {
+        "defined": {
+          "name": "curveRunResult"
+        }
+      }
+    },
+    {
       "name": "removeQuoteControlMint",
       "discriminator": [
         223,
@@ -8193,6 +9325,402 @@ export type Pump = {
       ]
     },
     {
+      "name": "sellV3",
+      "discriminator": [
+        28,
+        146,
+        222,
+        119,
+        38,
+        196,
+        105,
+        213
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "baseMint"
+        },
+        {
+          "name": "quoteMint"
+        },
+        {
+          "name": "baseTokenProgram"
+        },
+        {
+          "name": "quoteTokenProgram"
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedBaseBondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "baseTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "associatedQuoteBondingCurve",
+          "docs": [
+            "Must already exist on a token quote (create_v2 creates it); ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "associatedBaseUser",
+          "writable": true
+        },
+        {
+          "name": "associatedQuoteUser",
+          "docs": [
+            "canonical SPL associated-token PDA. Validated in the handlers via",
+            "`validate_user_quote_token_account` for non-legacy mints; ignored for legacy (SOL) trades."
+          ],
+          "writable": true
+        },
+        {
+          "name": "userVolumeAccumulator",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  118,
+                  111,
+                  108,
+                  117,
+                  109,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  117,
+                  109,
+                  117,
+                  108,
+                  97,
+                  116,
+                  111,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "feeConfig",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  101,
+                  101,
+                  95,
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              },
+              {
+                "kind": "const",
+                "value": [
+                  1,
+                  86,
+                  224,
+                  246,
+                  147,
+                  102,
+                  90,
+                  207,
+                  68,
+                  219,
+                  21,
+                  104,
+                  191,
+                  23,
+                  91,
+                  170,
+                  81,
+                  137,
+                  203,
+                  151,
+                  245,
+                  210,
+                  255,
+                  59,
+                  101,
+                  93,
+                  43,
+                  182,
+                  253,
+                  109,
+                  24,
+                  176
+                ]
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                12,
+                53,
+                255,
+                169,
+                5,
+                90,
+                142,
+                86,
+                141,
+                168,
+                247,
+                188,
+                7,
+                86,
+                21,
+                39,
+                76,
+                241,
+                201,
+                44,
+                164,
+                31,
+                64,
+                0,
+                156,
+                81,
+                106,
+                164,
+                20,
+                194,
+                124,
+                112
+              ]
+            }
+          }
+        },
+        {
+          "name": "buybackFeeRecipient",
+          "writable": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "minSolOutput",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "setCreator",
       "docs": [
         "Allows Global::set_creator_authority to set the bonding curve creator from Metaplex metadata or input argument"
@@ -8401,6 +9929,86 @@ export type Pump = {
         {
           "name": "creator",
           "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "setMaxCurveDepth",
+      "discriminator": [
+        32,
+        154,
+        152,
+        219,
+        142,
+        108,
+        218,
+        165
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global"
+          ]
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "maxCurveDepth",
+          "type": "u8"
         }
       ]
     },
@@ -9034,6 +10642,212 @@ export type Pump = {
       ]
     },
     {
+      "name": "setQuoteControlMintReserves",
+      "discriminator": [
+        116,
+        220,
+        107,
+        83,
+        191,
+        44,
+        32,
+        73
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quoteControl",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101,
+                  45,
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "quoteMint",
+          "type": "pubkey"
+        },
+        {
+          "name": "initialVirtualQuoteReserves",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "setQuoteControlReservesAdmin",
+      "discriminator": [
+        161,
+        195,
+        222,
+        165,
+        225,
+        101,
+        192,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true
+        },
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "quoteControl",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  113,
+                  117,
+                  111,
+                  116,
+                  101,
+                  45,
+                  99,
+                  111,
+                  110,
+                  116,
+                  114,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "newReservesAdmin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
       "name": "setReservedFeeRecipients",
       "discriminator": [
         111,
@@ -9191,6 +11005,496 @@ export type Pump = {
           "type": "u64"
         }
       ]
+    },
+    {
+      "name": "sweepCreatorFee",
+      "discriminator": [
+        32,
+        246,
+        191,
+        52,
+        8,
+        201,
+        73,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "baseMint"
+        },
+        {
+          "name": "quoteMint"
+        },
+        {
+          "name": "quoteTokenProgram"
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedQuoteBondingCurve",
+          "docs": [
+            "the source on a token quote, ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "recipient",
+          "docs": [
+            "recipient (`check_fee_recipient`) or the creator vault PDA of `bonding_curve.creator`."
+          ],
+          "writable": true
+        },
+        {
+          "name": "associatedQuoteRecipient",
+          "docs": [
+            "created idempotently on a token quote, ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "recipient"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "sweepProtocolFee",
+      "discriminator": [
+        8,
+        48,
+        190,
+        7,
+        182,
+        68,
+        183,
+        229
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "baseMint"
+        },
+        {
+          "name": "quoteMint"
+        },
+        {
+          "name": "quoteTokenProgram"
+        },
+        {
+          "name": "associatedTokenProgram",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "bondingCurve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  111,
+                  110,
+                  100,
+                  105,
+                  110,
+                  103,
+                  45,
+                  99,
+                  117,
+                  114,
+                  118,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "baseMint"
+              }
+            ]
+          }
+        },
+        {
+          "name": "associatedQuoteBondingCurve",
+          "docs": [
+            "the source on a token quote, ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "bondingCurve"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "recipient",
+          "docs": [
+            "recipient (`check_fee_recipient`) or the creator vault PDA of `bonding_curve.creator`."
+          ],
+          "writable": true
+        },
+        {
+          "name": "associatedQuoteRecipient",
+          "docs": [
+            "created idempotently on a token quote, ignored on a SOL quote."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "recipient"
+              },
+              {
+                "kind": "account",
+                "path": "quoteTokenProgram"
+              },
+              {
+                "kind": "account",
+                "path": "quoteMint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
     },
     {
       "name": "syncUserVolumeAccumulator",
@@ -10204,6 +12508,19 @@ export type Pump = {
       ]
     },
     {
+      "name": "postCompleteBuyEvent",
+      "discriminator": [
+        111,
+        176,
+        109,
+        139,
+        49,
+        108,
+        213,
+        251
+      ]
+    },
+    {
       "name": "removeQuoteControlMintEvent",
       "discriminator": [
         46,
@@ -10279,6 +12596,45 @@ export type Pump = {
         81,
         30,
         247
+      ]
+    },
+    {
+      "name": "setQuoteControlMintReservesEvent",
+      "discriminator": [
+        169,
+        67,
+        39,
+        109,
+        102,
+        134,
+        182,
+        232
+      ]
+    },
+    {
+      "name": "setQuoteControlReservesAdminEvent",
+      "discriminator": [
+        67,
+        251,
+        179,
+        182,
+        87,
+        92,
+        169,
+        33
+      ]
+    },
+    {
+      "name": "sweepBondingCurveFeeEvent",
+      "discriminator": [
+        116,
+        43,
+        77,
+        189,
+        17,
+        122,
+        72,
+        43
       ]
     },
     {
@@ -10799,6 +13155,76 @@ export type Pump = {
       "code": 6093,
       "name": "ctoSharedVaultFrozen",
       "msg": "A frozen sharing-config vault account holds a balance; thaw it before the holder conversion"
+    },
+    {
+      "code": 6094,
+      "name": "cashbackCoinNotSupported",
+      "msg": "v3 trades do not support cashback coins; use the v2 instructions"
+    },
+    {
+      "code": 6095,
+      "name": "creatorFeesNotSwept",
+      "msg": "creator_fee must be swept before the creator changes or the vault is distributed"
+    },
+    {
+      "code": 6096,
+      "name": "feeTiersEmpty",
+      "msg": "The fee config tier table is empty"
+    },
+    {
+      "code": 6097,
+      "name": "feeConfigTooShort",
+      "msg": "The fee config account is shorter than its initialize size"
+    },
+    {
+      "code": 6098,
+      "name": "multiHopDiscontinuousPath",
+      "msg": "multi-hop: a hop's input mint is neither side of its bonding curve"
+    },
+    {
+      "code": 6099,
+      "name": "invalidQuoteBondingCurve",
+      "msg": "Quote bonding curve remaining account does not match derivation or is uninitialized"
+    },
+    {
+      "code": 6100,
+      "name": "quoteBondingCurveNotEligible",
+      "msg": "Quote bonding curve is not eligible as a quote: mayhem mode, or a depth-0 coin whose own quote is not listed"
+    },
+    {
+      "code": 6101,
+      "name": "quotePoolAccountsRequired",
+      "msg": "Quote bonding curve has migrated: pool and vault remaining accounts are required"
+    },
+    {
+      "code": 6102,
+      "name": "quotePoolNotFound",
+      "msg": "Quote pool remaining account is not an initialized pump-amm pool"
+    },
+    {
+      "code": 6103,
+      "name": "invalidQuotePool",
+      "msg": "Quote pool or vault remaining accounts do not match derivation or are invalid"
+    },
+    {
+      "code": 6104,
+      "name": "quoteReservesOutOfRange",
+      "msg": "Derived quote reserves are zero or their graduation raise exceeds the quote mint supply"
+    },
+    {
+      "code": 6105,
+      "name": "curveDepthExceeded",
+      "msg": "The new curve's depth (quote coin depth plus one) exceeds Global.max_curve_depth"
+    },
+    {
+      "code": 6106,
+      "name": "multiHopHopFeesMismatch",
+      "msg": "multi-hop: hop_fees must carry one flag byte per curve hop using only the protocol and creator bits"
+    },
+    {
+      "code": 6107,
+      "name": "quoteCurveAwaitingMigration",
+      "msg": "The quote coin's curve is complete but not yet migrated; retry once migrate_v2 creates its pool"
     }
   ],
   "types": [
@@ -10994,6 +13420,30 @@ export type Pump = {
           {
             "name": "isHolderReward",
             "type": "bool"
+          },
+          {
+            "name": "creatorFee",
+            "type": "u64"
+          },
+          {
+            "name": "protocolFees",
+            "type": "u64"
+          },
+          {
+            "name": "depth",
+            "type": "u8"
+          },
+          {
+            "name": "initialVirtualQuoteReserves",
+            "type": "u64"
+          },
+          {
+            "name": "postCompleteBaseOut",
+            "type": "u64"
+          },
+          {
+            "name": "postCompleteQuoteIn",
+            "type": "u64"
           }
         ]
       }
@@ -11285,6 +13735,26 @@ export type Pump = {
           {
             "name": "isHolderReward",
             "type": "bool"
+          },
+          {
+            "name": "depth",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "curveRunResult",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amountOut",
+            "type": "u64"
+          },
+          {
+            "name": "buybackFee",
+            "type": "u64"
           }
         ]
       }
@@ -11629,6 +14099,10 @@ export type Pump = {
           {
             "name": "isHolderRewardEnabled",
             "type": "bool"
+          },
+          {
+            "name": "maxCurveDepth",
+            "type": "u8"
           }
         ]
       }
@@ -11766,6 +14240,78 @@ export type Pump = {
       }
     },
     {
+      "name": "postCompleteBuyEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondingCurve",
+            "type": "pubkey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "baseOut",
+            "type": "u64"
+          },
+          {
+            "name": "quoteIn",
+            "type": "u64"
+          },
+          {
+            "name": "feeBasisPoints",
+            "type": "u64"
+          },
+          {
+            "name": "fee",
+            "type": "u64"
+          },
+          {
+            "name": "creatorFeeBasisPoints",
+            "type": "u64"
+          },
+          {
+            "name": "creatorFee",
+            "type": "u64"
+          },
+          {
+            "name": "buybackFee",
+            "type": "u64"
+          },
+          {
+            "name": "poolBaseReservesBefore",
+            "type": "u64"
+          },
+          {
+            "name": "poolQuoteReservesBefore",
+            "type": "u64"
+          },
+          {
+            "name": "poolBaseReservesAfter",
+            "type": "u64"
+          },
+          {
+            "name": "poolQuoteReservesAfter",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "quoteControl",
       "type": {
         "kind": "struct",
@@ -11775,11 +14321,15 @@ export type Pump = {
             "type": "pubkey"
           },
           {
+            "name": "reservesAdmin",
+            "type": "pubkey"
+          },
+          {
             "name": "reserved",
             "type": {
               "array": [
                 "u8",
-                64
+                32
               ]
             }
           },
@@ -12011,6 +14561,66 @@ export type Pump = {
       }
     },
     {
+      "name": "setQuoteControlMintReservesEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "quoteControl",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "oldInitialVirtualQuoteReserves",
+            "type": "u64"
+          },
+          {
+            "name": "newInitialVirtualQuoteReserves",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "setQuoteControlReservesAdminEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "quoteControl",
+            "type": "pubkey"
+          },
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "oldReservesAdmin",
+            "type": "pubkey"
+          },
+          {
+            "name": "newReservesAdmin",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "shareholder",
       "type": {
         "kind": "struct",
@@ -12068,6 +14678,42 @@ export type Pump = {
                 }
               }
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "sweepBondingCurveFeeEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "bondingCurve",
+            "type": "pubkey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "bucket",
+            "type": "u8"
           }
         ]
       }
@@ -12244,6 +14890,10 @@ export type Pump = {
           },
           {
             "name": "holderRewards",
+            "type": "u64"
+          },
+          {
+            "name": "creatorFeeUnclaimed",
             "type": "u64"
           }
         ]

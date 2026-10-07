@@ -5105,6 +5105,16 @@
       "code": 6032,
       "name": "InvalidRemainingAccounts",
       "msg": "Invalid remaining accounts"
+    },
+    {
+      "code": 6033,
+      "name": "PoolCreatorFeesNotSwept",
+      "msg": "Pool creator_fees must be swept before the shares change"
+    },
+    {
+      "code": 6034,
+      "name": "InvalidQuoteMint",
+      "msg": "quote_mint is not the bonding curve's quote mint"
     }
   ],
   "types": [

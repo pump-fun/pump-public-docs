@@ -173,3 +173,8 @@ let ixs = sdk
     .expect("create_v2_and_buy_instruction");
 ```
 
+## Pump Coin as Quote Mint
+
+`create_v2` can also pair a new coin with an existing pump coin instead of SOL or USDC. The 16 accounts and the arguments above stay the same. Only the remaining accounts change: after the three quote accounts (17 to 19) you also pass the `quote_control` PDA, the quote coin's bonding curve, and the quote coin's PumpSwap pool and vaults if it has migrated. The new coin's starting price is computed from the quote coin's current price.
+
+See [Creating a coin paired with a pump coin](CREATE_WITH_PUMP_COIN_QUOTE.md) for the account list, the rules on which coins can be a quote, and how to trade the new coin.

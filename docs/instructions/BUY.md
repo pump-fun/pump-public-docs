@@ -2,6 +2,8 @@
 
 The `buy_v2` instruction buys base tokens from a bonding curve using the curve's quote mint. Unlike the legacy `buy` instruction, all accounts are passed through a single unified interface for both SOL-paired and non-SOL-paired coins.
 
+> **New, smaller version:** `buy_v3` and `buy_exact_quote_in_v3` do the same buy with 17 accounts instead of 27. Same price, same fees; the protocol and creator fee stay on the curve until they are swept. See [Bonding Curve Trades V3](TRADE_V3.md). For pools after migration see [PumpSwap Trades V2](PUMP_SWAP_TRADE_V2.md), and to buy a coin paired with another pump coin straight from SOL or USDC see [Multi-hop swap](MULTI_HOP_SWAP.md). `buy_v2` keeps working unchanged.
+
 ## Accounts
 
 

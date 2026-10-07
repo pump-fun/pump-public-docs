@@ -5111,6 +5111,16 @@ export type PumpFees = {
       "code": 6032,
       "name": "invalidRemainingAccounts",
       "msg": "Invalid remaining accounts"
+    },
+    {
+      "code": 6033,
+      "name": "poolCreatorFeesNotSwept",
+      "msg": "Pool creator_fees must be swept before the shares change"
+    },
+    {
+      "code": 6034,
+      "name": "invalidQuoteMint",
+      "msg": "quote_mint is not the bonding curve's quote mint"
     }
   ],
   "types": [
