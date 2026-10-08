@@ -5286,18 +5286,20 @@
         "depth-0 coins only, up to 5 planned), and Q's curve must not be mayhem mode; a depth-0 Q",
         "must itself be quoted in SOL, a `Global`-whitelisted mint or a quote-control mint",
         "(`QuoteBondingCurveNotEligible`). The new curve's virtual quote reserves are then derived",
-        "from Q's live price — the seed a fresh curve in Q's own quote would get for a depth-0 Q, or",
-        "Q's own stored `initial_virtual_quote_reserves` for a deeper Q (so every hop below Q is",
-        "pinned at its creation price and only Q is read), times Q's curve `virtual_token_reserves`",
-        "over `virtual_quote_reserves` while Q's curve trades, or times Q's canonical pump-amm pool",
-        "base vault balance over its quote vault balance plus `Pool.virtual_quote_reserves` once it is",
-        "migrated (a complete Q not yet migrated fails `QuoteCurveAwaitingMigration`);",
-        "a migrated Q requires accounts six to eight: the pool (index 0 under pump's",
-        "`pool-authority` PDA for Q, quote seed WSOL for a SOL-quoted Q) and its base and quote",
-        "vaults (`QuotePoolAccountsRequired`, `QuotePoolNotFound`, `InvalidQuotePool`). The derived",
-        "value must be at least 1 and its graduation raise at most Q's mint supply",
-        "(`QuoteReservesOutOfRange`); the new curve stores `depth = Q.depth + 1` and, like a",
-        "quote-control coin, cannot be mayhem mode. The Token-2022",
+        "from Q's live reserves: the graduation raise of a Target — the seed a fresh curve in Q's",
+        "own quote would get for a depth-0 Q, or Q's own stored `initial_virtual_quote_reserves`",
+        "for a deeper Q (so every hop below Q is pinned at its creation and only Q is read) — is",
+        "bought on Q's constant product, over Q's curve `virtual_token_reserves` and",
+        "`virtual_quote_reserves` while Q's curve trades, or over Q's canonical pump-amm pool base",
+        "vault balance and its quote vault balance plus `Pool.virtual_quote_reserves` once it is",
+        "migrated (a complete Q not yet migrated fails `QuoteCurveAwaitingMigration`); the Q tokens",
+        "that buy returns are the new curve's graduation raise and its seed is that raise scaled",
+        "back by the curve's raise ratio. A migrated Q requires accounts six to eight: the pool",
+        "(index 0 under pump's `pool-authority` PDA for Q, quote seed WSOL for a SOL-quoted Q) and",
+        "its base and quote vaults (`QuotePoolAccountsRequired`, `QuotePoolNotFound`,",
+        "`InvalidQuotePool`). The derived value must be at least 1 (`QuoteReservesOutOfRange`); its",
+        "raise never exceeds Q's token side, so there is no supply bound. The new curve stores",
+        "`depth = Q.depth + 1` and, like a quote-control coin, cannot be mayhem mode. The Token-2022",
         "native mint is rejected, and a Token-2022 quote mint may only carry the xStock operable",
         "extension set (metadata pointer/metadata, permanent delegate, initialized default account",
         "state, scaled UI amount, pausable, confidential-transfer mint, and a transfer hook with no",
@@ -13203,7 +13205,7 @@
     {
       "code": 6104,
       "name": "QuoteReservesOutOfRange",
-      "msg": "Derived quote reserves are zero or their graduation raise exceeds the quote mint supply"
+      "msg": "Derived quote reserves are zero"
     },
     {
       "code": 6105,
@@ -13219,6 +13221,11 @@
       "code": 6107,
       "name": "QuoteCurveAwaitingMigration",
       "msg": "The quote coin's curve is complete but not yet migrated; retry once migrate_v2 creates its pool"
+    },
+    {
+      "code": 6108,
+      "name": "MultiHopMayhemCurveNotSupported",
+      "msg": "multi-hop: mayhem-mode curves are not routable; use the v2 instructions"
     }
   ],
   "types": [

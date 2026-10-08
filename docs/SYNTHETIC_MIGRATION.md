@@ -37,7 +37,7 @@ buy_exact_quote_in_v3, net budget `in`: out   = floor((in - 1) * pool_base / (po
 
 The bonding curve fee schedule applies to each part separately. The pool part is the same math as a PumpSwap buy on a fresh pool with those reserves.
 
-The SDKs quote it for you: `getBuyV3QuoteAmountFromTokenAmount` and `getBuyV3TokenAmountFromQuoteAmount` in [`@pump-fun/pump-sdk` 3.2.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/3.2.0) (they need the curve's base token balance, returned by `fetchBuyState` as `curveBaseTokenBalance`), and `buy_quote_bonding_curve_v3_sol_in` / `buy_quote_bonding_curve_v3_token_out` in [`pump-rust-client` 0.3.1](https://crates.io/crates/pump-rust-client/0.3.1).
+The SDKs quote it for you: `getBuyV3QuoteAmountFromTokenAmount` and `getBuyV3TokenAmountFromQuoteAmount` in [`@pump-fun/pump-sdk` 4.0.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/4.0.0) (they need the curve's base token balance, returned by `fetchBuyState` as `curveBaseTokenBalance`), and `buy_quote_bonding_curve_v3_sol_in` / `buy_quote_bonding_curve_v3_token_out` in [`pump-rust-client` 0.4.0](https://crates.io/crates/pump-rust-client/0.4.0).
 
 ## Events and state
 

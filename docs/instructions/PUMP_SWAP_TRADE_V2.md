@@ -101,7 +101,7 @@ The payouts show up later as `SweepPoolFeeEvent`. See [Fee sweeps](SWEEP_FEES.md
 ## SDKs
 
 - TypeScript: [`@pump-fun/pump-swap-sdk` 2.1.0](https://www.npmjs.com/package/@pump-fun/pump-swap-sdk/v/2.1.0). `buyV2Instructions`, `buyExactQuoteInV2Instructions` and `sellV2Instructions`. The high-level `buyBaseInput`, `buyQuoteInput`, `sellBaseInput` and `sellQuoteInput` builders take `{ v2: true }` and use v2 on pools that support it (`supportsTradeV2(pool)`), v1 elsewhere. Prices come from the same quote functions as v1.
-- Rust: [`pump-rust-client` 0.3.1](https://crates.io/crates/pump-rust-client/0.3.1). `buy_amm_v2_instructions`, `buy_exact_quote_in_amm_v2_instruction` and `sell_amm_v2_instructions`.
+- Rust: [`pump-rust-client` 0.4.0](https://crates.io/crates/pump-rust-client/0.4.0). `buy_amm_v2_instructions`, `buy_exact_quote_in_amm_v2_instruction` and `sell_amm_v2_instructions`.
 - IDL: [idl/pump_amm.json](../../idl/pump_amm.json), TypeScript types in [idl/pump_amm.ts](../../idl/pump_amm.ts).
 
 ## Synthetic Migration

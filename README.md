@@ -9,7 +9,7 @@
 - **Why `virtual_quote_reserves` goes negative.** Fees kept in a pool are subtracted from `virtual_quote_reserves`, so the price does not count them. If you already handle it as a signed value, this is not a breaking change for your quotes, and all existing trade instructions work the same way. [Virtual quote reserves and fees](docs/VIRTUAL_QUOTE_RESERVES_FEE_ADJUSTMENT.md)
 - **Synthetic migration: the last buy on the curve has no max size.** With the v3 buys, the buy that empties the bonding curve can ask for more than what is left. It buys the rest from the tokens that would have gone into the PumpSwap pool, at that pool's price, and the pool later opens where that buy stopped. Only the buy that crosses the limit gets this; after it, no buys or sells are possible on the curve until the migration happens. [Synthetic migration](docs/SYNTHETIC_MIGRATION.md)
 
-The IDLs and TypeScript types in [idl](idl) are updated with all of the above. SDK support: `@pump-fun/pump-sdk` 3.2.0, `@pump-fun/pump-swap-sdk` 2.1.0 and `pump-rust-client` 0.3.1, see [SDKs](#sdks).
+The IDLs and TypeScript types in [idl](idl) are updated with all of the above. SDK support: `@pump-fun/pump-sdk` 4.0.0, `@pump-fun/pump-swap-sdk` 2.1.0 and `pump-rust-client` 0.4.0, see [SDKs](#sdks).
 
 # PumpSwap Update: Negative Virtual Quote Reserves (September 30)
 
@@ -121,9 +121,9 @@ Currently, no quote mint other than native SOL can be used to create or trade co
 
 These releases include builders for everything in the new section at the top: v3 trades, PumpSwap v2 trades, multi-hop swaps, pump coins as quote mints and fee sweeps.
 
-- `@pump-fun/pump-sdk` 3.2.0 (Pump program): https://www.npmjs.com/package/@pump-fun/pump-sdk/v/3.2.0
+- `@pump-fun/pump-sdk` 4.0.0 (Pump program): https://www.npmjs.com/package/@pump-fun/pump-sdk/v/4.0.0
 - `@pump-fun/pump-swap-sdk` 2.1.0 (PumpSwap): https://www.npmjs.com/package/@pump-fun/pump-swap-sdk/v/2.1.0
-- `pump-rust-client` 0.3.1 (both programs): https://crates.io/crates/pump-rust-client/0.3.1
+- `pump-rust-client` 0.4.0 (both programs): https://crates.io/crates/pump-rust-client/0.4.0
 
 ## New docs
 - Bonding curve trades v3: [docs/instructions/TRADE_V3.md](docs/instructions/TRADE_V3.md)

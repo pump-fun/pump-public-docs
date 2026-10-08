@@ -31,7 +31,11 @@ If Q is still on its bonding curve, pass indexes 0 to 4 only. If Q has migrated,
 
 ## Starting price
 
-The new coin's starting `virtual_quote_reserves` are not a fixed number. They are computed from Q's current price (from Q's bonding curve, or from Q's pool after migration) so that the new coin starts at about the same value as a normal SOL or USDC launch, just counted in Q. The value is stored in `BondingCurve.virtual_quote_reserves` and reported in `CreateEvent.virtual_quote_reserves`. If Q's price makes the value unusable, creation fails with `QuoteReservesOutOfRange` (6104).
+The new coin's starting `virtual_quote_reserves` are not a fixed number. They are computed from Q's current reserves (Q's bonding curve, or Q's pool after migration), so that the new coin raises about as much as a normal SOL or USDC launch, just counted in Q.
+
+How it works: take the amount a normal launch raises by the time its curve sells out (about 85 SOL for a SOL launch). Buy Q with that amount on Q's own curve or pool, with no fees. The Q tokens that buy returns are what the new coin will raise. The stored `virtual_quote_reserves` are that raise scaled back to a starting seed, using the same ratio a normal curve has between its seed and its raise.
+
+Because the amount is priced through Q's curve, not at Q's spot price, the new coin never asks for more Q than that buy returns. So a young Q with a small supply works too; there is no supply check. The value is stored in `BondingCurve.virtual_quote_reserves` and reported in `CreateEvent.virtual_quote_reserves`. If Q is priced so high that the raise rounds down to nothing, creation fails with `QuoteReservesOutOfRange` (6104).
 
 ## Trading the new coin
 
@@ -51,13 +55,13 @@ The new coin's starting `virtual_quote_reserves` are not a fixed number. They ar
 | 6101 | `QuotePoolAccountsRequired`     | Q has migrated but remaining accounts 5 to 7 are missing.                                       |
 | 6102 | `QuotePoolNotFound`             | Remaining account 5 is not a PumpSwap pool.                                                    |
 | 6103 | `InvalidQuotePool`              | Remaining accounts 5 to 7 do not match Q's pool and vaults.                                     |
-| 6104 | `QuoteReservesOutOfRange`       | The starting reserves computed from Q's price are unusable.                                    |
+| 6104 | `QuoteReservesOutOfRange`       | The starting reserves computed from Q's reserves round down to zero.                           |
 | 6071 | `MayhemModeQuoteMintNotAllowed` | `is_mayhem_mode` was `true`. Mayhem mode only works with SOL or USDC.                          |
 
 ## SDKs
 
-- TypeScript: [`@pump-fun/pump-sdk` 3.2.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/3.2.0). `OnlinePumpSdk.resolveQuoteMint` recognises a pump coin quote (`source: "pumpCoin"`). Pass its `pumpQuote.accounts` to `createV2Instruction` or `createV2AndBuyV2Instructions` as `pumpQuote`, and its `pumpQuote.curve` to the quote functions. The refusals above map to typed errors such as `QuoteBondingCurveNotEligibleError` and `QuoteCurveAwaitingMigrationError`.
-- Rust: [`pump-rust-client` 0.3.1](https://crates.io/crates/pump-rust-client/0.3.1). `fetch_pump_quote_create` and `create_v2_pump_quote_accounts` resolve the quote coin's accounts for `create_v2`; `pump_quote_initial_virtual_quote_reserves` gives the starting reserves for quoting the first buy.
+- TypeScript: [`@pump-fun/pump-sdk` 4.0.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/4.0.0). `OnlinePumpSdk.resolveQuoteMint` recognises a pump coin quote (`source: "pumpCoin"`). Pass its `pumpQuote.accounts` to `createV2Instruction` or `createV2AndBuyV2Instructions` as `pumpQuote`, and its `pumpQuote.curve` to the quote functions. The refusals above map to typed errors such as `QuoteBondingCurveNotEligibleError` and `QuoteCurveAwaitingMigrationError`.
+- Rust: [`pump-rust-client` 0.4.0](https://crates.io/crates/pump-rust-client/0.4.0). `fetch_pump_quote_create` and `create_v2_pump_quote_accounts` resolve the quote coin's accounts for `create_v2`; `pump_quote_initial_virtual_quote_reserves` gives the starting reserves for quoting the first buy.
 - IDL: [idl/pump.json](../../idl/pump.json), TypeScript types in [idl/pump.ts](../../idl/pump.ts).
 
 ## Synthetic Migration

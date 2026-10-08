@@ -117,9 +117,9 @@ For indexers: fee income is in the trade events (when it is charged), payouts ar
 
 ## SDKs
 
-- TypeScript, Pump: [`@pump-fun/pump-sdk` 3.2.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/3.2.0). `sweepProtocolFeeInstruction` and `sweepCreatorFeeInstruction` for the curve, `sweepPoolCreatorFeeInstruction` for the pool's creator fee. `OnlinePumpSdk.adminCtoInstructions` and `buildDistributeCreatorFeesInstructions` prepend the sweeps for you when a bucket is not empty. Event decoders: `decodeSweepBondingCurveFeeEvent` and `decodeSweepPoolFeeEventAmm`.
+- TypeScript, Pump: [`@pump-fun/pump-sdk` 4.0.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/4.0.0). `sweepProtocolFeeInstruction` and `sweepCreatorFeeInstruction` for the curve, `sweepPoolCreatorFeeInstruction` for the pool's creator fee. `OnlinePumpSdk.adminCtoInstructions` and `buildDistributeCreatorFeesInstructions` prepend the sweeps for you when a bucket is not empty. Event decoders: `decodeSweepBondingCurveFeeEvent` and `decodeSweepPoolFeeEventAmm`.
 - TypeScript, PumpSwap: [`@pump-fun/pump-swap-sdk` 2.1.0](https://www.npmjs.com/package/@pump-fun/pump-swap-sdk/v/2.1.0). `sweepProtocolFeeInstruction` and `sweepCreatorFeeInstruction` for the pool, or `onlineSdk.sweepCreatorFeeInstruction(poolKey, payer)`.
-- Rust: [`pump-rust-client` 0.3.1](https://crates.io/crates/pump-rust-client/0.3.1). `sweep_creator_fee_instruction` (curve) and `sweep_pool_creator_fee_instruction` (pool). `distribute_creator_fees_v2_instructions` prepends the curve sweep for you.
+- Rust: [`pump-rust-client` 0.4.0](https://crates.io/crates/pump-rust-client/0.4.0). `sweep_creator_fee_instruction` (curve) and `sweep_pool_creator_fee_instruction` (pool). `distribute_creator_fees_v2_instructions` prepends the curve sweep for you.
 - IDL: [idl/pump.json](../../idl/pump.json) and [idl/pump_amm.json](../../idl/pump_amm.json).
 
 ## Synthetic Migration

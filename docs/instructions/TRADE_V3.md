@@ -93,8 +93,8 @@ The payouts show up later as `SweepBondingCurveFeeEvent`. See [Fee sweeps](SWEEP
 
 ## SDKs
 
-- TypeScript: [`@pump-fun/pump-sdk` 3.2.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/3.2.0). `buyV3Instructions`, `buyExactQuoteInV3Instructions` and `sellV3Instructions` build the trade and create the buyback recipient's token account first when it is missing. `getBuyV3InstructionRaw`, `getBuyExactQuoteInV3InstructionRaw` and `getSellV3InstructionRaw` return the bare instruction. Quote with `getBuyV3QuoteAmountFromTokenAmount` and `getBuyV3TokenAmountFromQuoteAmount`.
-- Rust: [`pump-rust-client` 0.3.1](https://crates.io/crates/pump-rust-client/0.3.1). `buy_v3_instructions`, `buy_exact_quote_in_v3_instructions` and `sell_v3_instructions` prepend the buyback token account create; the single `*_instruction` versions do not. Quote with `buy_quote_bonding_curve_v3_sol_in` and `buy_quote_bonding_curve_v3_token_out`.
+- TypeScript: [`@pump-fun/pump-sdk` 4.0.0](https://www.npmjs.com/package/@pump-fun/pump-sdk/v/4.0.0). `buyV3Instructions`, `buyExactQuoteInV3Instructions` and `sellV3Instructions` build the trade and create the buyback recipient's token account first when it is missing. `getBuyV3InstructionRaw`, `getBuyExactQuoteInV3InstructionRaw` and `getSellV3InstructionRaw` return the bare instruction. Quote with `getBuyV3QuoteAmountFromTokenAmount` and `getBuyV3TokenAmountFromQuoteAmount`.
+- Rust: [`pump-rust-client` 0.4.0](https://crates.io/crates/pump-rust-client/0.4.0). `buy_v3_instructions`, `buy_exact_quote_in_v3_instructions` and `sell_v3_instructions` prepend the buyback token account create; the single `*_instruction` versions do not. Quote with `buy_quote_bonding_curve_v3_sol_in` and `buy_quote_bonding_curve_v3_token_out`.
 - IDL: [idl/pump.json](../../idl/pump.json), TypeScript types in [idl/pump.ts](../../idl/pump.ts).
 
 ## Synthetic Migration
