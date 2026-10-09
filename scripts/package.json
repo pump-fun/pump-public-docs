@@ -1,0 +1,28 @@
+{
+  "name": "scripts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "rimraf dist && tsc && node ./dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "files": [
+    "./dist/**/*"
+  ],
+  "dependencies": {
+    "@pump-fun/pump-sdk": "^1.28.0",
+    "@solana/spl-token": "0.4.6",
+    "@solana/web3.js": "1.93.1",
+    "undici": "^7.22.0"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.1.0",
+    "typescript": "5.2.2"
+  }
+}
