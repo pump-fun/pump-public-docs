@@ -4550,6 +4550,112 @@ export type PumpFees = {
           "type": "u8"
         }
       ]
+    },
+    {
+      "name": "withdraw",
+      "discriminator": [
+        183,
+        18,
+        70,
+        156,
+        148,
+        109,
+        161,
+        34
+      ],
+      "accounts": [
+        {
+          "name": "user",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "referralVault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  102,
+                  101,
+                  114,
+                  114,
+                  97,
+                  108,
+                  45,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "user"
+              }
+            ]
+          }
+        },
+        {
+          "name": "quoteMint",
+          "optional": true
+        },
+        {
+          "name": "vaultAta",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "userAta",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "tokenProgram",
+          "optional": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
@@ -4944,6 +5050,19 @@ export type PumpFees = {
         73,
         243
       ]
+    },
+    {
+      "name": "withdrawEvent",
+      "discriminator": [
+        22,
+        9,
+        133,
+        26,
+        160,
+        44,
+        71,
+        192
+      ]
     }
   ],
   "errors": [
@@ -5121,6 +5240,16 @@ export type PumpFees = {
       "code": 6034,
       "name": "invalidQuoteMint",
       "msg": "quote_mint is not the bonding curve's quote mint"
+    },
+    {
+      "code": 6035,
+      "name": "incompleteTokenAccounts",
+      "msg": "Token withdrawals need quote_mint, vault_ata, user_ata and token_program"
+    },
+    {
+      "code": 6036,
+      "name": "nothingToWithdraw",
+      "msg": "Nothing to withdraw"
     }
   ],
   "types": [
@@ -6370,6 +6499,30 @@ export type PumpFees = {
           {
             "name": "offset",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "withdrawEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "user",
+            "type": "pubkey"
+          },
+          {
+            "name": "quoteMint",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
           }
         ]
       }
