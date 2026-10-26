@@ -50,7 +50,7 @@ effective_quote_reserves = pool_quote_token_account.amount + Pool::virtual_quote
 ```
 
 - Use effective quote reserves (not the raw quote-vault token balance) wherever you quote, price, or index a pool.
-- `virtual_quote_reserves` is `0` on all pools today, so quotes are unchanged. Switching to effective quote reserves now keeps your quotes correct if a pool later carries a non-zero value.
+- `virtual_quote_reserves` is a signed `i128` and may be positive, zero, or negative. Always use the signed value in the effective-reserves formula so quotes reflect both boosted reserves and fees retained in the pool.
 - Indexers: the `BuyEvent` and `SellEvent` logs include the appended `virtual_quote_reserves` field, so effective quote reserves can be reconstructed from the event stream.
 
 Full details: [PumpSwap docs — Quoting: effective quote reserves](docs/PUMP_SWAP_README.md#quoting-effective-quote-reserves).

@@ -147,8 +147,8 @@ at https://solscan.io/account/GseMAnNDvntR5uFePZ51yZBXzNSn7GdFPkfHwfr6d77J#accou
   [PUMP_CASHBACK_README](PUMP_CASHBACK_README.md)).
 - The `virtual_quote_reserves` (`i128`) is an additional (appended) quote-reserve amount that a pool may carry. Quotes must be
   computed against the pool's **effective quote reserves**, not the raw quote-vault token balance, see
-  [Quoting: effective quote reserves](#quoting-effective-quote-reserves). It is `0` on all pools today, so effective
-  quote reserves currently equal the raw vault balance; some pools may carry a non-zero value in the future.
+  [Quoting: effective quote reserves](#quoting-effective-quote-reserves). The field is signed and may be positive, zero,
+  or negative; see [Negative virtual quote reserves](NEGATIVE_VIRTUAL_QUOTE_RESERVES.md).
 - The `creator_fee_bps` (`u64`, appended) is the pool's own creator fee rate for coins on a custom pair (a quote asset
   other than SOL or USDC), carried over from the bonding curve. `0` means the standard fee schedule applies, which is
   always the case for SOL- and USDC-paired coins. Contact the CTO team to change it.
@@ -171,9 +171,8 @@ effective_quote_reserves = pool_quote_token_account.amount + Pool::virtual_quote
 
 - Use `effective_quote_reserves` (not the raw `pool_quote_token_account.amount`) wherever you quote, price, or index a
   pool, for both `buy` and `sell`.
-- `virtual_quote_reserves` is `0` on all pools today, so effective quote reserves equal the raw vault balance and quotes
-  are unchanged. Integrating against effective quote reserves now is safe and keeps your quotes correct if a pool later
-  carries a non-zero `virtual_quote_reserves`.
+- `virtual_quote_reserves` is a signed `i128` and may be positive, zero, or negative. Add it as a signed value so a
+  negative virtual component correctly puts effective quote reserves below the raw vault balance.
 - The base side is unchanged: base reserves are still the raw `pool_base_token_account.amount`.
 
 Indexers: the `BuyEvent` and `SellEvent` logs include `virtual_quote_reserves` (appended field), so effective quote
