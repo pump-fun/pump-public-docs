@@ -14757,7 +14757,10 @@
     {
       "name": "TradeEvent",
       "docs": [
-        "ix_name: \"buy\" | \"sell\" | \"buy_exact_sol_in\""
+        "ix_name: \"buy\" | \"sell\" | \"buy_exact_sol_in\"",
+        "NOTE: On-chain TradeEvent body is 375 bytes; published schema accounts for 367 body bytes.",
+        "Eight trailing zero bytes are present in on-chain events but not yet defined in this IDL.",
+        "See https://github.com/pump-fun/pump-public-docs/issues/54 for investigation."
       ],
       "type": {
         "kind": "struct",
