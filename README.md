@@ -1,5 +1,26 @@
 # pump-public-docs
 
+# Protocol Fee Recipient Rotation (November 25)
+
+We are rotating the protocol fee recipients. These are the 8 new fee recipients, common for both pump and PumpSwap (AMM):
+
+```text
+2aSWZ3QXsNLVVBr1UB1HxSw7sqMRR2pv2qa5ohsTi5Gp
+DrcDxWxLi3i7Yd7cTyCyd44DE7pwS9BvFxSsPx1c7XTv
+EAN7utdjyxhKVaqA69DRyxW5ffBhnidRZfifmfhwUgPm
+Fso3Ggq2Um1pQT6Uzq8wDicgRh62vANYZUT8uqJd2fXh
+BWNNnhN6id5j71h5wfkzmXjnV2fgF9zA61FqGJJjnakw
+Eh7hTLi6iMbT55jAEYVgtN5QaSb6z9Ytzwxs2LGG5qg4
+3Mqk6qHEj7r3TFNFYjCP85a5venbp2mefYQTSKVVchBC
+A3cm36KqisUXVTSRCK6VQ7kvXLene4gsbQedhcd5MujQ
+```
+
+The cut off date is **November 25**. Until that day all fee recipients work. After November 25, only the new ones work.
+
+The mayhem mode (reserved) fee recipients and the buyback fee recipients remain the same.
+
+Full details: [Protocol fee recipient rotation](docs/FEE_RECIPIENT_ROTATION.md).
+
 # New: Depth 2 Pump Coin Quotes (October 13)
 
 - **Pump coins paired with pump coins can be quote mints.** Starting **October 13**, `create_v2` can pair a new coin with a pump coin that is itself paired with a pump coin (SOL → A → B → C). You pass one extra group of remaining accounts for each coin below the quote coin, and the starting price is computed from the whole chain live. [Creating a coin paired with a pump coin](docs/instructions/CREATE_WITH_PUMP_COIN_QUOTE.md#depth)
