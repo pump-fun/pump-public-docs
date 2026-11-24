@@ -9,6 +9,18 @@ The lifecycle is:
 3. `transfer_creator_fees_to_pump_v2` (Pump AMM) — sweep coin creator fees accrued on the AMM into the bonding curve's creator vault so they can be distributed by the pump program. Permissionless.
 4. `distribute_creator_fees_v2` (Pump program) — pay out the bonding curve's creator vault to each shareholder according to their `share_bps`. Permissionless.
 
+## Social recipients and GitHub identity
+
+> **Safety note:** The Pump Fees program represents a social recipient on chain as a `SocialFeePda` containing only `user_id` and `platform`. It does not encode whether a GitHub identity is an individual user or an organization. The claim instructions require the configured `social_claim_authority` to sign; the destination `recipient` itself is not required to sign. As a result, GitHub account-type and membership checks are part of the off-chain claim authorization boundary.
+
+Do not infer that a GitHub organization is claimable merely because it can be discovered or displayed by a client. Before an organization-backed social recipient is committed to a sharing configuration, the product must define and enforce the supported organization policy.
+
+If GitHub organizations are supported, verify the authenticated user's entitlement to the selected organization with an organization-membership check that matches the product rule (for example, GitHub exposes `GET /orgs/{org}/public_members/{username}` for the public-membership predicate). If organizations are not supported, reject organization IDs before they are converted into social-fee recipients.
+
+This validation must happen **before** the final `update_fee_shares_v2` call. That instruction sets `admin_revoked = true`, so a recipient identity mistake cannot be repaired by another normal fee-share update.
+
+The public IDL exposes `create_social_fee_pda`, `claim_social_fee_pda`, and `claim_social_fee_pda_v2`; integrations that use these instructions should treat the social identity mapping as asset-routing logic, not presentation metadata.
+
 For every token account in the tables below, the third column tells you who is responsible for initialization: whether the caller must initialize it beforehand, whether the instruction will initialize it on the fly, or whether it can be left uninitialized when `quote_mint` is wrapped SOL (the SOL-paired code path never touches it).
 
 ## `create_fee_sharing_config` (Pump Fees)
