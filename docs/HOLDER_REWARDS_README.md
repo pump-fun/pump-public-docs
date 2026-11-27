@@ -34,6 +34,8 @@ Notes:
 - On a holder rewards coin the `creator` argument is not used as the fee recipient. Pass your usual creator address; the
   program records a pump.fun controlled address as the coin's creator instead. The `BondingCurve::creator` field
   therefore still tells you where the fee goes, and the `creator_vault` derivation used by `buy` / `sell` is unchanged.
+- The `creator` argument is stored as `BondingCurve::tax_exempt_creator`: the wallet that does not pay the
+  [block 0 tax](BLOCK0_TAX.md). It must not be `Pubkey::default()`.
 - `is_cashback_enabled` (argument 6) must be `[false]` or omitted, see [Cashback is deprecated](#cashback-is-deprecated).
 
 ### TS SDK
