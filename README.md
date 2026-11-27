@@ -1,5 +1,20 @@
 # pump-public-docs
 
+# New: Block 0 Tax (November 27)
+
+The bonding curve program can now charge an extra protocol fee on trades made in the same slot a coin is created, by anyone other than the coin's creator. The upgrade is live on mainnet.
+
+**The tax is currently 0 and stays 0 until further notice.** Nothing is charged today. We will announce before it is turned on.
+
+**This is not a breaking change.** There are no interface changes for coin creation or trading: every instruction takes the same accounts and arguments as before. PumpSwap is not affected.
+
+- **Where to read the rate.** `Global::block0_tax_bps` (`u64`, basis points) on the pump `Global` account, bytes `1096..1104`. It is `0` today, which means no tax. Read it live so you pick up the change when it is turned on.
+- **Who is exempt.** `BondingCurve` has a new `tax_exempt_creator` field (and `created_at_slot`). It is the `creator` passed to `create` / `create_v2`, and it is the one wallet that does not pay the tax.
+- **Holder rewards coins.** `BondingCurve::creator` is still the holder rewards PDA. The `creator` argument of `create_v2`, which used to be unused on these coins, is now stored as `tax_exempt_creator`.
+- `TradeEvent` has a new `block0_fee` field. `BondingCurve` is now `206` bytes and `Global` is `1104` bytes.
+
+Full details: [Block 0 tax](docs/BLOCK0_TAX.md). The pump IDL and TypeScript types in [idl](idl) are updated.
+
 # Protocol Fee Recipient Rotation (November 25)
 
 We are rotating the protocol fee recipients. These are the 8 new fee recipients, common for both pump and PumpSwap (AMM):

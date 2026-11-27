@@ -5318,12 +5318,16 @@ export type Pump = {
         "program). The trailing `creator_fee_bps` argument (EOF-tolerant) sets the coin's own creator",
         "fee rate for a quote mint admitted through quote-control or through a pump coin's curve,",
         "and then requires `Global.creator_fee_configurable`, a non-cashback coin and a value in",
-        "`1..=Global.max_configurable_creator_fee_bps`; on a SOL or `Global`-whitelisted quote it is",
-        "ignored, and omitted or zero stores 0 so the pump-fees schedule rate applies.",
+        "`max(1, Global.min_configurable_creator_fee_bps)..=Global.max_configurable_creator_fee_bps`;",
+        "on a SOL or `Global`-whitelisted quote it is ignored and 0 is stored, so the pump-fees",
+        "schedule rate applies; on the other two quotes omitted or zero stores the floor while the",
+        "gate is on (0 while it is off).",
         "`is_cashback_enabled` is deprecated and must be false. `is_holder_reward` (EOF-tolerant,",
         "gated by `Global.is_holder_reward_enabled`) sets the creator to the `holder-rewards` PDA",
         "of the mint, so creator fees accrue to its creator vault, are collected onto the PDA with",
-        "`collect_creator_fee*` and paid out through `distribute_fee_to_holders`."
+        "`collect_creator_fee*` and paid out through `distribute_fee_to_holders`. The `creator`",
+        "argument is stored as the curve's `tax_exempt_creator` on every coin, holder-reward ones",
+        "included: the one wallet that trades free of `Global.block0_tax_bps` in the creation slot."
       ],
       "discriminator": [
         214,
@@ -9729,6 +9733,86 @@ export type Pump = {
       ]
     },
     {
+      "name": "setBlock0TaxBps",
+      "discriminator": [
+        68,
+        251,
+        149,
+        89,
+        117,
+        16,
+        71,
+        128
+      ],
+      "accounts": [
+        {
+          "name": "global",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "global"
+          ]
+        },
+        {
+          "name": "eventAuthority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  95,
+                  95,
+                  101,
+                  118,
+                  101,
+                  110,
+                  116,
+                  95,
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program"
+        }
+      ],
+      "args": [
+        {
+          "name": "block0TaxBps",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "setCreator",
       "docs": [
         "Allows Global::set_creator_authority to set the bonding curve creator from Metaplex metadata or input argument"
@@ -12035,6 +12119,10 @@ export type Pump = {
         {
           "name": "maxConfigurableCreatorFeeBps",
           "type": "u64"
+        },
+        {
+          "name": "minConfigurableCreatorFeeBps",
+          "type": "u64"
         }
       ]
     },
@@ -13087,7 +13175,7 @@ export type Pump = {
     {
       "code": 6078,
       "name": "creatorFeeBpsOutOfRange",
-      "msg": "Creator fee basis points must be between 1 and the configured maximum"
+      "msg": "Creator fee basis points must be between the configured minimum (at least 1) and the configured maximum"
     },
     {
       "code": 6079,
@@ -13243,6 +13331,26 @@ export type Pump = {
       "code": 6109,
       "name": "quoteChainAccountsRequired",
       "msg": "The quote coin is nested: a bonding curve remaining account is required for every coin on its quote chain down to the depth-0 root"
+    },
+    {
+      "code": 6110,
+      "name": "quoteMintNotWritable",
+      "msg": "quote_mint must be writable for a quote with a Token-2022 transfer fee: its withheld fees are harvested to the mint"
+    },
+    {
+      "code": 6111,
+      "name": "creatorFeeRangeInvalid",
+      "msg": "min_configurable_creator_fee_bps must not exceed max_configurable_creator_fee_bps"
+    },
+    {
+      "code": 6112,
+      "name": "block0TaxBpsOutOfRange",
+      "msg": "block0_tax_bps must not exceed 10000"
+    },
+    {
+      "code": 6113,
+      "name": "multiHopBlock0TaxLegRequired",
+      "msg": "multi-hop: a curve in its creation slot only routes on the leg that charges the protocol fee, unless the creator trades"
     }
   ],
   "types": [
@@ -13462,6 +13570,14 @@ export type Pump = {
           {
             "name": "postCompleteQuoteIn",
             "type": "u64"
+          },
+          {
+            "name": "createdAtSlot",
+            "type": "u64"
+          },
+          {
+            "name": "taxExemptCreator",
+            "type": "pubkey"
           }
         ]
       }
@@ -14121,6 +14237,14 @@ export type Pump = {
           {
             "name": "maxCurveDepth",
             "type": "u8"
+          },
+          {
+            "name": "minConfigurableCreatorFeeBps",
+            "type": "u64"
+          },
+          {
+            "name": "block0TaxBps",
+            "type": "u64"
           }
         ]
       }
@@ -14324,6 +14448,10 @@ export type Pump = {
           },
           {
             "name": "poolQuoteReservesAfter",
+            "type": "u64"
+          },
+          {
+            "name": "block0Fee",
             "type": "u64"
           }
         ]
@@ -14913,6 +15041,14 @@ export type Pump = {
           {
             "name": "creatorFeeUnclaimed",
             "type": "u64"
+          },
+          {
+            "name": "quoteTransferFee",
+            "type": "u64"
+          },
+          {
+            "name": "block0Fee",
+            "type": "u64"
           }
         ]
       }
@@ -14936,6 +15072,10 @@ export type Pump = {
           },
           {
             "name": "maxConfigurableCreatorFeeBps",
+            "type": "u64"
+          },
+          {
+            "name": "minConfigurableCreatorFeeBps",
             "type": "u64"
           }
         ]
